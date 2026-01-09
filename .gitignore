@@ -1,0 +1,10 @@
+﻿################################################################################
+# 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
+################################################################################
+
+/.vs/ImageProcessingPlatform
+/ImageProcessingPlatform/x64
+/RunDir/log_tmp
+/RunDir/opencv_world4120d.dll
+/RunDir/Star_HMI.pdb
+/RunDir/Star_HMI.log

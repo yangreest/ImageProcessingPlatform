@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B222CC3F-3214-4460-9411-4D34BFFAF7B0}</ProjectGuid>
+    <Keyword>QtVS_v304</Keyword>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0</WindowsTargetPlatformVersion>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DesignTimeResourceGenerationEnabled>false</DesignTimeResourceGenerationEnabled>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
+    <Import Project="$(QtMsBuild)\qt_defaults.props" />
+  </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
+    <QtModules>core;gui;network;widgets</QtModules>
+    <QtBuildConfig>debug</QtBuildConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
+    <QtModules>core;gui;network;widgets</QtModules>
+    <QtBuildConfig>release</QtBuildConfig>
+  </PropertyGroup>
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <TargetName>Star_HMI</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <TargetName>Star_HMI</TargetName>
+    <OutDir>$(SolutionDir)\RunDir</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\3rd\XCloud\include;D:\3rd\PZMedical\include;D:\3rd\DRTECH\include;D:\3rd\HammingElectronic\include;D:\3rd\Vikey\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>D:\3rd\XCloud\lib;D:\3rd\PZMedical\lib;D:\3rd\DRTECH\lib;D:\3rd\HammingElectronic\lib;D:\3rd\Vikey\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>XCloudSDK.lib;ComApi.lib;DRTECH_LAN.lib;ImgProcCplusplusd.lib;ViKey_X64_oMDd.lib;ViKey_X64_oMTd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\3rd\XCloud\include;D:\3rd\PZMedical\include;D:\3rd\DRTECH\include;D:\3rd\HammingElectronic\include;D:\3rd\Vikey\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <Optimization>Disabled</Optimization>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>D:\3rd\XCloud\lib;D:\3rd\PZMedical\lib;D:\3rd\DRTECH\lib;D:\3rd\HammingElectronic\lib;D:\3rd\Vikey\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>XCloudSDK.lib;ComApi.lib;DRTECH_LAN.lib;ImgProcCplusplus.lib;ViKey_X64_oMD.lib;ViKey_X64_oMT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Config\ConfigManager.cpp" />
+    <ClCompile Include="ImageProcessing\ImageProcessBase.cpp" />
+    <ClCompile Include="ImageProcessing\ImageProcessByHamming.cpp" />
+    <ClCompile Include="Log\ScanS_FC.cpp" />
+    <ClCompile Include="Log\ScanS_WriteLog.cpp" />
+    <ClCompile Include="Log\WriteLogIns.cpp" />
+    <ClCompile Include="Model\ImageCapture.cpp" />
+    <ClCompile Include="Model\ImageTag.cpp" />
+    <ClCompile Include="Model\SampleBoardConfig.cpp" />
+    <ClCompile Include="Protocol\WHSDControlBoradProtocol.cpp" />
+    <ClCompile Include="Model\SD_Raw.cpp" />
+    <ClCompile Include="Tools\tinyxml2.cpp" />
+    <ClCompile Include="Tools\Tools.cpp" />
+    <ClCompile Include="Tools\USBKey.cpp" />
+    <ClCompile Include="Tools\XInputHelper.cpp" />
+    <ClCompile Include="UI\AlertForm.cpp" />
+    <ClCompile Include="UI\CameraFrom.cpp" />
+    <ClCompile Include="UI\CloseEventFilter.cpp" />
+    <ClCompile Include="UI\ControlBoardConfigForm.cpp" />
+    <ClCompile Include="UI\FormWithShowModal.cpp" />
+    <ClCompile Include="UI\MouseEventFilter.cpp" />
+    <ClCompile Include="UI\SingleInputForm.cpp" />
+    <QtRcc Include="UI\MainForm.qrc" />
+    <QtUic Include="UI\AlertForm.ui" />
+    <QtUic Include="UI\CameraFrom.ui" />
+    <QtUic Include="UI\ControlBoardConfigForm.ui" />
+    <QtUic Include="UI\MainForm.ui" />
+    <QtMoc Include="UI\MainForm.h" />
+    <ClCompile Include="Camera\CameraBase.cpp" />
+    <ClCompile Include="Camera\XCloud.cpp" />
+    <ClCompile Include="DeviceCom\IDeviceCom.cpp" />
+    <ClCompile Include="DeviceCom\TcpClient.cpp" />
+    <ClCompile Include="SampleBoard\DRTECH.cpp" />
+    <ClCompile Include="SampleBoard\PZMedical.cpp" />
+    <ClCompile Include="SampleBoard\SampleBoardBase.cpp" />
+    <ClCompile Include="Tools\HttpClient.cpp" />
+    <ClCompile Include="UI\KeyEventFilter.cpp" />
+    <ClCompile Include="UI\MainForm.cpp" />
+    <ClCompile Include="main.cpp" />
+    <QtUic Include="UI\SingleInputForm.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Camera\CameraBase.h" />
+    <ClInclude Include="Camera\XCloud.h" />
+    <ClInclude Include="Config\ConfigManager.h" />
+    <ClInclude Include="DeviceCom\IDeviceCom.h" />
+    <ClInclude Include="DeviceCom\TcpClient.h" />
+    <ClInclude Include="Model\ImageCapture.h" />
+    <ClInclude Include="Model\ImageTag.h" />
+    <ClInclude Include="Tools\USBKey.h" />
+    <ClInclude Include="Tools\XInputHelper.h" />
+    <ClInclude Include="UI\FormWithShowModal.h" />
+    <QtMoc Include="UI\AlertForm.h" />
+    <QtMoc Include="UI\SingleInputForm.h" />
+    <QtMoc Include="UI\ControlBoardConfigForm.h" />
+    <QtMoc Include="UI\CloseEventFilter.h" />
+    <QtMoc Include="UI\CameraFrom.h" />
+    <QtMoc Include="UI\MouseEventFilter.h" />
+    <QtMoc Include="UI\KeyEventFilter.h" />
+    <ClInclude Include="Tools\HttpClient.h" />
+    <ClInclude Include="ImageProcessing\ImageProcessBase.h" />
+    <ClInclude Include="ImageProcessing\ImageProcessByHamming.h" />
+    <ClInclude Include="Log\ScanS_FC.h" />
+    <ClInclude Include="Log\ScanS_WriteLog.h" />
+    <ClInclude Include="Log\WriteLogIns.h" />
+    <ClInclude Include="Model\SampleBoardConfig.h" />
+    <ClInclude Include="Protocol\WHSDControlBoradProtocol.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="SampleBoard\DRTECH.h" />
+    <ClInclude Include="SampleBoard\PZMedical.h" />
+    <ClInclude Include="SampleBoard\SampleBoardBase.h" />
+    <ClInclude Include="Model\SD_Raw.h" />
+    <ClInclude Include="Tools\tinyxml2.h" />
+    <ClInclude Include="Tools\Tools.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ImageProcessingPlatform.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="2.ico" />
+    <Image Include="UI\icon\baocunbendi_1.png" />
+    <Image Include="UI\icon\baocunbendi_2.png" />
+    <Image Include="UI\icon\baocun_1.png" />
+    <Image Include="UI\icon\baocun_2.png" />
+    <Image Include="UI\icon\changjizengqiang_1.png" />
+    <Image Include="UI\icon\chaojijiangzao_1.png" />
+    <Image Include="UI\icon\chaojijiangzao_2.png" />
+    <Image Include="UI\icon\chaojizengqiang_1.png" />
+    <Image Include="UI\icon\chaojizengqiang_2.png" />
+    <Image Include="UI\icon\chexiao_1.png" />
+    <Image Include="UI\icon\chexiao_2.png" />
+    <Image Include="UI\icon\chicunbiaoding_1.png" />
+    <Image Include="UI\icon\chicunbiaoding_2.png" />
+    <Image Include="UI\icon\chongzhi_1.png" />
+    <Image Include="UI\icon\chongzhi_2.png" />
+    <Image Include="UI\icon\daochupng_1.png" />
+    <Image Include="UI\icon\daochupng_2.png" />
+    <Image Include="UI\icon\daochuraw_1.png" />
+    <Image Include="UI\icon\daochuraw_2.png" />
+    <Image Include="UI\icon\dazi_1.png" />
+    <Image Include="UI\icon\dazi_2.png" />
+    <Image Include="UI\icon\duqu_1.png" />
+    <Image Include="UI\icon\duqu_2.png" />
+    <Image Include="UI\icon\fanzhuan_1.png" />
+    <Image Include="UI\icon\fanzhuan_2.png" />
+    <Image Include="UI\icon\favicon.ico" />
+    <Image Include="UI\icon\gaojijiangzao_1.png" />
+    <Image Include="UI\icon\gaojijiangzao_2.png" />
+    <Image Include="UI\icon\gaojizengqiang_1.png" />
+    <Image Include="UI\icon\gaojizengqiang_2.png" />
+    <Image Include="UI\icon\huanyuan_1.png" />
+    <Image Include="UI\icon\huanyuan_2.png" />
+    <Image Include="UI\icon\huaxian_1.png" />
+    <Image Include="UI\icon\huaxian_2.png" />
+    <Image Include="UI\icon\huifu_1.png" />
+    <Image Include="UI\icon\huifu_2.png" />
+    <Image Include="UI\icon\jiaodu_1.png" />
+    <Image Include="UI\icon\jiaodu_2.png" />
+    <Image Include="UI\icon\jietu_1.png" />
+    <Image Include="UI\icon\jietu_2.png" />
+    <Image Include="UI\icon\juxing_1.png" />
+    <Image Include="UI\icon\juxing_2.png" />
+    <Image Include="UI\icon\putongjiangzao_1.png" />
+    <Image Include="UI\icon\putongjiangzao_2.png" />
+    <Image Include="UI\icon\putongzengqiang_1.png" />
+    <Image Include="UI\icon\putongzengqiang_2.png" />
+    <Image Include="UI\icon\quxiaojietu_1.png" />
+    <Image Include="UI\icon\quxiaojietu_2.png" />
+    <Image Include="UI\icon\quyuxuanze_1.png" />
+    <Image Include="UI\icon\quyuxuanze_2.png" />
+    <Image Include="UI\icon\shangchuan_1.png" />
+    <Image Include="UI\icon\shangchuan_2.png" />
+    <Image Include="UI\icon\shangchubiaozhu_1.png" />
+    <Image Include="UI\icon\shangchubiaozhu_2.png" />
+    <Image Include="UI\icon\shangchu_1.png" />
+    <Image Include="UI\icon\shangchu_2.png" />
+    <Image Include="UI\icon\shangxia_1.png" />
+    <Image Include="UI\icon\shangxia_2.png" />
+    <Image Include="UI\icon\shangyizhang_1.png" />
+    <Image Include="UI\icon\shangyizhang_2.png" />
+    <Image Include="UI\icon\suofang_1.png" />
+    <Image Include="UI\icon\suofang_2.png" />
+    <Image Include="UI\icon\tuoyuan_1.png" />
+    <Image Include="UI\icon\tuoyuan_2.png" />
+    <Image Include="UI\icon\wanqudu_1.png" />
+    <Image Include="UI\icon\wanqudu_2.png" />
+    <Image Include="UI\icon\xiayizhang_1.png" />
+    <Image Include="UI\icon\xiayizhang_2.png" />
+    <Image Include="UI\icon\yidong_1.png" />
+    <Image Include="UI\icon\yidong_2.png" />
+    <Image Include="UI\icon\youxuan_1.png" />
+    <Image Include="UI\icon\youxuan_2.png" />
+    <Image Include="UI\icon\zuoxuan_1.png" />
+    <Image Include="UI\icon\zuoxuan_2.png" />
+    <Image Include="UI\icon\zuoyou_1.png" />
+    <Image Include="UI\icon\zuoyou_2.png" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
