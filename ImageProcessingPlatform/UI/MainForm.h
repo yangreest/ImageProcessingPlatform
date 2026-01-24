@@ -52,6 +52,8 @@ private slots:
 	void On_SafeChanged_Off();
 	void On_ManuallyTrigger_Clicked();
 	void On_LoadPic_Clicked();
+	void On_ControlOnly_Pressed();
+	void On_ControlOnly_Released();
 	void On_SampleBoard_Change_Clicked1();
 	void On_SampleBoard_Change_Clicked2();
 	void On_SampleBoard_Change_Stop();
@@ -222,7 +224,11 @@ private:
 
 	bool m_bUpDownMirror;
 
-	double m_dImgScale;
+	bool m_bControlPressed;// 是否按下了控制键 用于按住旋转图像
+
+	bool m_bNeedRoteImg; // 是否需要旋转图片
+
+	double m_dImgScale; // 显示图片的缩放比例
 
 	int m_nRotate;
 

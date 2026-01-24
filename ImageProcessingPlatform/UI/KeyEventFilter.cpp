@@ -58,6 +58,11 @@ bool KeyEventFilter::eventFilter(QObject* obj, QEvent* event)
 			}
 			return true;
 		}
+        case Qt::Key_Control:
+		{
+			emit controlOnlyPressed();
+			return true;
+		}
 		default:
 			break;
 		}
@@ -102,6 +107,11 @@ bool KeyEventFilter::eventFilter(QObject* obj, QEvent* event)
 				return true; // 事件被过滤掉，不再继续传播
 			}
 			emit rightKeyReleased();
+			return true;
+		}
+        case Qt::Key_Control:
+		{
+			emit controlOnlyReleased();
 			return true;
 		}
 		default:

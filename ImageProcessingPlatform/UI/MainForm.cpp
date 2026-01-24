@@ -13,6 +13,7 @@
 #include <QBuffer>
 #include <QFileDialog>
 #include <QSettings>
+#include <iostream>
 
 #include "AlertForm.h"
 #include "CloseEventFilter.h"
@@ -25,11 +26,6 @@
 
 #define HeartbeatFaultTolerance 5
 
-#ifdef _DEBUG
-
-#include <iostream>
-
-#endif
 
 MainForm::MainForm(const std::string& guid, int model, QWidget* parent)
 	: QMainWindow(parent)
@@ -397,7 +393,11 @@ void MainForm::On_Right_Release()
 
 void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 {
-	if (m_bNeedChangePicInfo)
+	std::cout << "On_ImgLabelMouseMove -- " 
+		<< "m_bNeedChangePicInfo= "<< m_bNeedChangePicInfo 
+		<< " m_nMouseMode= " << m_nMouseMode
+		<< std::endl;
+	if (m_bNeedChangePicInfo) // 鼠标右键控制图片的灰度
 	{
 		auto bv = 1;
 		auto dx = (pos.x() - m_nLastMouseX) * bv;
@@ -427,6 +427,8 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 
 		PaintImg();
 	}
+
+	// 处理四边形标记模式下的鼠标移动（模式4），根据点击次数更新不同的端点坐标
 	if (m_nMouseMode == 4 && !m_vector_ImgTag.empty())
 	{
 		if (m_nMouseClickCount == 0)
@@ -465,6 +467,7 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 		}
 		PaintImg();
 	}
+	// 处理截图模式下的鼠标移动（模式7），更新截图区域的尺寸和位置
 	if (m_nMouseMode == 7)
 	{
 		auto labelSize = ui.label->size();
@@ -494,10 +497,15 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 	{
 		m_bNeedChangePicInfo = true;
 	}
+	if (button == Qt::LeftButton && m_bControlPressed)
+    { 
+		m_bNeedRoteImg = true;
+    }
 
 	m_nLastMouseX = pos.x();
 
 	m_nLastMouseY = pos.y();
+
 	if (m_nMouseMode == 1 || m_nMouseMode == 2 || m_nMouseMode == 3 || (m_nMouseMode == 4 && m_nMouseClickCount == 0) ||
 		(m_nMouseMode == 6 && m_nMouseClickCount == 0))
 	{
@@ -864,7 +872,7 @@ void MainForm::showEvent(QShowEvent* event)
 					ui.label->setPixmap(pixmap.scaled(ui.label->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 				}
 				std::thread td(&MainForm::DownloadPic, this);
-				td.detach();
+				td.detach();//线程分离
 				break;
 			}
 		}
@@ -874,11 +882,8 @@ void MainForm::showEvent(QShowEvent* event)
 void MainForm::InitUI(int model)
 {
 #ifdef _DEBUG
-
 #else
-
-	this->setWindowFlags(this->windowFlags() | Qt::WindowStaysOnTopHint);
-
+	//this->setWindowFlags(this->windowFlags() | Qt::WindowStaysOnTopHint);
 #endif
 	this->setFocus();
 	SetAllVis(true);
@@ -1050,6 +1055,8 @@ void MainForm::BindAction()
 	connect(m_pKeyEventFilter, &KeyEventFilter::rightKeyPressed, this, &MainForm::On_Right_PressDown);
 	connect(m_pKeyEventFilter, &KeyEventFilter::rightKeyReleased, this, &MainForm::On_Right_Release);
 	connect(m_pKeyEventFilter, &KeyEventFilter::ctrlAEvent, this, &MainForm::On_LoadPic_Clicked);
+	connect(m_pKeyEventFilter, &KeyEventFilter::controlOnlyPressed, this, &MainForm::On_ControlOnly_Pressed);
+    connect(m_pKeyEventFilter, &KeyEventFilter::controlOnlyReleased, this, &MainForm::On_ControlOnly_Released);
 	m_pMouseEventFilter = new MouseEventFilter(this);
 	ui.label->installEventFilter(m_pMouseEventFilter);
 	connect(m_pMouseEventFilter, &MouseEventFilter::mousePositionChanged, this, &MainForm::On_ImgLabelMouseMove);
@@ -1196,6 +1203,7 @@ void MainForm::InitParam()
 	m_nPicCount = 0;
 	m_bLeftRightMirror = false;
 	m_bUpDownMirror = false;
+	m_bControlPressed = false;
 	m_nRotate = 0;
 	m_nImgXOffset = 0;
 	m_nImgYOffset = 0;
@@ -2472,7 +2480,7 @@ void MainForm::LoadOnlinePicByThread()
 	}
 }
 
-
+// 软件通过 启动界面调用加载图像方法
 void MainForm::DownloadPic()
 {
 	//return;
@@ -3067,6 +3075,18 @@ void MainForm::On_LoadPic_Clicked()
 	{
 		MY_WARNING("程序错误！");
 	}
+}
+
+void MainForm::On_ControlOnly_Pressed()
+{
+	m_bControlPressed = true;
+	std::cout<< "ControlOnly_Pressed" << std::endl;
+}
+
+void MainForm::On_ControlOnly_Released()
+{
+    m_bControlPressed = false;
+	std::cout<< "ControlOnly_Released" << std::endl;
 }
 
 void MainForm::On_SampleBoard_Change_Clicked1()

@@ -25,4 +25,6 @@ signals:
 	void rightKeyReleased();
 
 	void ctrlAEvent();
+	void controlOnlyPressed();
+    void controlOnlyReleased();
 };

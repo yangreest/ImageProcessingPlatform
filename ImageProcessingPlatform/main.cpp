@@ -1,4 +1,4 @@
-#ifdef _DEBUG
+#ifndef _DEBUG
 #define _CRT_SECURE_NO_WARNINGS
 #include <windows.h>
 #include <iostream>
@@ -13,7 +13,7 @@
 
 int main(int argc, char* argv[])
 {
-#ifdef _DEBUG
+#ifndef _DEBUG
 
 	AllocConsole();
 	freopen("CONOUT$", "w", stdout); // 重定向标准输出到控制台
