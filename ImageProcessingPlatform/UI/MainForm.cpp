@@ -393,10 +393,6 @@ void MainForm::On_Right_Release()
 
 void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 {
-	std::cout << "On_ImgLabelMouseMove -- " 
-		<< "m_bNeedChangePicInfo= "<< m_bNeedChangePicInfo 
-		<< " m_nMouseMode= " << m_nMouseMode
-		<< std::endl;
 	if (m_bNeedChangePicInfo) // 鼠标右键控制图片的灰度
 	{
 		auto bv = 1;
