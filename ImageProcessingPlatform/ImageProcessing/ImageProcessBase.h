@@ -28,6 +28,7 @@ public:
 		std::vector<uint8_t>* v) = 0;
 	virtual bool BrightAndContrastProcess(int wid, int hei, uint16_t* picData, CImageProcessParam2* imageProcessParam,
 		std::vector<uint8_t>* result) = 0;
+	virtual bool calculateMeanAndStdDev(const std::vector<uint8_t>& data, int& nMean, int& nStdDev) = 0;
 	virtual std::string GetVersion() = 0;
 	virtual void SetReverse(bool bImgNeedReverse) = 0;
 

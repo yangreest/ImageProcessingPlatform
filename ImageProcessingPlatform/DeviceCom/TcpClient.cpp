@@ -8,7 +8,7 @@
 #include <condition_variable>
 #include <chrono>
 
-#ifdef _DEBUG
+#ifdef __DEBUG__
 bool bWriteLog = true;
 #include <iostream>
 #include <sstream>
@@ -264,7 +264,7 @@ void CTcpClientCom::SendThread()
 		if (!data.empty() && m_connected)
 		{
 			auto bytesSent = send(m_socket, (char*)data.data(), (int)data.size(), 0);
-#ifdef _DEBUG
+#ifdef __DEBUG__
 			if (bWriteLog)
 			{
 				auto toHexString = [](const uint8_t* t, size_t len)
@@ -328,7 +328,7 @@ void CTcpClientCom::ReceiveThread()
 							m_function_ReadDataCallBack((uint8_t*)buffer, bytesReceived, 0);
 						}
 
-#ifdef _DEBUG
+#ifdef __DEBUG__
 						if (bWriteLog)
 						{
 							auto toHexString = [](const uint8_t* t, int len)

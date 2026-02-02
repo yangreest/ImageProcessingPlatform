@@ -1,7 +1,6 @@
 #pragma once
 
 #include <mutex>
-
 #include "CameraFrom.h"
 #include "ControlBoardConfigForm.h"
 #include "ui_MainForm.h"
@@ -25,9 +24,27 @@ class MainForm : public QMainWindow
 {
 	Q_OBJECT
 
+
+
 public:
+	// 枚举类
+	// 1: 画线 2: 画矩形 3: 画椭圆 4: 角度 5: 输入文字 6: 弯曲度 7: 截图 8: 删除
+    enum class MouseMode
+    {
+        nNone,
+        DrawLine,
+        Rect,
+        Ellipse,
+		Angle,
+        InputText,
+        Curvature,
+        Capture,
+        DeleteTag,
+    };
+
 	MainForm(const std::string& guid, int model, QWidget* parent = nullptr);
 	~MainForm() override;
+
 
 private slots:
 	void ConnectDevice();
@@ -327,11 +344,13 @@ private:
 
 	/// <summary>
 	/// 鼠标的操作方式
+	/// 1: 画线 2: 画矩形 3: 画椭圆 4: 角度 5: 输入文字 6: 弯曲度 7: 截图 8: 删除
 	/// </summary>
-	int m_nMouseMode;
+	MouseMode m_eMouseMode;
 
 	/// <summary>
 	/// 鼠标操作模式下的点击计数
+	/// 
 	/// </summary>
 	int m_nMouseClickCount;
 

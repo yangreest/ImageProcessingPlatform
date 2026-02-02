@@ -2,12 +2,12 @@
 #include "ImageProcessByHamming.h"
 #include "HmImgProApi.h"
 #include <array>
+#include <iostream>
 
 CImageProcessByHamming::CImageProcessByHamming()
 {
-#ifdef _DEBUG
-	auto ko = InitiImgPro(true);
-	int tm = 10;
+#ifdef __DEBUG__
+	InitiImgPro(true);
 #else
 	InitiImgPro(false);
 #endif
@@ -98,6 +98,55 @@ bool CImageProcessByHamming::BrightAndContrastProcess(int wid, int hei, uint16_t
 	}
 
 	return result;
+}
+
+bool CImageProcessByHamming::calculateMeanAndStdDev(const std::vector<uint8_t>& data, int& nMean, int& nStdDev)
+{
+	// 1. 合法性检查：空数组直接返回失败
+	if (data.empty())
+	{
+		std::cerr << "错误：输入数组为空，无法计算均值和标准差！" << std::endl;
+		nMean = 0.0;
+		nStdDev = 0.0;
+		return false;
+	}
+
+	std::vector<uint16_t> data_16bit;
+	data_16bit.reserve(data.size() / 2);
+	for (size_t i = 0; i < data.size(); i += 2)
+	{
+		// 小端模式：低字节在前，高字节在后
+		uint16_t pixel_value = static_cast<uint16_t>(data[i]) |
+			(static_cast<uint16_t>(data[i + 1]) << 8);
+		data_16bit.push_back(pixel_value);
+	}
+
+
+	// 2. 计算总和（使用uint64_t避免溢出，因为uint16_t最大65535，若数组有100万元素，总和会超32位）
+	uint64_t sum = 0;
+	for (uint16_t val : data_16bit)
+	{
+		sum += val;
+	}
+	// 也可以用std::accumulate（需要包含<numeric>），效果等价
+	// uint64_t sum = std::accumulate(data.begin(), data.end(), 0ULL);
+
+	// 3. 计算均值（转换为double，保证精度）
+	size_t n = data_16bit.size();
+	nMean = static_cast<double>(sum) / n;
+
+	// 4. 计算平方差之和（每个元素与均值的差的平方和）
+	double sumOfSquares = 0.0;
+	for (uint16_t val : data_16bit)
+	{
+		double diff = static_cast<double>(val) - nMean;
+		sumOfSquares += diff * diff; // 等价于pow(diff, 2)，效率更高
+	}
+
+	// 5. 计算标准差（总体标准差，除以n；若要样本标准差则除以n-1）
+	nStdDev = std::sqrt(sumOfSquares / n);
+
+	return true;
 }
 
 std::string CImageProcessByHamming::GetVersion()

@@ -21,6 +21,8 @@
 #include "Tools/HttpClient.h"
 #include "Tools/Tools.h"
 
+#include <opencv2/opencv.hpp>
+
 #define MY_WARNING(t) 	{AlertForm f("警告", t);f.showModal();}//QMessageBox::warning(this, "警告", t)
 #define MY_INFO(t) {AlertForm f("提示", t);f.showModal();}//QMessageBox::information(this, "提示", t)
 
@@ -72,8 +74,8 @@ void MainForm::ConnectDevice()
 	if (m_pSampleBoardBase != nullptr && m_pSampleBoardBase->Init(m_pConfig->m_memCSampleBoardConfig))
 	{
 		m_pSampleBoardBase->RegisterImgCallback(std::bind(&MainForm::Callback_SampleBoardNewImg, this,
-		                                                  std::placeholders::_1, std::placeholders::_2,
-		                                                  std::placeholders::_3, std::placeholders::_4));
+			std::placeholders::_1, std::placeholders::_2,
+			std::placeholders::_3, std::placeholders::_4));
 		m_pSampleBoardBase->RegisterDeviceConnectCallback(
 			std::bind(&MainForm::Callback_SampleBoardDeviceConnectStatus, this, std::placeholders::_1));
 		m_pSampleBoardBase->RegisterDeviceRunCallback(
@@ -127,55 +129,55 @@ void MainForm::On_timer_timeout()
 		switch (enumDeviceConnectStatus)
 		{
 		case DeviceConnectStatus::UnKnown:
-			{
-				info = "未知/未连接";
-				break;
-			}
+		{
+			info = "未知/未连接";
+			break;
+		}
 		case DeviceConnectStatus::Closed:
-			{
-				info = "连接断开";
-				break;
-			}
+		{
+			info = "连接断开";
+			break;
+		}
 		case DeviceConnectStatus::OpendListen:
-			{
-				info = "连接中";
-				break;
-			}
+		{
+			info = "连接中";
+			break;
+		}
 		case DeviceConnectStatus::Connected:
-			{
-				info = "已连接";
-				break;
-			}
+		{
+			info = "已连接";
+			break;
+		}
 		}
 
 		info.append("_");
 		switch (m_enumDeviceRunStatus)
 		{
 		case DeviceRunStatus::Unknow:
-			{
-				info.append("未知");
-				break;
-			}
+		{
+			info.append("未知");
+			break;
+		}
 		case DeviceRunStatus::Awake:
-			{
-				info.append("已唤醒");
-				break;
-			}
+		{
+			info.append("已唤醒");
+			break;
+		}
 		case DeviceRunStatus::Busy:
-			{
-				info.append("忙");
-				break;
-			}
+		{
+			info.append("忙");
+			break;
+		}
 		case DeviceRunStatus::Ready:
-			{
-				info.append("就绪");
-				break;
-			}
+		{
+			info.append("就绪");
+			break;
+		}
 		default:
-			{
-				info.append("未知");
-				break;
-			}
+		{
+			info.append("未知");
+			break;
+		}
 		}
 		ui.label_4->setText(QString::fromStdString(info));
 	}
@@ -208,24 +210,24 @@ void MainForm::On_timer_timeout()
 		switch (memHeartBeat.m_cXRayDeviceStatus)
 		{
 		case 0:
-			{
-				strXRayDeviceStatus = "空闲";
-				break;
-			}
+		{
+			strXRayDeviceStatus = "空闲";
+			break;
+		}
 		case 1:
-			{
-				strXRayDeviceStatus = "延时开启中";
-				break;
-			}
+		{
+			strXRayDeviceStatus = "延时开启中";
+			break;
+		}
 		case 2:
-			{
-				strXRayDeviceStatus = "工作完成";
-				break;
-			}
+		{
+			strXRayDeviceStatus = "工作完成";
+			break;
+		}
 		default:
-			{
-				break;
-			}
+		{
+			break;
+		}
 		}
 		if (m_pConfig->m_memControlBoardConfig.m_bEnableIp2)
 		{
@@ -254,87 +256,87 @@ void MainForm::On_timer_timeout()
 		switch (m_memImageProcessParam1.m_nDenoise)
 		{
 		case 0:
-			{
-				ui.pushButton_33->setStyleSheet(QString::fromStdString(ChangeUIImg("putongjiangzao", false)));
-				ui.pushButton_38->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojijiangzao", false)));
-				ui.pushButton_31->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojijiangzao", false)));
-				break;
-			}
+		{
+			ui.pushButton_33->setStyleSheet(QString::fromStdString(ChangeUIImg("putongjiangzao", false)));
+			ui.pushButton_38->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojijiangzao", false)));
+			ui.pushButton_31->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojijiangzao", false)));
+			break;
+		}
 		case 3:
-			{
-				ui.pushButton_33->setStyleSheet(QString::fromStdString(ChangeUIImg("putongjiangzao", true)));
-				ui.pushButton_38->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojijiangzao", false)));
-				ui.pushButton_31->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojijiangzao", false)));
-				break;
-			}
+		{
+			ui.pushButton_33->setStyleSheet(QString::fromStdString(ChangeUIImg("putongjiangzao", true)));
+			ui.pushButton_38->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojijiangzao", false)));
+			ui.pushButton_31->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojijiangzao", false)));
+			break;
+		}
 		case 7:
-			{
-				ui.pushButton_33->setStyleSheet(QString::fromStdString(ChangeUIImg("putongjiangzao", false)));
-				ui.pushButton_38->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojijiangzao", true)));
-				ui.pushButton_31->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojijiangzao", false)));
-				break;
-			}
+		{
+			ui.pushButton_33->setStyleSheet(QString::fromStdString(ChangeUIImg("putongjiangzao", false)));
+			ui.pushButton_38->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojijiangzao", true)));
+			ui.pushButton_31->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojijiangzao", false)));
+			break;
+		}
 		case 10:
-			{
-				ui.pushButton_33->setStyleSheet(QString::fromStdString(ChangeUIImg("putongjiangzao", false)));
-				ui.pushButton_38->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojijiangzao", false)));
-				ui.pushButton_31->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojijiangzao", true)));
-				break;
-			}
+		{
+			ui.pushButton_33->setStyleSheet(QString::fromStdString(ChangeUIImg("putongjiangzao", false)));
+			ui.pushButton_38->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojijiangzao", false)));
+			ui.pushButton_31->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojijiangzao", true)));
+			break;
+		}
 		}
 
 		switch (m_memImageProcessParam1.m_nEnhance)
 		{
 		case 0:
-			{
-				ui.pushButton_42->setStyleSheet(QString::fromStdString(ChangeUIImg("putongzengqiang", false)));
-				ui.pushButton_46->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojizengqiang", false)));
-				ui.pushButton_45->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojizengqiang", false)));
-				break;
-			}
+		{
+			ui.pushButton_42->setStyleSheet(QString::fromStdString(ChangeUIImg("putongzengqiang", false)));
+			ui.pushButton_46->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojizengqiang", false)));
+			ui.pushButton_45->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojizengqiang", false)));
+			break;
+		}
 		case 2:
-			{
-				ui.pushButton_42->setStyleSheet(QString::fromStdString(ChangeUIImg("putongzengqiang", true)));
-				ui.pushButton_46->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojizengqiang", false)));
-				ui.pushButton_45->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojizengqiang", false)));
-				break;
-			}
+		{
+			ui.pushButton_42->setStyleSheet(QString::fromStdString(ChangeUIImg("putongzengqiang", true)));
+			ui.pushButton_46->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojizengqiang", false)));
+			ui.pushButton_45->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojizengqiang", false)));
+			break;
+		}
 		case 4:
-			{
-				ui.pushButton_42->setStyleSheet(QString::fromStdString(ChangeUIImg("putongzengqiang", false)));
-				ui.pushButton_46->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojizengqiang", true)));
-				ui.pushButton_45->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojizengqiang", false)));
-				break;
-			}
+		{
+			ui.pushButton_42->setStyleSheet(QString::fromStdString(ChangeUIImg("putongzengqiang", false)));
+			ui.pushButton_46->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojizengqiang", true)));
+			ui.pushButton_45->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojizengqiang", false)));
+			break;
+		}
 		case 6:
-			{
-				ui.pushButton_42->setStyleSheet(QString::fromStdString(ChangeUIImg("putongzengqiang", false)));
-				ui.pushButton_46->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojizengqiang", false)));
-				ui.pushButton_45->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojizengqiang", true)));
-				break;
-			}
+		{
+			ui.pushButton_42->setStyleSheet(QString::fromStdString(ChangeUIImg("putongzengqiang", false)));
+			ui.pushButton_46->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojizengqiang", false)));
+			ui.pushButton_45->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojizengqiang", true)));
+			break;
+		}
 		}
 	}
 	//if ()
 	{
 		ui.pushButton_48->
-		   setStyleSheet(QString::fromStdString(ChangeUIImg("huaxian", m_nMouseMode == 1)));
+			setStyleSheet(QString::fromStdString(ChangeUIImg("huaxian", m_eMouseMode == MouseMode::DrawLine)));
 		ui.pushButton_34->
-		   setStyleSheet(QString::fromStdString(ChangeUIImg("juxing", m_nMouseMode == 2)));
+			setStyleSheet(QString::fromStdString(ChangeUIImg("juxing", m_eMouseMode == MouseMode::Rect)));
 		ui.pushButton_49->
-		   setStyleSheet(QString::fromStdString(ChangeUIImg("tuoyuan", m_nMouseMode == 3)));
+			setStyleSheet(QString::fromStdString(ChangeUIImg("tuoyuan", m_eMouseMode == MouseMode::Ellipse)));
 		ui.pushButton_50->
-		   setStyleSheet(QString::fromStdString(ChangeUIImg("dazi", m_nMouseMode == 5)));
+			setStyleSheet(QString::fromStdString(ChangeUIImg("dazi", m_eMouseMode == MouseMode::InputText)));
 		ui.pushButton_54->
-		   setStyleSheet(QString::fromStdString(ChangeUIImg("wanqudu", m_nMouseMode == 6)));
+			setStyleSheet(QString::fromStdString(ChangeUIImg("wanqudu", m_eMouseMode == MouseMode::Curvature)));
 		ui.pushButton_47->
-		   setStyleSheet(QString::fromStdString(ChangeUIImg("jiaodu", m_nMouseMode == 4)));
+			setStyleSheet(QString::fromStdString(ChangeUIImg("jiaodu", m_eMouseMode == MouseMode::Angle)));
 		ui.pushButton_55->
-		   setStyleSheet(QString::fromStdString(ChangeUIImg("jietu", m_nMouseMode == 7)));
+			setStyleSheet(QString::fromStdString(ChangeUIImg("jietu", m_eMouseMode == MouseMode::Capture)));
 		ui.pushButton_11->
-		   setStyleSheet(QString::fromStdString(ChangeUIImg("fanzhuan", m_bImgNeedReverse)));
+			setStyleSheet(QString::fromStdString(ChangeUIImg("fanzhuan", m_bImgNeedReverse)));
 		ui.pushButton_57->
-		   setStyleSheet(QString::fromStdString(ChangeUIImg("shangchubiaozhu", m_nMouseMode == 8)));
+			setStyleSheet(QString::fromStdString(ChangeUIImg("shangchubiaozhu", m_eMouseMode == MouseMode::DeleteTag)));
 	}
 	ui.label_42->setText(QString::number(m_nXRaySendCout));
 }
@@ -395,14 +397,14 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 {
 	if (m_bNeedChangePicInfo) // 鼠标右键控制图片的灰度
 	{
-		auto bv = 1;
+		auto bv = 6;
 		auto dx = (pos.x() - m_nLastMouseX) * bv;
 		auto dy = (pos.y() - m_nLastMouseY) * bv;
 		ui.horizontalSlider->setValue(ui.horizontalSlider->value() + dx);
 		ui.horizontalSlider_2->setValue(ui.horizontalSlider_2->value() - dy);
 		On_SliderValueChanged2(0);
 	}
-	if ((m_nMouseMode == 1 || m_nMouseMode == 2 || m_nMouseMode == 3 || (m_nMouseMode == 6 && m_nMouseClickCount == 0))
+	if ((m_eMouseMode == MouseMode::DrawLine || m_eMouseMode == MouseMode::Rect || m_eMouseMode == MouseMode::Ellipse || (m_eMouseMode == MouseMode::Curvature && m_nMouseClickCount == 0))
 		&& !m_vector_ImgTag.empty())
 	{
 		auto& p = m_vector_ImgTag.back();
@@ -425,7 +427,7 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 	}
 
 	// 处理四边形标记模式下的鼠标移动（模式4），根据点击次数更新不同的端点坐标
-	if (m_nMouseMode == 4 && !m_vector_ImgTag.empty())
+	if (m_eMouseMode == MouseMode::Angle && !m_vector_ImgTag.empty())
 	{
 		if (m_nMouseClickCount == 0)
 		{
@@ -464,7 +466,7 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 		PaintImg();
 	}
 	// 处理截图模式下的鼠标移动（模式7），更新截图区域的尺寸和位置
-	if (m_nMouseMode == 7)
+	if (m_eMouseMode == MouseMode::Capture)
 	{
 		auto labelSize = ui.label->size();
 
@@ -494,16 +496,16 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 		m_bNeedChangePicInfo = true;
 	}
 	if (button == Qt::LeftButton && m_bControlPressed)
-    { 
+	{
 		m_bNeedRoteImg = true;
-    }
+	}
 
 	m_nLastMouseX = pos.x();
 
 	m_nLastMouseY = pos.y();
 
-	if (m_nMouseMode == 1 || m_nMouseMode == 2 || m_nMouseMode == 3 || (m_nMouseMode == 4 && m_nMouseClickCount == 0) ||
-		(m_nMouseMode == 6 && m_nMouseClickCount == 0))
+	if (m_eMouseMode == MouseMode::DrawLine || m_eMouseMode == MouseMode::Rect || m_eMouseMode == MouseMode::Ellipse || (m_eMouseMode == MouseMode::Angle && m_nMouseClickCount == 0) ||
+		(m_eMouseMode == MouseMode::Curvature && m_nMouseClickCount == 0))
 	{
 		auto labelSize = ui.label->size();
 		double newX = 0, newY = 0;
@@ -515,12 +517,12 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 			m_memMainQImage.width(), m_memMainQImage.height(), &newX, &newY);
 
 		CImageTag t;
-		t.m_nTagType = m_nMouseMode - 1;
+		t.m_nTagType = (int)m_eMouseMode - 1;
 		t.m_nStartX = newX;
 		t.m_nStartY = newY;
 		AddOneImgTag(t);
 	}
-	if (m_nMouseMode == 7)
+	if (m_eMouseMode == MouseMode::Capture)
 	{
 		auto labelSize = ui.label->size();
 
@@ -534,7 +536,7 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 		m_memCImageCapture.m_nPosX = newX;
 		m_memCImageCapture.m_nPosY = newY;
 	}
-	if (m_nMouseMode == 8)
+	if (m_eMouseMode == MouseMode::DeleteTag)
 	{
 		auto labelSize = ui.label->size();
 
@@ -551,56 +553,56 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 		int index = -1, index2 = -1;
 
 		auto isPointInExpandedRectangle = [](double xa, double ya, double xb, double yb,
-		                                     double xc, double yc, double m)
-		{
-			// 计算原始矩形的边界
-			double originalMinX = std::min(xa, xb);
-			double originalMaxX = std::max(xa, xb);
-			double originalMinY = std::min(ya, yb);
-			double originalMaxY = std::max(ya, yb);
+			double xc, double yc, double m)
+			{
+				// 计算原始矩形的边界
+				double originalMinX = std::min(xa, xb);
+				double originalMaxX = std::max(xa, xb);
+				double originalMinY = std::min(ya, yb);
+				double originalMaxY = std::max(ya, yb);
 
-			// 计算扩展后的矩形边界（向四个方向各扩展m单位）
-			double expandedMinX = originalMinX - m;
-			double expandedMaxX = originalMaxX + m;
-			double expandedMinY = originalMinY - m;
-			double expandedMaxY = originalMaxY + m;
+				// 计算扩展后的矩形边界（向四个方向各扩展m单位）
+				double expandedMinX = originalMinX - m;
+				double expandedMaxX = originalMaxX + m;
+				double expandedMinY = originalMinY - m;
+				double expandedMaxY = originalMaxY + m;
 
-			// 判断点C是否在扩展后的矩形范围内（包括边界）
-			return (xc >= expandedMinX && xc <= expandedMaxX &&
-				yc >= expandedMinY && yc <= expandedMaxY);
-		};
+				// 判断点C是否在扩展后的矩形范围内（包括边界）
+				return (xc >= expandedMinX && xc <= expandedMaxX &&
+					yc >= expandedMinY && yc <= expandedMaxY);
+			};
 
 		auto isPointInBoundingRectangle = [](double xa, double ya,
-		                                     double xb, double yb,
-		                                     double xc, double yc,
-		                                     double xd, double yd)
-		{
-			// 计算三个点的x坐标的最小值和最大值，确定矩形的左右边界
-			double minX = std::min(std::min(xa, xb), xc);
-			double maxX = std::max(std::max(xa, xb), xc);
+			double xb, double yb,
+			double xc, double yc,
+			double xd, double yd)
+			{
+				// 计算三个点的x坐标的最小值和最大值，确定矩形的左右边界
+				double minX = std::min(std::min(xa, xb), xc);
+				double maxX = std::max(std::max(xa, xb), xc);
 
-			// 计算三个点的y坐标的最小值和最大值，确定矩形的上下边界
-			double minY = std::min(std::min(ya, yb), yc);
-			double maxY = std::max(std::max(ya, yb), yc);
+				// 计算三个点的y坐标的最小值和最大值，确定矩形的上下边界
+				double minY = std::min(std::min(ya, yb), yc);
+				double maxY = std::max(std::max(ya, yb), yc);
 
-			// 判断点d是否在这个矩形范围内（包括边界）
-			return (xd >= minX && xd <= maxX && yd >= minY && yd <= maxY);
-		};
+				// 判断点d是否在这个矩形范围内（包括边界）
+				return (xd >= minX && xd <= maxX && yd >= minY && yd <= maxY);
+			};
 		auto isDistanceLessOrEqual = [](double xa, double ya, double xb, double yb, double m)
-		{
-			// 计算两点在x轴和y轴上的距离差
-			double dx = xb - xa;
-			double dy = yb - ya;
+			{
+				// 计算两点在x轴和y轴上的距离差
+				double dx = xb - xa;
+				double dy = yb - ya;
 
-			// 计算欧氏距离的平方（避免开方运算，提高效率）
-			double distanceSquared = dx * dx + dy * dy;
+				// 计算欧氏距离的平方（避免开方运算，提高效率）
+				double distanceSquared = dx * dx + dy * dy;
 
-			// 计算m的平方
-			double mSquared = m * m;
+				// 计算m的平方
+				double mSquared = m * m;
 
-			// 比较距离的平方（结果与比较距离本身一致，但更高效）
-			return distanceSquared <= mSquared;
-		};
+				// 比较距离的平方（结果与比较距离本身一致，但更高效）
+				return distanceSquared <= mSquared;
+			};
 		for (const auto& t : m_vector_ImgTag)
 		{
 			index2++;
@@ -616,7 +618,7 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 			if (t.m_nTagType == 3 || t.m_nTagType == 5)
 			{
 				if (isPointInBoundingRectangle(t.m_nStartX, t.m_nStartY, t.m_nEndX, t.m_nEndY, t.m_nEndX2, t.m_nEndY2,
-				                               x, y))
+					x, y))
 				{
 					index = index2;
 					break;
@@ -638,7 +640,7 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 			m_vector_ImgTag_bak.emplace_back(pt);
 			PaintImg();
 		}
-		m_nMouseMode = 0;
+		m_eMouseMode = MouseMode::nNone;
 	}
 }
 
@@ -646,47 +648,23 @@ void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos
 {
 	if (button == Qt::LeftButton)
 	{
-		switch (m_nMouseMode)
+		switch (m_eMouseMode)
 		{
-		case 0:
+		case MouseMode::nNone:
+		{
+			m_nImgXOffset = m_nImgXOffset + (pos.x() - m_nLastMouseX);
+			m_nImgYOffset = m_nImgYOffset + (pos.y() - m_nLastMouseY);
+			PaintImg();
+			break;
+		}
+
+		case MouseMode::DrawLine:
+		case MouseMode::Rect:
+		case MouseMode::Ellipse:
+		{
+			if (!m_vector_ImgTag.empty())
 			{
-				m_nImgXOffset = m_nImgXOffset + (pos.x() - m_nLastMouseX);
-				m_nImgYOffset = m_nImgYOffset + (pos.y() - m_nLastMouseY);
-				PaintImg();
-				break;
-			}
-
-		case 1:
-		case 2:
-		case 3:
-			{
-				if (!m_vector_ImgTag.empty())
-				{
-					auto& p = m_vector_ImgTag.back();
-					auto labelSize = ui.label->size();
-
-					double newX = 0, newY = 0;
-					WHSD_Tools::CalculateOriginalCoordinates(
-						pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.
-							width()
-							* (m_dImgScale -
-								1) / 2), pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-						m_nRotate * 90, m_dImgScale, m_dImgScale, 0, 0, m_bLeftRightMirror, m_bUpDownMirror,
-						m_memMainQImage.width(), m_memMainQImage.height(), &newX, &newY);
-
-					p.m_nEndX = newX;
-					p.m_nEndY = newY;
-				}
-
-				PaintImg();
-				//这里就算绘制好一条线了
-				m_nMouseMode = 0;
-				break;
-			}
-		case 5:
-			{
-				CImageTag p;
-				p.m_nTagType = 4;
+				auto& p = m_vector_ImgTag.back();
 				auto labelSize = ui.label->size();
 
 				double newX = 0, newY = 0;
@@ -698,106 +676,130 @@ void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos
 					m_nRotate * 90, m_dImgScale, m_dImgScale, 0, 0, m_bLeftRightMirror, m_bUpDownMirror,
 					m_memMainQImage.width(), m_memMainQImage.height(), &newX, &newY);
 
-
-				p.m_nStartX = newX;
-				p.m_nStartY = newY;
-
-
-				// 创建输入对话框，指定当前窗口为主窗口
-				QInputDialog dialog(this);
-
-				// 为对话框也设置总在最前属性
-				dialog.setWindowFlags(dialog.windowFlags() | Qt::WindowStaysOnTopHint);
-
-				// 设置对话框其他属性
-				dialog.setWindowTitle("输入");
-				dialog.setLabelText("请输入内容:");
-				dialog.setInputMode(QInputDialog::TextInput);
-
-				// 显示对话框
-				if (dialog.exec() == QInputDialog::Accepted)
-				{
-					QString text = dialog.textValue();
-					// 处理输入内容
-					if (!text.isEmpty())
-					{
-						QByteArray utf8Bytes = text.toUtf8();
-						std::string stdStr(utf8Bytes.constData(), utf8Bytes.size());
-						p.m_strContent = stdStr;
-						AddOneImgTag(p);
-					}
-				}
-
-				PaintImg();
-				m_nMouseMode = 0;
-				break;
+				p.m_nEndX = newX;
+				p.m_nEndY = newY;
 			}
-		case 4:
-		case 6:
+
+			PaintImg();
+			//这里就算绘制好一条线了
+			m_eMouseMode = MouseMode::nNone;
+			break;
+		}
+		case MouseMode::InputText:
+		{
+			CImageTag p;
+			p.m_nTagType = 4;
+			auto labelSize = ui.label->size();
+
+			double newX = 0, newY = 0;
+			WHSD_Tools::CalculateOriginalCoordinates(
+				pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.
+					width()
+					* (m_dImgScale -
+						1) / 2), pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
+				m_nRotate * 90, m_dImgScale, m_dImgScale, 0, 0, m_bLeftRightMirror, m_bUpDownMirror,
+				m_memMainQImage.width(), m_memMainQImage.height(), &newX, &newY);
+
+
+			p.m_nStartX = newX;
+			p.m_nStartY = newY;
+
+
+			// 创建输入对话框，指定当前窗口为主窗口
+			QInputDialog dialog(this);
+
+			// 为对话框也设置总在最前属性
+			dialog.setWindowFlags(dialog.windowFlags() | Qt::WindowStaysOnTopHint);
+
+			// 设置对话框其他属性
+			dialog.setWindowTitle("输入");
+			dialog.setLabelText("请输入内容:");
+			dialog.setInputMode(QInputDialog::TextInput);
+
+			// 显示对话框
+			if (dialog.exec() == QInputDialog::Accepted)
 			{
-				if (m_nMouseClickCount == 0)
+				QString text = dialog.textValue();
+				// 处理输入内容
+				if (!text.isEmpty())
 				{
-					if (!m_vector_ImgTag.empty())
-					{
-						auto labelSize = ui.label->size();
-
-						double newX = 0, newY = 0;
-						WHSD_Tools::CalculateOriginalCoordinates(
-							pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset -
-								m_memMainQImage.
-								width()
-								* (m_dImgScale -
-									1) / 2),
-							pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-							m_nRotate * 90, m_dImgScale, m_dImgScale, 0, 0, m_bLeftRightMirror, m_bUpDownMirror,
-							m_memMainQImage.width(), m_memMainQImage.height(), &newX, &newY);
-
-						auto& t = m_vector_ImgTag.back();
-
-						t.m_nEndX = newX;
-						t.m_nEndY = newY;
-					}
-					m_nMouseClickCount++;
+					QByteArray utf8Bytes = text.toUtf8();
+					std::string stdStr(utf8Bytes.constData(), utf8Bytes.size());
+					p.m_strContent = stdStr;
+					AddOneImgTag(p);
 				}
-				else if (m_nMouseClickCount == 1)
-				{
-					if (!m_vector_ImgTag.empty())
-					{
-						auto labelSize = ui.label->size();
-
-						double newX = 0, newY = 0;
-						WHSD_Tools::CalculateOriginalCoordinates(
-							pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset -
-								m_memMainQImage.
-								width()
-								* (m_dImgScale -
-									1) / 2),
-							pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-							m_nRotate * 90, m_dImgScale, m_dImgScale, 0, 0, m_bLeftRightMirror, m_bUpDownMirror,
-							m_memMainQImage.width(), m_memMainQImage.height(), &newX, &newY);
-
-						auto& t = m_vector_ImgTag.back();
-
-						t.m_nEndX2 = newX;
-						t.m_nEndY2 = newY;
-					}
-					m_nMouseClickCount = 0;
-					m_nMouseMode = 0;
-				}
-				PaintImg();
-				break;
 			}
-		case 7:
+
+			PaintImg();
+			m_eMouseMode = MouseMode::nNone;
+			break;
+		}
+		case MouseMode::Angle:
+		case MouseMode::Curvature:
+		{
+			if (m_nMouseClickCount == 0)
 			{
-				m_memCImageCapture.m_bSaved = true;
-				m_nMouseMode = 0;
-				PaintImg();
-				break;
+				if (!m_vector_ImgTag.empty())
+				{
+					auto labelSize = ui.label->size();
+
+					double newX = 0, newY = 0;
+					WHSD_Tools::CalculateOriginalCoordinates(
+						pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset -
+							m_memMainQImage.
+							width()
+							* (m_dImgScale -
+								1) / 2),
+						pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
+						m_nRotate * 90, m_dImgScale, m_dImgScale, 0, 0, m_bLeftRightMirror, m_bUpDownMirror,
+						m_memMainQImage.width(), m_memMainQImage.height(), &newX, &newY);
+
+					auto& t = m_vector_ImgTag.back();
+
+					t.m_nEndX = newX;
+					t.m_nEndY = newY;
+				}
+				m_nMouseClickCount++;
 			}
+			else if (m_nMouseClickCount == 1)
+			{
+				if (!m_vector_ImgTag.empty())
+				{
+					auto labelSize = ui.label->size();
+
+					double newX = 0, newY = 0;
+					WHSD_Tools::CalculateOriginalCoordinates(
+						pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset -
+							m_memMainQImage.
+							width()
+							* (m_dImgScale -
+								1) / 2),
+						pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
+						m_nRotate * 90, m_dImgScale, m_dImgScale, 0, 0, m_bLeftRightMirror, m_bUpDownMirror,
+						m_memMainQImage.width(), m_memMainQImage.height(), &newX, &newY);
+
+					auto& t = m_vector_ImgTag.back();
+
+					t.m_nEndX2 = newX;
+					t.m_nEndY2 = newY;
+				}
+				m_nMouseClickCount = 0;
+				m_eMouseMode = MouseMode::nNone;
+			}
+			PaintImg();
+			break;
+		}
+		case MouseMode::Capture:
+		{
+			m_memCImageCapture.m_bSaved = true;
+			m_eMouseMode = MouseMode::nNone;
+			PaintImg();
+			break;
+		}
 		default:
-			{
-				break;
-			}
+		{
+			break;
+		}
 		}
 	}
 	m_bNeedChangePicInfo = false;
@@ -821,7 +823,7 @@ void MainForm::On_ImgLabelWheelDown()
 
 void MainForm::On_ImgRightDoubleClick()
 {
-	if (m_nMouseMode == 0)
+	if (m_eMouseMode == MouseMode::nNone)
 	{
 		m_dImgScale = 1;
 		m_nImgXOffset = 0;
@@ -833,7 +835,7 @@ void MainForm::On_ImgRightDoubleClick()
 
 void MainForm::On_ImgLeftDoubleClick()
 {
-	if (m_nMouseMode == 0)
+	if (m_eMouseMode == MouseMode::nNone)
 	{
 		m_nRotate++;
 		PaintImg();
@@ -846,38 +848,38 @@ void MainForm::showEvent(QShowEvent* event)
 	switch (m_nWorkMode)
 	{
 	case 1:
-		{
-			ReadSavedFiles(0);
-			break;
-		}
+	{
+		ReadSavedFiles(0);
+		break;
+	}
 	case 2:
+	{
+		if (!m_bDownloadedPic)
 		{
-			if (!m_bDownloadedPic)
-			{
-				QPixmap pixmap;
-#ifdef _DEBUG
+			QPixmap pixmap;
+#ifdef __DEBUG__
 
-				auto path = "jjz.png";
+			auto path = "jjz.png";
 
 #else
-				auto path = WHSD_Tools::GetExeDirectory() + "\\" + "jjz.png";
+			auto path = WHSD_Tools::GetExeDirectory() + "\\" + "jjz.png";
 #endif
 
-				if (pixmap.load(QString::fromStdString(path)))
-				{
-					ui.label->setPixmap(pixmap.scaled(ui.label->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
-				}
-				std::thread td(&MainForm::DownloadPic, this);
-				td.detach();//线程分离
-				break;
+			if (pixmap.load(QString::fromStdString(path)))
+			{
+				ui.label->setPixmap(pixmap.scaled(ui.label->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 			}
+			std::thread td(&MainForm::DownloadPic, this);
+			td.detach();//线程分离
+			break;
 		}
+	}
 	}
 }
 
 void MainForm::InitUI(int model)
 {
-#ifdef _DEBUG
+#ifdef __DEBUG__
 #else
 	//this->setWindowFlags(this->windowFlags() | Qt::WindowStaysOnTopHint);
 #endif
@@ -887,35 +889,35 @@ void MainForm::InitUI(int model)
 	switch (m_cWorkModel)
 	{
 	case 0:
-		{
-			title = "单双分裂一体式";
-			ui.groupBox_5->setVisible(false);
-			break;
-		}
+	{
+		title = "单双分裂一体式";
+		ui.groupBox_5->setVisible(false);
+		break;
+	}
 	case 1:
-		{
-			title = "单双分裂分体式";
-			ui.groupBox_5->setVisible(false);
-			break;
-		}
+	{
+		title = "单双分裂分体式";
+		ui.groupBox_5->setVisible(false);
+		break;
+	}
 	case 2:
-		{
-			title = "四分裂分体式";
-			//四分裂需要隐藏的
-			//ui.groupBox_6->setVisible(false);
-			//Set4SplitNotVisible(false);
-			break;
-		}
+	{
+		title = "四分裂分体式";
+		//四分裂需要隐藏的
+		//ui.groupBox_6->setVisible(false);
+		//Set4SplitNotVisible(false);
+		break;
+	}
 	case 3:
-		{
-			title = "六八分裂";
-			//六八分裂一体式的功能是最全的
-			break;
-		}
+	{
+		title = "六八分裂";
+		//六八分裂一体式的功能是最全的
+		break;
+	}
 	default:
-		{
-			break;
-		}
+	{
+		break;
+	}
 	}
 	ui.groupBox->setTitle(QString::fromStdString(title));
 
@@ -973,25 +975,25 @@ void MainForm::InitUI(int model)
 		switch (model)
 		{
 		case -1:
-			{
-				ui.groupBox_10->setVisible(true);
-				break;
-			}
+		{
+			ui.groupBox_10->setVisible(true);
+			break;
+		}
 		case 1:
-			{
-				ui.groupBox_10->setVisible(true);
-				break;
-			}
+		{
+			ui.groupBox_10->setVisible(true);
+			break;
+		}
 		case 2:
-			{
-				ui.groupBox->setVisible(false);
-				ui.groupBox_8->setVisible(true);
-				break;
-			}
+		{
+			ui.groupBox->setVisible(false);
+			ui.groupBox_8->setVisible(true);
+			break;
+		}
 		default:
-			{
-				break;
-			}
+		{
+			break;
+		}
 		}
 	}
 	ui.comboBox_5->setCurrentIndex(1);
@@ -1052,7 +1054,7 @@ void MainForm::BindAction()
 	connect(m_pKeyEventFilter, &KeyEventFilter::rightKeyReleased, this, &MainForm::On_Right_Release);
 	connect(m_pKeyEventFilter, &KeyEventFilter::ctrlAEvent, this, &MainForm::On_LoadPic_Clicked);
 	connect(m_pKeyEventFilter, &KeyEventFilter::controlOnlyPressed, this, &MainForm::On_ControlOnly_Pressed);
-    connect(m_pKeyEventFilter, &KeyEventFilter::controlOnlyReleased, this, &MainForm::On_ControlOnly_Released);
+	connect(m_pKeyEventFilter, &KeyEventFilter::controlOnlyReleased, this, &MainForm::On_ControlOnly_Released);
 	m_pMouseEventFilter = new MouseEventFilter(this);
 	ui.label->installEventFilter(m_pMouseEventFilter);
 	connect(m_pMouseEventFilter, &MouseEventFilter::mousePositionChanged, this, &MainForm::On_ImgLabelMouseMove);
@@ -1092,10 +1094,10 @@ void MainForm::BindAction()
 	auto filter = new CloseEventFilter(this);
 	installEventFilter(filter);
 	connect(filter, &CloseEventFilter::windowAboutToClose, []
-	{
-		// 窗口即将关闭，执行自定义操作
-		_Exit(0);
-	});
+		{
+			// 窗口即将关闭，执行自定义操作
+			_Exit(0);
+		});
 
 	connect(ui.pushButton_16, &QPushButton::clicked, this, &MainForm::On_Upgrade_DoubleClick);
 	connect(ui.pushButton_25, &QPushButton::clicked, this, &MainForm::On_TurnOnCamera_Click);
@@ -1158,8 +1160,8 @@ void MainForm::BindAction()
 void MainForm::InitParam()
 {
 	//第一件事儿就是USB加密狗鉴权
-#ifdef _DEBUG
-
+#ifdef __DEBUG__
+	m_cWorkModel = 0;
 #else
 
 	m_pUSBKey = new CUSBKey();
@@ -1174,9 +1176,6 @@ void MainForm::InitParam()
 
 #endif
 
-#ifdef _DEBUG
-	m_cWorkModel = 0;
-#endif
 	m_bDownloadedPic = false;
 	m_bImgNeedReverse = false;
 	for (int i = 0; i < MaxControlBoardCount; ++i)
@@ -1188,7 +1187,7 @@ void MainForm::InitParam()
 		m_anHeartBeatCount[i] = 0;
 	}
 	m_nMouseClickCount = 0;
-	m_nMouseMode = 0;
+	m_eMouseMode = MouseMode::nNone;
 	m_nXRaySendCout = 0;
 	m_nPicIndex = 0;
 	m_bNeedChangePicInfo = false;
@@ -1226,20 +1225,20 @@ void MainForm::InitParam()
 		auto pWHSDControlBoardProtocol = m_apWHSDControlBoardProtocol[0];
 		auto pDeviceCom = m_apDeviceCom[0];
 		pDeviceCom->SetParam(m_pConfig->m_memControlBoardConfig.m_strIp.c_str(),
-		                     m_pConfig->m_memControlBoardConfig.m_wPort);
+			m_pConfig->m_memControlBoardConfig.m_wPort);
 		pDeviceCom->RegisterReadDataCallBack(std::bind(&CWHSDControlBoardProtocol::ReceiveNewData,
-		                                               pWHSDControlBoardProtocol, std::placeholders::_1,
-		                                               std::placeholders::_2));
+			pWHSDControlBoardProtocol, std::placeholders::_1,
+			std::placeholders::_2));
 		pDeviceCom->RegisterConnectStatusCallBack(std::bind(&MainForm::Callback_ComDeviceConnectionChanged, this,
-		                                                    std::placeholders::_1, std::placeholders::_2, 0));
+			std::placeholders::_1, std::placeholders::_2, 0));
 		pWHSDControlBoardProtocol->RegisterAnswerFunction(
 			std::bind(&IDeviceCom::Write, pDeviceCom, std::placeholders::_1, std::placeholders::_2));
 		pWHSDControlBoardProtocol->RegisterDeviceLog(std::bind(&CWriteLog::Write, m_pDeviceLog, std::placeholders::_1));
 		pWHSDControlBoardProtocol->RegisterDeviceHeartBeat(
 			std::bind(&MainForm::Callback_DeviceHeartBeat, this, std::placeholders::_1, 0));
 		pWHSDControlBoardProtocol->RegisterOTAStatus(std::bind(&MainForm::Callback_OTAStatus, this,
-		                                                       std::placeholders::_1,
-		                                                       std::placeholders::_2, std::placeholders::_3));
+			std::placeholders::_1,
+			std::placeholders::_2, std::placeholders::_3));
 		pWHSDControlBoardProtocol->RegisterXRaySendResult(xRayResult);
 		pDeviceCom->BeginWork();
 		pWHSDControlBoardProtocol->BeginWork();
@@ -1253,15 +1252,15 @@ void MainForm::InitParam()
 			m_pConfig->m_memControlBoardConfig.m_wDeviceHeartBeat);
 		auto pXRayControlPanelCom = m_apDeviceCom[1];
 		pXRayControlPanelCom->SetParam(m_pConfig->m_memControlBoardConfig.m_strIp2.c_str(),
-		                               m_pConfig->m_memControlBoardConfig.m_wPort2);
+			m_pConfig->m_memControlBoardConfig.m_wPort2);
 
 		auto pWHSDControlBoardProtocol2 = m_apWHSDControlBoardProtocol[1];
 		pXRayControlPanelCom->RegisterReadDataCallBack(std::bind(&CWHSDControlBoardProtocol::ReceiveNewData,
-		                                                         pWHSDControlBoardProtocol2, std::placeholders::_1,
-		                                                         std::placeholders::_2));
+			pWHSDControlBoardProtocol2, std::placeholders::_1,
+			std::placeholders::_2));
 		pXRayControlPanelCom->RegisterConnectStatusCallBack(std::bind(&MainForm::Callback_ComDeviceConnectionChanged,
-		                                                              this,
-		                                                              std::placeholders::_1, std::placeholders::_2, 1));
+			this,
+			std::placeholders::_1, std::placeholders::_2, 1));
 		pWHSDControlBoardProtocol2->RegisterDeviceHeartBeat(
 			std::bind(&MainForm::Callback_DeviceHeartBeat, this, std::placeholders::_1, 1));
 		pWHSDControlBoardProtocol2->RegisterAnswerFunction(
@@ -1292,24 +1291,24 @@ void MainForm::Callback_GetSampleBoardValue(const DeviceValue v, const double d)
 	switch (v)
 	{
 	case Temperature:
-		{
-			m_nTemperature = d;
-			break;
-		}
+	{
+		m_nTemperature = d;
+		break;
+	}
 	case Battery:
-		{
-			m_nBattery = d;
-			break;
-		}
+	{
+		m_nBattery = d;
+		break;
+	}
 	case Wifi:
-		{
-			m_nWifi = d;
-			break;
-		}
+	{
+		m_nWifi = d;
+		break;
+	}
 	default:
-		{
-			break;
-		}
+	{
+		break;
+	}
 	}
 	m_mutexDeviceInfoLock.unlock();
 }
@@ -1364,11 +1363,18 @@ bool MainForm::CheckPassword()
 void MainForm::Callback_ShowImgOnLabel_2()
 {
 	auto m_vector_LastImgBuffer = m_memSDRaw.GetOriginalRawData();
+	// 获取图像的 均值和标准差
+	int m_nMean, m_nStdDev;
+	m_pImageProcess->calculateMeanAndStdDev(m_vector_LastImgBuffer, m_nMean, m_nStdDev);
+	ui.horizontalSlider->setValue(m_nStdDev);
+	ui.horizontalSlider_2->setValue(m_nMean);
+
+
 	QImage image(m_vector_LastImgBuffer.data(), m_memSDRaw.m_wPicWidth, m_memSDRaw.m_wPicHeight,
-	             m_memSDRaw.m_wPicWidth * sizeof(uint16_t),
-	             QImage::Format_Grayscale16);
+		m_memSDRaw.m_wPicWidth * sizeof(uint16_t),
+		QImage::Format_Grayscale16);
 	m_memMainQImage = image.convertToFormat(QImage::Format_Grayscale16).scaled(ui.label->size(), Qt::KeepAspectRatio,
-	                                                                           Qt::SmoothTransformation);
+		Qt::SmoothTransformation);
 	On_SliderValueChanged();
 	//PaintImg();
 }
@@ -1376,10 +1382,10 @@ void MainForm::Callback_ShowImgOnLabel_2()
 void MainForm::ShowImgOnLabel()
 {
 	QImage image(m_vecNeedShowBuffer.data(), m_memSDRaw.m_wPicWidth, m_memSDRaw.m_wPicHeight,
-	             m_memSDRaw.m_wPicWidth * sizeof(uint8_t),
-	             QImage::Format_Grayscale8);
+		m_memSDRaw.m_wPicWidth * sizeof(uint8_t),
+		QImage::Format_Grayscale8);
 	m_memMainQImage = image.convertToFormat(QImage::Format_Grayscale16).scaled(ui.label->size(), Qt::KeepAspectRatio,
-	                                                                           Qt::SmoothTransformation);
+		Qt::SmoothTransformation);
 	PaintImg();
 }
 
@@ -1449,7 +1455,7 @@ void MainForm::On_RecoverImgTag_Click()
 
 void MainForm::On_deleteTag_Click()
 {
-	m_nMouseMode = 8;
+	m_eMouseMode = MouseMode::DeleteTag;
 	ClearPicOpt();
 	PaintImg();
 }
@@ -1471,9 +1477,9 @@ void MainForm::On_SaveDealedPic()
 		// 获取当前日期时间
 
 
-		for (const auto & p: m_mapDealedPic)
+		for (const auto& p : m_mapDealedPic)
 		{
-			std::string fileName = path +"_"+ std::to_string(p.first) + ".png";
+			std::string fileName = path + "_" + std::to_string(p.first) + ".png";
 			WHSD_Tools::SaveDataToFile((uint8_t*)p.second.data(), p.second.size(), fileName.c_str());
 		}
 		if (!m_mapDealedPic.empty())
@@ -1568,14 +1574,14 @@ void MainForm::On_SliderValueChanged()
 		auto m_vector_LastImgBuffer = m_memSDRaw.GetOriginalRawData();
 		auto m_vector_ChangedImgBuffer2 = m_memSDRaw.GetTempRawData();
 		if (m_pImageProcess->ImageProcess1(m_memSDRaw.m_wPicWidth, m_memSDRaw.m_wPicHeight,
-		                                   m_vector_LastImgBuffer.data(),
-		                                   &m_memImageProcessParam1, &m_vector_ChangedImgBuffer2))
+			m_vector_LastImgBuffer.data(),
+			&m_memImageProcessParam1, &m_vector_ChangedImgBuffer2))
 		{
 			m_memSDRaw.SetTempRawData(&m_vector_ChangedImgBuffer2);
 			if (m_pImageProcess->BrightAndContrastProcess(m_memSDRaw.m_wPicWidth, m_memSDRaw.m_wPicHeight,
-			                                              reinterpret_cast<uint16_t*>(m_vector_ChangedImgBuffer2.
-				                                              data()),
-			                                              &m_memImageProcessParam2, &m_vecNeedShowBuffer))
+				reinterpret_cast<uint16_t*>(m_vector_ChangedImgBuffer2.
+					data()),
+				&m_memImageProcessParam2, &m_vecNeedShowBuffer))
 			{
 			}
 		}
@@ -1597,8 +1603,8 @@ void MainForm::On_SliderValueChanged2(int value)
 		std::lock_guard<std::mutex> g(m_mutexLastImgMutex);
 		auto m_vector_ChangedImgBuffer2 = m_memSDRaw.GetTempRawData();
 		m_pImageProcess->BrightAndContrastProcess(m_memSDRaw.m_wPicWidth, m_memSDRaw.m_wPicHeight,
-		                                          (uint16_t*)m_vector_ChangedImgBuffer2.data(),
-		                                          &m_memImageProcessParam2, &m_vecNeedShowBuffer);
+			(uint16_t*)m_vector_ChangedImgBuffer2.data(),
+			&m_memImageProcessParam2, &m_vecNeedShowBuffer);
 	}
 	ShowImgOnLabel();
 	ui.lineEdit_3->setText(QString::number(cw));
@@ -1712,7 +1718,7 @@ void MainForm::On_UploadAllPic_Click2()
 		return;
 	}
 	auto [t1, t2, t3] = HttpClient::Get(m_pConfig->m_memTimsConfig.m_strGetGuidInfo,
-	                                    {{"sampleId", m_strWorkGuid}});
+		{ {"sampleId", m_strWorkGuid} });
 	QString clampName;
 	if (t1)
 	{
@@ -1759,7 +1765,7 @@ void MainForm::On_UploadAllPic_Click2()
 	QJsonDocument doc(jsonObj);
 	bool success = false;
 	auto [t4, t5, t6] = HttpClient::Post(m_pConfig->m_memTimsConfig.m_strUploadPic, doc.toJson(),
-	                                     "application/json", {}, 20000);
+		"application/json", {}, 20000);
 	if (t4)
 	{
 		auto jsonStr = QString::fromStdString(t2);
@@ -1790,7 +1796,7 @@ void MainForm::On_UploadAllPic_Click2()
 void MainForm::On_UploadAllPic_Click()
 {
 	auto [t1, t2, t3] = HttpClient::Get(m_pConfig->m_memTimsConfig.m_strGetGuidInfo,
-	                                    {{"sampleId", m_strWorkGuid}});
+		{ {"sampleId", m_strWorkGuid} });
 	QString clampName;
 	if (t1)
 	{
@@ -1840,7 +1846,7 @@ void MainForm::On_UploadAllPic_Click()
 	QJsonDocument doc(jsonObj);
 	bool success = false;
 	auto [t4, t5, t6] = HttpClient::Post(m_pConfig->m_memTimsConfig.m_strUploadPic, doc.toJson(),
-	                                     "application/json", {}, 20000);
+		"application/json", {}, 20000);
 	if (t4)
 	{
 		auto jsonStr = QString::fromStdString(t2);
@@ -1888,28 +1894,28 @@ void MainForm::On_SavePic_Click()
 {
 	// 将 QImage 直接转换为 PNG 格式的 std::vector<uint8_t>（无中间文件）
 	auto imageToPngVector = [](const QImage& image)-> std::vector<uint8_t>
-	{
-		// 1. 创建内存缓冲区（QBuffer）用于存储 PNG 数据
-		QByteArray byteArray;
-		QBuffer buffer(&byteArray);
-		if (!buffer.open(QIODevice::WriteOnly))
 		{
-			return {};
-		}
+			// 1. 创建内存缓冲区（QBuffer）用于存储 PNG 数据
+			QByteArray byteArray;
+			QBuffer buffer(&byteArray);
+			if (!buffer.open(QIODevice::WriteOnly))
+			{
+				return {};
+			}
 
-		// 2. 使用 QImageWriter 编码为 PNG 格式
-		QImageWriter writer(&buffer, "PNG"); // 第二个参数指定格式为 PNG
-		if (!writer.write(image))
-		{
+			// 2. 使用 QImageWriter 编码为 PNG 格式
+			QImageWriter writer(&buffer, "PNG"); // 第二个参数指定格式为 PNG
+			if (!writer.write(image))
+			{
+				buffer.close();
+				return {};
+			}
+
+			// 3. 关闭缓冲区并获取数据
 			buffer.close();
-			return {};
-		}
 
-		// 3. 关闭缓冲区并获取数据
-		buffer.close();
-
-		return std::vector<uint8_t>(byteArray.begin(), byteArray.end());
-	};
+			return std::vector<uint8_t>(byteArray.begin(), byteArray.end());
+		};
 	m_mapDealedPic[m_nPicIndex] = imageToPngVector(m_memShowedImg);
 	ui.label_35->setStyleSheet("color:lightgreen");
 	//ReadPicFromMem(m_nPicIndex);
@@ -1957,29 +1963,29 @@ QImage MainForm::PaintTag()
 		switch (s.m_nTagType)
 		{
 		case 0:
-			{
-				painter2.drawLine(s.m_nStartX, s.m_nStartY, s.m_nEndX, s.m_nEndY);
-				break;
-			}
+		{
+			painter2.drawLine(s.m_nStartX, s.m_nStartY, s.m_nEndX, s.m_nEndY);
+			break;
+		}
 		case 1:
-			{
-				painter2.drawRect(std::min(s.m_nStartX, s.m_nEndX), std::min(s.m_nStartY, s.m_nEndY),
-				                  std::abs(s.m_nStartX - s.m_nEndX), std::abs(s.m_nStartY - s.m_nEndY));
-				break;
-			}
+		{
+			painter2.drawRect(std::min(s.m_nStartX, s.m_nEndX), std::min(s.m_nStartY, s.m_nEndY),
+				std::abs(s.m_nStartX - s.m_nEndX), std::abs(s.m_nStartY - s.m_nEndY));
+			break;
+		}
 		case 2:
-			{
-				painter2.drawEllipse(std::min(s.m_nStartX, s.m_nEndX), std::min(s.m_nStartY, s.m_nEndY),
-				                     std::abs(s.m_nStartX - s.m_nEndX), std::abs(s.m_nStartY - s.m_nEndY));
-				break;
-			}
+		{
+			painter2.drawEllipse(std::min(s.m_nStartX, s.m_nEndX), std::min(s.m_nStartY, s.m_nEndY),
+				std::abs(s.m_nStartX - s.m_nEndX), std::abs(s.m_nStartY - s.m_nEndY));
+			break;
+		}
 		case 3:
+		{
+			painter2.drawLine(s.m_nStartX, s.m_nStartY, s.m_nEndX, s.m_nEndY);
+			if (s.m_nEndX2 != 0 && s.m_nEndY2 != 0)
 			{
-				painter2.drawLine(s.m_nStartX, s.m_nStartY, s.m_nEndX, s.m_nEndY);
-				if (s.m_nEndX2 != 0 && s.m_nEndY2 != 0)
-				{
-					painter2.drawLine(s.m_nEndX2, s.m_nEndY2, s.m_nEndX, s.m_nEndY);
-					auto calculateAngleABC = [](double ax, double ay, double bx, double by, double cx, double cy)
+				painter2.drawLine(s.m_nEndX2, s.m_nEndY2, s.m_nEndX, s.m_nEndY);
+				auto calculateAngleABC = [](double ax, double ay, double bx, double by, double cx, double cy)
 					{
 						// 计算向量BA和向量BC
 						const double ba_x = ax - bx; // 向量BA = A - B
@@ -2011,33 +2017,33 @@ QImage MainForm::PaintTag()
 						// 由于acos的特性，角度自然在0°到180°之间，这里再次确认
 						return std::clamp(angle_deg, 0.0, 180.0);
 					};
-					auto jd = calculateAngleABC(s.m_nStartX, s.m_nStartY, s.m_nEndX, s.m_nEndY, s.m_nEndX2, s.m_nEndY2);
+				auto jd = calculateAngleABC(s.m_nStartX, s.m_nStartY, s.m_nEndX, s.m_nEndY, s.m_nEndX2, s.m_nEndY2);
 
-					std::stringstream ss;
-					ss << "angel:" << jd << "°";
+				std::stringstream ss;
+				ss << "angel:" << jd << "°";
 
-					painter2.translate(s.m_nStartX, s.m_nStartX);
-					painter2.rotate(0 - (m_nRotate % 4) * 90); // 平移到绘制起点（旋转中心）
-					painter2.drawText(0, 0, ss.str().c_str());
-					painter2.restore();
-				}
-				break;
-			}
-		case 4:
-			{
 				painter2.translate(s.m_nStartX, s.m_nStartX);
 				painter2.rotate(0 - (m_nRotate % 4) * 90); // 平移到绘制起点（旋转中心）
-				painter2.drawText(0, 0, s.m_strContent.c_str());
+				painter2.drawText(0, 0, ss.str().c_str());
 				painter2.restore();
-				break;
 			}
+			break;
+		}
+		case 4:
+		{
+			painter2.translate(s.m_nStartX, s.m_nStartX);
+			painter2.rotate(0 - (m_nRotate % 4) * 90); // 平移到绘制起点（旋转中心）
+			painter2.drawText(0, 0, s.m_strContent.c_str());
+			painter2.restore();
+			break;
+		}
 		case 5:
+		{
+			painter2.drawLine(s.m_nStartX, s.m_nStartY, s.m_nEndX, s.m_nEndY);
+			if (s.m_nEndX2 != 0 && s.m_nEndY2 != 0)
 			{
-				painter2.drawLine(s.m_nStartX, s.m_nStartY, s.m_nEndX, s.m_nEndY);
-				if (s.m_nEndX2 != 0 && s.m_nEndY2 != 0)
-				{
-					auto findPerpendicularFoot = [](double ax, double ay, double bx, double by,
-					                                double cx, double cy, double* dx, double* dy)
+				auto findPerpendicularFoot = [](double ax, double ay, double bx, double by,
+					double cx, double cy, double* dx, double* dy)
 					{
 						// 计算向量AB和AC
 						double ab_x = bx - ax;
@@ -2067,7 +2073,7 @@ QImage MainForm::PaintTag()
 						*dy = ay + t * ab_y;
 					};
 
-					auto calculateDistance = [](double ax, double ay, double bx, double by)
+				auto calculateDistance = [](double ax, double ay, double bx, double by)
 					{
 						// 计算x坐标差的平方
 						double dx_squared = (bx - ax) * (bx - ax);
@@ -2077,31 +2083,31 @@ QImage MainForm::PaintTag()
 						return std::sqrt(dx_squared + dy_squared);
 					};
 
-					double dx, dy;
-					findPerpendicularFoot(s.m_nStartX, s.m_nStartY, s.m_nEndX, s.m_nEndY, s.m_nEndX2, s.m_nEndY2, &dx,
-					                      &dy);
+				double dx, dy;
+				findPerpendicularFoot(s.m_nStartX, s.m_nStartY, s.m_nEndX, s.m_nEndY, s.m_nEndX2, s.m_nEndY2, &dx,
+					&dy);
 
-					painter2.drawLine(dx, dy, s.m_nEndX2, s.m_nEndY2);
+				painter2.drawLine(dx, dy, s.m_nEndX2, s.m_nEndY2);
 
-					auto len = calculateDistance(s.m_nStartX, s.m_nStartY, s.m_nEndX, s.m_nEndY);
-					auto hei = calculateDistance(dx, dy, s.m_nEndX2, s.m_nEndY2);
+				auto len = calculateDistance(s.m_nStartX, s.m_nStartY, s.m_nEndX, s.m_nEndY);
+				auto hei = calculateDistance(dx, dy, s.m_nEndX2, s.m_nEndY2);
 
-					std::stringstream ss;
-					ss << "L:" << len << ",H:" << hei;
+				std::stringstream ss;
+				ss << "L:" << len << ",H:" << hei;
 
-					painter2.translate(s.m_nEndX2, s.m_nEndY2);
-					painter2.rotate(0 - (m_nRotate % 4) * 90); // 平移到绘制起点（旋转中心）
-					painter2.drawText(5, 5, ss.str().c_str());
-					painter2.restore();
-				}
-				break;
+				painter2.translate(s.m_nEndX2, s.m_nEndY2);
+				painter2.rotate(0 - (m_nRotate % 4) * 90); // 平移到绘制起点（旋转中心）
+				painter2.drawText(5, 5, ss.str().c_str());
+				painter2.restore();
 			}
+			break;
+		}
 		}
 	}
 	if (!m_memCImageCapture.m_bSaved)
 	{
 		painter2.drawRect(m_memCImageCapture.m_nPosX, m_memCImageCapture.m_nPosY, m_memCImageCapture.m_nPicW,
-		                  m_memCImageCapture.m_nPicH);
+			m_memCImageCapture.m_nPicH);
 	}
 	painter2.end();
 	return q;
@@ -2146,59 +2152,59 @@ void MainForm::PaintImg()
 		{
 			//截图
 			auto stretchImageKeepRatio = [](QImage& a, int starX, int starY, int width, int height)
-			{
-				// 确保源区域有效
-				if (starX < 0 || starY < 0 || width <= 0 || height <= 0 ||
-					starX + width > a.width() || starY + height > a.height())
 				{
-					return; // 无效区域，直接返回
-				}
+					// 确保源区域有效
+					if (starX < 0 || starY < 0 || width <= 0 || height <= 0 ||
+						starX + width > a.width() || starY + height > a.height())
+					{
+						return; // 无效区域，直接返回
+					}
 
-				// 提取指定区域
-				QImage sourceRegion = a.copy(starX, starY, width, height);
+					// 提取指定区域
+					QImage sourceRegion = a.copy(starX, starY, width, height);
 
-				// 计算源区域的宽高比
-				qreal aspectRatio = static_cast<qreal>(width) / height;
+					// 计算源区域的宽高比
+					qreal aspectRatio = static_cast<qreal>(width) / height;
 
-				// 获取目标图像a的尺寸
-				int targetWidth = a.width();
-				int targetHeight = a.height();
+					// 获取目标图像a的尺寸
+					int targetWidth = a.width();
+					int targetHeight = a.height();
 
-				// 计算按比例拉伸后的尺寸（完全填充目标区域，保持比例）
-				int drawWidth, drawHeight;
+					// 计算按比例拉伸后的尺寸（完全填充目标区域，保持比例）
+					int drawWidth, drawHeight;
 
-				if (static_cast<qreal>(targetWidth) / targetHeight > aspectRatio)
-				{
-					// 目标区域更宽，按高度缩放
-					drawHeight = targetHeight;
-					drawWidth = static_cast<int>(drawHeight * aspectRatio);
-				}
-				else
-				{
-					// 目标区域更高，按宽度缩放
-					drawWidth = targetWidth;
-					drawHeight = static_cast<int>(drawWidth / aspectRatio);
-				}
+					if (static_cast<qreal>(targetWidth) / targetHeight > aspectRatio)
+					{
+						// 目标区域更宽，按高度缩放
+						drawHeight = targetHeight;
+						drawWidth = static_cast<int>(drawHeight * aspectRatio);
+					}
+					else
+					{
+						// 目标区域更高，按宽度缩放
+						drawWidth = targetWidth;
+						drawHeight = static_cast<int>(drawWidth / aspectRatio);
+					}
 
-				// 计算居中绘制的位置（可选，也可根据需要调整位置）
-				int x = (targetWidth - drawWidth) / 2;
-				int y = (targetHeight - drawHeight) / 2;
+					// 计算居中绘制的位置（可选，也可根据需要调整位置）
+					int x = (targetWidth - drawWidth) / 2;
+					int y = (targetHeight - drawHeight) / 2;
 
-				a.fill(Qt::transparent);
-				// 创建QPainter绘制
-				QPainter painter23(&a);
-				painter23.setRenderHint(QPainter::SmoothPixmapTransform, true); // 平滑缩放
+					a.fill(Qt::transparent);
+					// 创建QPainter绘制
+					QPainter painter23(&a);
+					painter23.setRenderHint(QPainter::SmoothPixmapTransform, true); // 平滑缩放
 
-				// 清空目标图像（可选，根据需求决定是否保留背景）
-				painter23.fillRect(a.rect(), Qt::transparent); // 透明背景，也可改为其他颜色
+					// 清空目标图像（可选，根据需求决定是否保留背景）
+					painter23.fillRect(a.rect(), Qt::transparent); // 透明背景，也可改为其他颜色
 
-				// 拉伸绘制（保持比例）
-				painter23.drawImage(QRect(x, y, drawWidth, drawHeight), sourceRegion);
+					// 拉伸绘制（保持比例）
+					painter23.drawImage(QRect(x, y, drawWidth, drawHeight), sourceRegion);
 
-				painter23.end();
-			};
+					painter23.end();
+				};
 			stretchImageKeepRatio(memMainQImage, m_memCImageCapture.m_nPosX, m_memCImageCapture.m_nPosY,
-			                      m_memCImageCapture.m_nPicW, m_memCImageCapture.m_nPicH);
+				m_memCImageCapture.m_nPicW, m_memCImageCapture.m_nPicH);
 		}
 		auto lbw = labelSize.width();
 		auto lbh = labelSize.height();
@@ -2230,29 +2236,29 @@ void MainForm::UpdateMotorRunStatus(const CDeviceHeartBeat& c)
 	{
 	case 0:
 	case 3:
-		{
-			strWalkingMotorStatus = "停止";
-			break;
-		}
+	{
+		strWalkingMotorStatus = "停止";
+		break;
+	}
 	case 1:
-		{
-			strWalkingMotorStatus = "右运行";
-			break;
-		}
+	{
+		strWalkingMotorStatus = "右运行";
+		break;
+	}
 	case 2:
-		{
-			strWalkingMotorStatus = "左运行";
-			break;
-		}
+	{
+		strWalkingMotorStatus = "左运行";
+		break;
+	}
 	case 4:
-		{
-			strWalkingMotorStatus = "故障";
-			break;
-		}
+	{
+		strWalkingMotorStatus = "故障";
+		break;
+	}
 	default:
-		{
-			break;
-		}
+	{
+		break;
+	}
 	}
 	ui.label_19->setText(QString::fromStdString(strWalkingMotorStatus));
 
@@ -2262,29 +2268,29 @@ void MainForm::UpdateMotorRunStatus(const CDeviceHeartBeat& c)
 	{
 	case 0:
 	case 3:
-		{
-			strWalkingMotorStatus = "停止";
-			break;
-		}
+	{
+		strWalkingMotorStatus = "停止";
+		break;
+	}
 	case 1:
-		{
-			strWalkingMotorStatus = "上运行";
-			break;
-		}
+	{
+		strWalkingMotorStatus = "上运行";
+		break;
+	}
 	case 2:
-		{
-			strWalkingMotorStatus = "下运行";
-			break;
-		}
+	{
+		strWalkingMotorStatus = "下运行";
+		break;
+	}
 	case 4:
-		{
-			strWalkingMotorStatus = "故障";
-			break;
-		}
+	{
+		strWalkingMotorStatus = "故障";
+		break;
+	}
 	default:
-		{
-			break;
-		}
+	{
+		break;
+	}
 	}
 
 	ui.label_20->setText(QString::fromStdString(strWalkingMotorStatus));
@@ -2295,29 +2301,29 @@ void MainForm::UpdateMotorRunStatus(const CDeviceHeartBeat& c)
 	{
 	case 0:
 	case 3:
-		{
-			strWalkingMotorStatus = "停止";
-			break;
-		}
+	{
+		strWalkingMotorStatus = "停止";
+		break;
+	}
 	case 1:
-		{
-			strWalkingMotorStatus = "关闭中";
-			break;
-		}
+	{
+		strWalkingMotorStatus = "关闭中";
+		break;
+	}
 	case 2:
-		{
-			strWalkingMotorStatus = "开启中";
-			break;
-		}
+	{
+		strWalkingMotorStatus = "开启中";
+		break;
+	}
 	case 4:
-		{
-			strWalkingMotorStatus = "故障";
-			break;
-		}
+	{
+		strWalkingMotorStatus = "故障";
+		break;
+	}
 	default:
-		{
-			break;
-		}
+	{
+		break;
+	}
 	}
 
 	ui.label_22->setText(QString::fromStdString(strWalkingMotorStatus));
@@ -2328,29 +2334,29 @@ void MainForm::UpdateMotorRunStatus(const CDeviceHeartBeat& c)
 	{
 	case 0:
 	case 3:
-		{
-			strWalkingMotorStatus = "停止";
-			break;
-		}
+	{
+		strWalkingMotorStatus = "停止";
+		break;
+	}
 	case 1:
-		{
-			strWalkingMotorStatus = "水平打开中";
-			break;
-		}
+	{
+		strWalkingMotorStatus = "水平打开中";
+		break;
+	}
 	case 2:
-		{
-			strWalkingMotorStatus = "垂直收拢中";
-			break;
-		}
+	{
+		strWalkingMotorStatus = "垂直收拢中";
+		break;
+	}
 	case 4:
-		{
-			strWalkingMotorStatus = "故障";
-			break;
-		}
+	{
+		strWalkingMotorStatus = "故障";
+		break;
+	}
 	default:
-		{
-			break;
-		}
+	{
+		break;
+	}
 	}
 
 	ui.label_23->setText(QString::fromStdString(strWalkingMotorStatus));
@@ -2388,37 +2394,37 @@ void MainForm::UpdateOTAStatus()
 	switch (m_cOTAStatus)
 	{
 	case 0:
-		{
-			lb->setText("");
-			break;
-		}
+	{
+		lb->setText("");
+		break;
+	}
 	case 1:
-		{
-			lb->setText("开始升级固件");
-			break;
-		}
+	{
+		lb->setText("开始升级固件");
+		break;
+	}
 	case 2:
-		{
-			std::stringstream ss;
-			ss << "升级中：" << m_nOTAPackIndex << "/" << m_nOTAAllPackNumber;
-			lb->setText(QString::fromStdString(ss.str()));
-			break;
-		}
+	{
+		std::stringstream ss;
+		ss << "升级中：" << m_nOTAPackIndex << "/" << m_nOTAAllPackNumber;
+		lb->setText(QString::fromStdString(ss.str()));
+		break;
+	}
 	case 3:
-		{
-			lb->setText("升级完成");
-			break;
-		}
+	{
+		lb->setText("升级完成");
+		break;
+	}
 	case 255:
-		{
-			lb->setText("升级失败");
-			break;
-		}
+	{
+		lb->setText("升级失败");
+		break;
+	}
 	default:
-		{
-			lb->setText("");
-			break;
-		}
+	{
+		lb->setText("");
+		break;
+	}
 	}
 }
 
@@ -2481,8 +2487,8 @@ void MainForm::DownloadPic()
 {
 	//return;
 	auto [t1, t2, t3] = HttpClient::Get(m_pConfig->m_memTimsConfig.m_strDownloadPic,
-	                                    {{"sampleId", m_strWorkGuid}}, {},
-	                                    m_pConfig->m_memTimsConfig.m_nDownloadTimeOut);
+		{ {"sampleId", m_strWorkGuid} }, {},
+		m_pConfig->m_memTimsConfig.m_nDownloadTimeOut);
 	bool loadSuccess = false;
 	if (t1)
 	{
@@ -2504,7 +2510,7 @@ void MainForm::DownloadPic()
 					m_nLoadedMapType = result["ImgType"].toInt();
 					auto imgsArray = result["Imgs"].toArray();
 					auto imgCount = result["ImgCount"].toInt();
-					if (imgCount>0)
+					if (imgCount > 0)
 					{
 						auto path = WHSD_Tools::GetGuidPath(m_strWorkGuid, "temp");
 						WHSD_Tools::DeleteDirectoryContents(path);
@@ -2602,27 +2608,27 @@ void MainForm::On_SaveRaw_Clicked()
 void MainForm::On_SavePNG_Clicked()
 {
 	auto isImageValid = [](const QImage& image)
-	{
-		// 检查图像是否为空
-		if (image.isNull())
 		{
-			return false;
-		}
+			// 检查图像是否为空
+			if (image.isNull())
+			{
+				return false;
+			}
 
-		// 检查图像尺寸是否有效
-		if (image.width() <= 0 || image.height() <= 0)
-		{
-			return false;
-		}
+			// 检查图像尺寸是否有效
+			if (image.width() <= 0 || image.height() <= 0)
+			{
+				return false;
+			}
 
-		// 检查图像格式是否有效
-		if (image.format() == QImage::Format_Invalid)
-		{
-			return false;
-		}
+			// 检查图像格式是否有效
+			if (image.format() == QImage::Format_Invalid)
+			{
+				return false;
+			}
 
-		return true;
-	};
+			return true;
+		};
 	if (!isImageValid(m_memDealedImg))
 	{
 		MY_WARNING("无图片！");
@@ -2708,21 +2714,21 @@ void MainForm::On_Enhance3()
 
 void MainForm::On_DrawLine_Click()
 {
-	m_nMouseMode = 1;
+	m_eMouseMode = MouseMode::DrawLine;
 	ClearPicOpt();
 	PaintImg();
 }
 
 void MainForm::On_Rect_Click()
 {
-	m_nMouseMode = 2;
+	m_eMouseMode = MouseMode::Rect;
 	ClearPicOpt();
 	PaintImg();
 }
 
 void MainForm::On_Ellipse_Click()
 {
-	m_nMouseMode = 3;
+	m_eMouseMode = MouseMode::Ellipse;
 	ClearPicOpt();
 	PaintImg();
 }
@@ -2740,28 +2746,28 @@ void MainForm::On_MoveLast_Click()
 
 void MainForm::On_InputText_Click()
 {
-	m_nMouseMode = 5;
+	m_eMouseMode = MouseMode::InputText;
 	ClearPicOpt();
 	PaintImg();
 }
 
 void MainForm::On_Curvature_Click()
 {
-	m_nMouseMode = 6;
+	m_eMouseMode = MouseMode::Curvature;
 	ClearPicOpt();
 	PaintImg();
 }
 
 void MainForm::On_Angle_Click()
 {
-	m_nMouseMode = 4;
+	m_eMouseMode = MouseMode::Angle;
 	ClearPicOpt();
 	PaintImg();
 }
 
 void MainForm::On_Capture_Click()
 {
-	m_nMouseMode = 7;
+	m_eMouseMode = MouseMode::Capture;
 	ClearPicOpt();
 	PaintImg();
 }
@@ -2812,29 +2818,29 @@ void MainForm::ReadPicFromMem(int index)
 			if (!tp->second.empty())
 			{
 				auto pngVectorToImage = [](const std::vector<uint8_t>& pngData) -> QImage
-				{
-					// 1. 将 vector 转换为 QByteArray（Qt 的字节容器）
-					QImage outImage;
-					QByteArray dataArray(
-						reinterpret_cast<const char*>(pngData.data()), // 转换为 const char*
-						pngData.size() // 数据长度
-					);
-
-					// 2. 从字节数组加载 PNG 图像
-					bool loaded = outImage.loadFromData(
-						reinterpret_cast<const uchar*>(dataArray.constData()), // 转换为 uchar*（QImage 要求）
-						dataArray.size() // 数据长度
-					);
-
-					if (!loaded)
 					{
-						//qDebug() << "加载 PNG 失败！数据可能不完整或格式错误。";
-						return QImage();
-					}
+						// 1. 将 vector 转换为 QByteArray（Qt 的字节容器）
+						QImage outImage;
+						QByteArray dataArray(
+							reinterpret_cast<const char*>(pngData.data()), // 转换为 const char*
+							pngData.size() // 数据长度
+						);
 
-					//qDebug() << "PNG 数据成功转换为 QImage，尺寸：" << outImage.size();
-					return outImage;
-				};
+						// 2. 从字节数组加载 PNG 图像
+						bool loaded = outImage.loadFromData(
+							reinterpret_cast<const uchar*>(dataArray.constData()), // 转换为 uchar*（QImage 要求）
+							dataArray.size() // 数据长度
+						);
+
+						if (!loaded)
+						{
+							//qDebug() << "加载 PNG 失败！数据可能不完整或格式错误。";
+							return QImage();
+						}
+
+						//qDebug() << "PNG 数据成功转换为 QImage，尺寸：" << outImage.size();
+						return outImage;
+					};
 				m_memMainQImage = pngVectorToImage(tp->second);
 				PaintImg();
 				ui.label_36->setStyleSheet("color:lightgreen");
@@ -3032,6 +3038,26 @@ void MainForm::On_LoadPic_Clicked()
 					{
 						m_memSDRaw.m_wPicHeight = value.m_nRawFileHeight;
 						m_memSDRaw.m_wPicWidth = value.m_nRawFileWidth;
+#ifdef __DEBUG__
+						//将图像保存到cv::Mat
+						std::vector<uint16_t> data_16bit;
+						data_16bit.reserve(m_memSDRaw.m_wPicWidth * m_memSDRaw.m_wPicHeight);
+						for (size_t i = 0; i < buf.size(); i += 2)
+						{
+							// 小端模式：低字节在前，高字节在后
+							uint16_t pixel_value = static_cast<uint16_t>(buf[i]) |
+								(static_cast<uint16_t>(buf[i + 1]) << 8);
+							data_16bit.push_back(pixel_value);
+						}
+						// 3. 构建16位单通道cv::Mat
+						// CV_16UC1 表示：16位无符号整型、单通道
+						cv::Mat img(m_memSDRaw.m_wPicHeight, m_memSDRaw.m_wPicWidth, CV_16UC1);
+						// 4. 将转换后的数据拷贝到Mat中 (使用memcpy保证效率)
+						memcpy(img.data, data_16bit.data(), data_16bit.size() * sizeof(uint16_t));
+						utf8_str.erase(utf8_str.length() - 3, 3);
+						utf8_str += "tif";
+						cv::imwrite(utf8_str, img);
+#endif
 						m_memSDRaw.SetOriginalRawData(&buf);
 						m_memSDRaw.SetTempRawData(&buf);
 						this->On_Pic_Receive();
@@ -3076,13 +3102,13 @@ void MainForm::On_LoadPic_Clicked()
 void MainForm::On_ControlOnly_Pressed()
 {
 	m_bControlPressed = true;
-	std::cout<< "ControlOnly_Pressed" << std::endl;
+	std::cout << "ControlOnly_Pressed" << std::endl;
 }
 
 void MainForm::On_ControlOnly_Released()
 {
-    m_bControlPressed = false;
-	std::cout<< "ControlOnly_Released" << std::endl;
+	m_bControlPressed = false;
+	std::cout << "ControlOnly_Released" << std::endl;
 }
 
 void MainForm::On_SampleBoard_Change_Clicked1()

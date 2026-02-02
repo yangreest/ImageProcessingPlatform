@@ -3,7 +3,7 @@
 #include <thread>
 #include <windows.h>
 
-#ifdef _DEBUG
+#ifdef __DEBUG__
 #include <iostream>
 #include <sstream>
 #endif
@@ -198,7 +198,7 @@ void CDRTECH::CallbackMessageProcess_Inner(int _nMsgType, char* _pMsg)
 			// Get status from _pMsg parameter.
 			int ReadyState = *(int*)_pMsg; // convert to int.
 
-#ifdef _DEBUG
+#ifdef __DEBUG__
 			std::cout << "IDC_READY_STATUS:" << ReadyState << std::endl;
 #endif
 			switch (ReadyState)
@@ -228,7 +228,7 @@ void CDRTECH::CallbackMessageProcess_Inner(int _nMsgType, char* _pMsg)
 	}
 	case IDC_DEVICE_READY:
 	{
-#ifdef _DEBUG
+#ifdef __DEBUG__
 		std::cout << "IDC_DEVICE_READY" << std::endl;
 #endif
 		m_function_DeviceConnectStatusCallBack(DeviceConnectStatus::Connected);

@@ -2,7 +2,7 @@
 #include "PZMedical.h"
 #include "NetCom.h"
 
-#ifdef _DEBUG
+#ifdef __DEBUG__
 #include <iostream>
 #include <sstream>
 #endif
@@ -157,7 +157,7 @@ BOOL CPZMedical::FuncExposeCallBack(char nEvent)
 int CPZMedical::FuncLinkCallBack(char nEvent)
 {
 	m_bLinked = true;
-#ifdef _DEBUG
+#ifdef __DEBUG__
 	std::cout << "PZ FuncLinkCallBack" << std::endl;
 #endif
 	CHAR FPSnOpened[32] = { 0 };
@@ -190,7 +190,7 @@ int CPZMedical::FuncBreakCallBack(char nEvent)
 {
 	m_bLinked = false;
 	m_nInitStatus = 0;
-#ifdef _DEBUG
+#ifdef __DEBUG__
 	std::cout << "PZ FuncBreakCallBack" << std::endl;
 #endif
 
@@ -209,7 +209,7 @@ int CPZMedical::FuncBreakCallBack(char nEvent)
 
 int CPZMedical::FuncImageCallBack(char nEvent)
 {
-#ifdef _DEBUG
+#ifdef __DEBUG__
 	std::cout << "PZ FuncImageCallBack" << std::endl;
 #endif
 	TImageMode tImageMode;
@@ -231,7 +231,7 @@ int CPZMedical::FuncImageCallBack(char nEvent)
 
 int CPZMedical::FuncHeartBeatCallBack(char nEvent)
 {
-#ifdef _DEBUG
+#ifdef __DEBUG__
 	//COM_HstAcq();
 	std::stringstream ss;
 	std::cout << "PZ FuncHeartBeatCallBack" << std::endl;
@@ -291,7 +291,7 @@ int CPZMedical::FuncHeartBeatCallBack(char nEvent)
 
 int CPZMedical::FuncReadyCallBack(char nEvent)
 {
-#ifdef _DEBUG
+#ifdef __DEBUG__
 	std::cout << "PZ FuncReadyCallBack" << std::endl;
 #endif
 	//设备已就绪

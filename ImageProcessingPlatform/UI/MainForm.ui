@@ -805,7 +805,7 @@ QGroupBox  {
       <item>
        <widget class="QLabel" name="label">
         <property name="styleSheet">
-         <string notr="true">background-color: #FFFFFF;</string>
+         <string notr="true">background-color: #888888;</string>
         </property>
         <property name="text">
          <string>.</string>
@@ -1907,7 +1907,7 @@ QPushButton:hover {
           <item>
            <widget class="QSlider" name="horizontalSlider">
             <property name="maximum">
-             <number>40000</number>
+             <number>65535</number>
             </property>
             <property name="value">
              <number>14483</number>
@@ -1938,7 +1938,7 @@ QPushButton:hover {
           <item>
            <widget class="QSlider" name="horizontalSlider_2">
             <property name="maximum">
-             <number>40000</number>
+             <number>65535</number>
             </property>
             <property name="value">
              <number>5172</number>

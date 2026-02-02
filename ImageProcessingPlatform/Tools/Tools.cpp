@@ -5,6 +5,8 @@
 #include <sstream>
 #include <shlwapi.h>
 
+#include <opencv2/opencv.hpp>
+
 #pragma comment(lib, "shlwapi.lib") // 链接 shlwapi 库
 
 #pragma comment(lib, "advapi32.lib")
@@ -70,7 +72,7 @@ bool WHSD_Tools::SaveDataToFile_Raw(uint8_t* data, int len, const std::string& f
 		std::string dateFolderName(dateBuffer);
 
 		// 构建完整路径
-#ifdef _DEBUG
+#ifdef __DEBUG__
 		std::filesystem::path currentPath = std::filesystem::current_path();
 #else
 		std::filesystem::path currentPath = GetExeDirectory();
@@ -126,7 +128,7 @@ bool WHSD_Tools::SaveDataToFile2_Raw(uint8_t* data, int len, const std::string& 
 std::string WHSD_Tools::GetGuidPath(const std::string& guid, const std::string& fName)
 {
 	// 构建完整路径
-#ifdef _DEBUG
+#ifdef __DEBUG__
 	std::filesystem::path currentPath = std::filesystem::current_path();
 #else
 	std::filesystem::path currentPath = GetExeDirectory();
@@ -207,6 +209,8 @@ bool WHSD_Tools::ReadFileToVector(const std::string& filename, std::vector<uint8
 			break;
 		}
 	}
+
+	
 
 	return true;
 }
@@ -341,7 +345,7 @@ std::vector<int> WHSD_Tools::ExtractIntegers(const std::vector<std::string>& str
 
 std::string WHSD_Tools::GetAbsolutePath(const std::string& s)
 {
-#ifdef _DEBUG
+#ifdef __DEBUG__
 	return s;
 #else
 	auto rst = GetExeDirectory();

@@ -83,16 +83,16 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\3rd\XCloud\include;D:\3rd\PZMedical\include;D:\3rd\DRTECH\include;D:\3rd\HammingElectronic\include;D:\3rd\Vikey\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\3rd\opencv_4_12_0\include;D:\3rd\XCloud\include;D:\3rd\PZMedical\include;D:\3rd\DRTECH\include;D:\3rd\HammingElectronic\include;D:\3rd\Vikey\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__DEBUG__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>D:\3rd\XCloud\lib;D:\3rd\PZMedical\lib;D:\3rd\DRTECH\lib;D:\3rd\HammingElectronic\lib;D:\3rd\Vikey\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>XCloudSDK.lib;ComApi.lib;DRTECH_LAN.lib;ImgProcCplusplus.lib;ViKey_X64_oMD.lib;ViKey_X64_oMT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\3rd\XCloud\lib;D:\3rd\PZMedical\lib;D:\3rd\DRTECH\lib;D:\3rd\HammingElectronic\lib;D:\3rd\Vikey\lib;D:\3rd\opencv_4_12_0\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>XCloudSDK.lib;ComApi.lib;DRTECH_LAN.lib;ImgProcCplusplus.lib;ViKey_X64_oMD.lib;ViKey_X64_oMT.lib;opencv_world4120.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <ResourceCompile>
