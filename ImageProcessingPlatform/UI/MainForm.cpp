@@ -2486,10 +2486,12 @@ void MainForm::LoadOnlinePicByThread()
 void MainForm::DownloadPic()
 {
 	//return;
+	qDebug() << "MainForm::DownloadPic in ";
 	auto [t1, t2, t3] = HttpClient::Get(m_pConfig->m_memTimsConfig.m_strDownloadPic,
 		{ {"sampleId", m_strWorkGuid} }, {},
 		m_pConfig->m_memTimsConfig.m_nDownloadTimeOut);
 	bool loadSuccess = false;
+	qDebug() << "MainForm::DownloadPic out ";
 	if (t1)
 	{
 		auto jsonStr = QString::fromStdString(t2);
@@ -2891,7 +2893,7 @@ void MainForm::ReadPicFromMem(int index)
 			}
 			else
 			{
-				MY_WARNING("文件读取失败！");
+				MY_WARNING("文件读取失败!");
 			}
 			ui.label_36->setStyleSheet("color:white");
 		}

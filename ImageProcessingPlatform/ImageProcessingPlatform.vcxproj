@@ -29,7 +29,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup>
     <DesignTimeResourceGenerationEnabled>false</DesignTimeResourceGenerationEnabled>
@@ -88,7 +88,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <PreprocessorDefinitions>__DEBUG__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>D:\3rd\XCloud\lib;D:\3rd\PZMedical\lib;D:\3rd\DRTECH\lib;D:\3rd\HammingElectronic\lib;D:\3rd\Vikey\lib;D:\3rd\opencv_4_12_0\lib</AdditionalLibraryDirectories>

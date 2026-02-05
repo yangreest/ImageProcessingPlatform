@@ -1,4 +1,4 @@
-#ifdef __DEBUG__
+#ifndef __DEBUG__
 #define _CRT_SECURE_NO_WARNINGS
 #include <windows.h>
 #include <iostream>
@@ -13,16 +13,18 @@
 
 int main(int argc, char* argv[])
 {
-#ifdef __DEBUG__
-
-	AllocConsole();
-	freopen("CONOUT$", "w", stdout); // 重定向标准输出到控制台
+#ifndef __DEBUG__
+	SetConsoleOutputCP(CP_UTF8);  // 或者使用 CP_GBK
+	if (AttachConsole(ATTACH_PARENT_PROCESS) || AllocConsole()) {
+		freopen("CONOUT$", "w", stdout);
+		freopen("CONOUT$", "w", stderr);
+	}
 	std::cout << "Console allocated at runtime!" << std::endl;
 	auto tp=WHSD_Tools::GetExeDirectory();
 #endif
 
 	//保证程序实例只会启动一次
-	HANDLE m_hMutex = CreateMutex(NULL, FALSE, ProgramName);
+	HANDLE m_hMutex = CreateMutex(NULL, FALSE, TEXT(ProgramName) );
 	if (GetLastError() == ERROR_ALREADY_EXISTS)
 	{
 		CloseHandle(m_hMutex);
@@ -39,7 +41,7 @@ int main(int argc, char* argv[])
 		model = std::atoi(argv[2]);
 	}
 
-	//guid = "40990";
+	//guid = "99100045037";
 	//model = 2;
 
 	QApplication app(argc, argv);

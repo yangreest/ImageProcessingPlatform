@@ -1,8 +1,10 @@
-#include <windows.h>
+﻿#include <windows.h>
 #include "ImageProcessByHamming.h"
 #include "HmImgProApi.h"
 #include <array>
 #include <iostream>
+
+#include <opencv2/opencv.hpp>
 
 CImageProcessByHamming::CImageProcessByHamming()
 {
@@ -45,6 +47,74 @@ bool CImageProcessByHamming::ImageProcess1(int wid, int hei, uint8_t* picData,
 	return true;
 }
 
+bool CImageProcessByHamming::BrightAndContrastProcess(int wid, int hei, uint16_t* picData,
+	CImageProcessParam2* imageProcessParam,
+	std::vector<uint8_t>* result)
+{
+	SetConsoleOutputCP(CP_UTF8);  // 或者使用 CP_GBK
+	cv::Mat src(hei, wid, CV_16UC1, picData);
+
+	uint16_t targetMean = imageProcessParam->m_wBright;
+	uint16_t targetStd = imageProcessParam->m_wContrast;
+
+	// 校验输入图像格式：必须是16位单通道
+	if (src.type() != CV_16UC1) {
+		std::cerr << "错误：输入图像必须是16位单通道（CV_16UC1）！" << std::endl;
+		return false;
+	}
+	if (src.empty())
+	{
+		std::cerr << "错误：输入图像为空！" << std::endl;
+		return false;
+	}
+
+
+	// 校验传入的目标参数是否在合理范围
+	if (targetMean < 0 || targetMean >  65535) {
+		std::cerr << "警告：目标亮度均值超出0~65535范围，已自动修正为32768！" << std::endl;
+		targetMean = 32768;
+	}
+	if (targetStd < 0 || targetStd >65535) {
+		std::cerr << "警告：目标对比度标准差超出0~65535范围，已自动修正为16384！" << std::endl;
+		targetStd = 16384;
+	}
+
+	// 计算图像的原始均值和标准差
+	cv::Scalar meanVal, stdDevVal;
+	meanStdDev(src, meanVal, stdDevVal);
+	double mean = meanVal[0];    // 原始亮度均值
+	double stdDev = stdDevVal[0];// 原始对比度标准差
+
+	// 16位图像的数值范围：0~65535
+	const int MAX_16BIT = 65535;
+
+	// 计算对比度系数alpha（避免除以0）
+	double alpha = (stdDev > 1e-6) ? targetStd / stdDev : 1.0;
+	// 计算亮度偏移beta（将均值调整到传入的目标均值）
+	double beta = targetMean - alpha * mean;
+
+
+	// 调整亮度和对比度，限制像素值范围
+	cv::Mat dst;
+	src.convertTo(dst, CV_16UC1, alpha, beta); // 核心调整公式
+	// 裁剪超出0~65535的像素值，避免溢出
+	threshold(dst, dst, MAX_16BIT, MAX_16BIT, cv::THRESH_TRUNC);
+	threshold(dst, dst, 0, 0, cv::THRESH_TOZERO);
+
+	// 使用CV_16UC1 dst 赋值给 result <uint8_t>
+	result->resize(wid * hei);
+	cv::Mat dst8bit;
+	dst8bit = dst / 255;
+	dst8bit.convertTo(dst8bit, CV_8UC1);
+	memcpy(result->data(), dst8bit.data, wid * hei * sizeof(uint8_t));
+
+	std::cout << "自适应调整参数：" << std::endl;
+	std::cout << "原始均值：" << mean << "，原始标准差：" << stdDev << std::endl;
+	std::cout << "对比度系数alpha：" << alpha << "，亮度偏移beta：" << beta << std::endl;
+	return true;
+}
+
+#if 0
 bool CImageProcessByHamming::BrightAndContrastProcess(int wid, int hei, uint16_t* picData,
 	CImageProcessParam2* imageProcessParam,
 	std::vector<uint8_t>* result)
@@ -99,6 +169,8 @@ bool CImageProcessByHamming::BrightAndContrastProcess(int wid, int hei, uint16_t
 
 	return result;
 }
+
+#endif
 
 bool CImageProcessByHamming::calculateMeanAndStdDev(const std::vector<uint8_t>& data, int& nMean, int& nStdDev)
 {
