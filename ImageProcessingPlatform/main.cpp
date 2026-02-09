@@ -6,6 +6,7 @@
 #include "Tools/Tools.h"
 #endif
 
+
 #include "./UI/MainForm.h"
 #include <QtWidgets/QApplication>
 
@@ -13,18 +14,10 @@
 
 int main(int argc, char* argv[])
 {
-#ifndef __DEBUG__
-	SetConsoleOutputCP(CP_UTF8);  // 或者使用 CP_GBK
-	if (AttachConsole(ATTACH_PARENT_PROCESS) || AllocConsole()) {
-		freopen("CONOUT$", "w", stdout);
-		freopen("CONOUT$", "w", stderr);
-	}
-	std::cout << "Console allocated at runtime!" << std::endl;
-	auto tp=WHSD_Tools::GetExeDirectory();
-#endif
-
+	// 1. 注册自定义消息处理函数（必须在创建QApplication之后、使用qDebug之前）
+	qInstallMessageHandler(customMessageHandler);
 	//保证程序实例只会启动一次
-	HANDLE m_hMutex = CreateMutex(NULL, FALSE, TEXT(ProgramName) );
+	HANDLE m_hMutex = CreateMutex(NULL, FALSE, TEXT(ProgramName));
 	if (GetLastError() == ERROR_ALREADY_EXISTS)
 	{
 		CloseHandle(m_hMutex);
@@ -46,6 +39,9 @@ int main(int argc, char* argv[])
 
 	QApplication app(argc, argv);
 	MainForm window(guid, model);
+#ifdef __DEBUG__
+	qDebug() << "Console allocated at runtime!";
+#endif
 	window.show();
 	return app.exec();
 }

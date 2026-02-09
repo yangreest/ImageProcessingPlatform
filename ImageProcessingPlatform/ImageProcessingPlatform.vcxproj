@@ -86,9 +86,9 @@
       <AdditionalIncludeDirectories>D:\3rd\opencv_4_12_0\include;D:\3rd\XCloud\include;D:\3rd\PZMedical\include;D:\3rd\DRTECH\include;D:\3rd\HammingElectronic\include;D:\3rd\Vikey\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MinSpace</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__DEBUG__;QT_MESSAGELOGCONTEXT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>D:\3rd\XCloud\lib;D:\3rd\PZMedical\lib;D:\3rd\DRTECH\lib;D:\3rd\HammingElectronic\lib;D:\3rd\Vikey\lib;D:\3rd\opencv_4_12_0\lib</AdditionalLibraryDirectories>
@@ -148,12 +148,14 @@
     <ClCompile Include="UI\CloseEventFilter.cpp" />
     <ClCompile Include="UI\ControlBoardConfigForm.cpp" />
     <ClCompile Include="UI\FormWithShowModal.cpp" />
+    <ClCompile Include="UI\LogDisplayDialog.cpp" />
     <ClCompile Include="UI\MouseEventFilter.cpp" />
     <ClCompile Include="UI\SingleInputForm.cpp" />
     <QtRcc Include="UI\MainForm.qrc" />
     <QtUic Include="UI\AlertForm.ui" />
     <QtUic Include="UI\CameraFrom.ui" />
     <QtUic Include="UI\ControlBoardConfigForm.ui" />
+    <QtUic Include="UI\LogDisplayDialog.ui" />
     <QtUic Include="UI\MainForm.ui" />
     <QtMoc Include="UI\MainForm.h" />
     <ClCompile Include="Camera\CameraBase.cpp" />
@@ -180,6 +182,7 @@
     <ClInclude Include="Tools\USBKey.h" />
     <ClInclude Include="Tools\XInputHelper.h" />
     <ClInclude Include="UI\FormWithShowModal.h" />
+    <QtMoc Include="UI\LogDisplayDialog.h" />
     <QtMoc Include="UI\AlertForm.h" />
     <QtMoc Include="UI\SingleInputForm.h" />
     <QtMoc Include="UI\ControlBoardConfigForm.h" />

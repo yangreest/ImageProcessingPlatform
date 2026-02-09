@@ -15,6 +15,8 @@ bool bWriteLog = true;
 #include <iomanip>
 
 #endif
+#include <qlogging.h>
+#include <QDebug>
 
 #pragma comment(lib, "ws2_32.lib")
 
@@ -278,7 +280,7 @@ void CTcpClientCom::SendThread()
 						}
 						return oss.str();
 					};
-				std::cout << "send data:" << toHexString(data.data(), data.size()) << std::endl;
+				qDebug() << "send data:" << toHexString(data.data(), data.size());
 			}
 #endif
 			if (bytesSent == SOCKET_ERROR)
@@ -342,7 +344,7 @@ void CTcpClientCom::ReceiveThread()
 									}
 									return oss.str();
 								};
-							std::cout << "get data:" << toHexString((uint8_t*)buffer, bytesReceived) << std::endl;
+							qDebug() << "get data:" << toHexString((uint8_t*)buffer, bytesReceived);
 						}
 #endif
 					}

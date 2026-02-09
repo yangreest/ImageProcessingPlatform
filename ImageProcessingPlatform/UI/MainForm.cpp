@@ -23,15 +23,47 @@
 
 #include <opencv2/opencv.hpp>
 
-#define MY_WARNING(t) 	{AlertForm f("警告", t);f.showModal();}//QMessageBox::warning(this, "警告", t)
-#define MY_INFO(t) {AlertForm f("提示", t);f.showModal();}//QMessageBox::information(this, "提示", t)
+#define MY_WARNING(t) 	{AlertForm f("警告", t);f.showModal();qWarning() << t; }//QMessageBox::warning(this, "警告", t)
+#define MY_INFO(t) {AlertForm f("提示", t);f.showModal();qInfo()<< t; }//QMessageBox::information(this, "提示", t)
 
 #define HeartbeatFaultTolerance 5
 
+// 全局静态指针，用于在消息处理函数中访问主窗口对象
+static MainForm* g_mainForm = nullptr;
+
+// 自定义Qt消息处理函数（核心）
+void customMessageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
+{
+	// 拼接日志前缀：时间 + 日志级别
+	QString logLevel;
+	switch (type) {
+	case QtDebugMsg:    logLevel = "[DEBUG]"; break;
+	case QtInfoMsg:     logLevel = "[INFO]";  break;
+	case QtWarningMsg:  logLevel = "[WARN]";  break;
+	case QtCriticalMsg: logLevel = "[CRIT]";  break;
+	case QtFatalMsg:    logLevel = "[FATAL]"; break;
+	default:            logLevel = "[UNKNOWN]";
+	}
+
+	// 格式化日志：时间 + 级别 + 信息 + 代码位置(文件名+行号)
+	QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz");
+	QString logText = QString("%1  (%2:%3:%4)")
+		.arg(msg)
+		.arg(context.file)
+		.arg(context.line)
+		.arg(context.function);
+
+	// 通过全局指针调用主窗口方法，将日志添加到TextEdit
+	if (g_mainForm) {
+		// 直接调用（本示例在主线程使用，线程安全；多线程场景建议改用信号槽）
+		emit g_mainForm->logReceived(logLevel, msg, time, context.file, context.function, QString::number(context.line));
+	}
+}
 
 MainForm::MainForm(const std::string& guid, int model, QWidget* parent)
 	: QMainWindow(parent)
 {
+	g_mainForm = this;
 	ui.setupUi(this);
 	m_strWorkGuid = guid;
 	m_nWorkMode = model;
@@ -52,6 +84,14 @@ MainForm::~MainForm()
 	WHSD_Tools::SafeRelease(m_pTimer);
 	//SafeReleaseWithEndWork(m_pDeviceCom);
 	WHSD_Tools::SafeReleaseWithEndWork(m_pDeviceLog);
+}
+
+void MainForm::appendLog(const QString& level, const QString& message, const QString& timestamp, const QString& file, const QString& function, const QString& line)
+{
+	if (m_pLogDisplayDialog)
+	{
+		m_pLogDisplayDialog->addLogEntry(level, message, timestamp, file, function, line);
+	}
 }
 
 void MainForm::ConnectDevice()
@@ -1042,6 +1082,8 @@ void MainForm::BindAction()
 	m_pTimer->start();
 	connect(ui.pushButton_2, &QPushButton::clicked, this, &MainForm::ConnectDevice);
 
+	connect(this, &MainForm::logReceived, this, &MainForm::appendLog, Qt::QueuedConnection);
+
 	m_pKeyEventFilter = new KeyEventFilter(this);
 	qApp->installEventFilter(m_pKeyEventFilter);
 	connect(m_pKeyEventFilter, &KeyEventFilter::upKeyPressed, this, &MainForm::On_Up_PressDown);
@@ -1155,6 +1197,7 @@ void MainForm::BindAction()
 	connect(ui.pushButton_26, &QPushButton::clicked, this, &MainForm::On_RecoverImgTag_Click);
 	connect(ui.pushButton_57, &QPushButton::clicked, this, &MainForm::On_deleteTag_Click);
 	connect(ui.pushButton_59, &QPushButton::clicked, this, &MainForm::On_SaveDealedPic);
+	connect(ui.pushButton_60, &QPushButton::clicked, this, &MainForm::On_LogForm_Click);
 }
 
 void MainForm::InitParam()
@@ -1199,6 +1242,7 @@ void MainForm::InitParam()
 	m_bLeftRightMirror = false;
 	m_bUpDownMirror = false;
 	m_bControlPressed = false;
+	m_pLogDisplayDialog = nullptr;
 	m_nRotate = 0;
 	m_nImgXOffset = 0;
 	m_nImgYOffset = 0;
@@ -1210,6 +1254,8 @@ void MainForm::InitParam()
 	m_enumDeviceConnectStatus = DeviceConnectStatus::UnKnown;
 	m_enumDeviceRunStatus = DeviceRunStatus::Unknow;
 	m_pSampleBoardBase = nullptr;
+	WHSD_Tools::SafeRelease(m_pLogDisplayDialog);
+	m_pLogDisplayDialog = new LogDisplayDialog();
 	m_pDeviceLog = new CWriteLog(WHSD_Tools::GetAbsolutePath("Log\\DeviceLog.txt"), 10000, 250);
 	m_pDeviceLog->BeginWork();
 	m_pConfig = new CConfigManager();
@@ -1365,7 +1411,7 @@ void MainForm::Callback_ShowImgOnLabel_2()
 	auto m_vector_LastImgBuffer = m_memSDRaw.GetOriginalRawData();
 	// 获取图像的 均值和标准差
 	int m_nMean, m_nStdDev;
-	m_pImageProcess->calculateMeanAndStdDev(m_vector_LastImgBuffer, m_nMean, m_nStdDev);
+	m_pImageProcess->calculateMaxandMinBright(m_vector_LastImgBuffer, m_nMean, m_nStdDev);
 	ui.horizontalSlider->setValue(m_nStdDev);
 	ui.horizontalSlider_2->setValue(m_nMean);
 
@@ -1490,6 +1536,12 @@ void MainForm::On_SaveDealedPic()
 	}
 }
 
+void MainForm::On_LogForm_Click()
+{
+	if (m_pLogDisplayDialog)
+		m_pLogDisplayDialog->show();
+}
+
 void MainForm::On_TurnOnAll_Click()
 {
 	auto cmds = CWHSDControlBoardProtocol::TurnOnAll();
@@ -1566,8 +1618,8 @@ void MainForm::On_SliderValueChanged()
 {
 	auto ck = ui.horizontalSlider->value();
 	auto cw = ui.horizontalSlider_2->value();
-	m_memImageProcessParam2.m_wBright = cw;
-	m_memImageProcessParam2.m_wContrast = ck;
+	m_memImageProcessParam2.m_wMaxBright = cw;
+	m_memImageProcessParam2.m_wMinBright = ck;
 
 	{
 		std::lock_guard<std::mutex> g(m_mutexLastImgMutex);
@@ -1597,8 +1649,8 @@ void MainForm::On_SliderValueChanged2(int value)
 {
 	auto ck = ui.horizontalSlider->value();
 	auto cw = ui.horizontalSlider_2->value();
-	m_memImageProcessParam2.m_wBright = cw;
-	m_memImageProcessParam2.m_wContrast = ck;
+	m_memImageProcessParam2.m_wMaxBright = cw;
+	m_memImageProcessParam2.m_wMinBright = ck;
 	{
 		std::lock_guard<std::mutex> g(m_mutexLastImgMutex);
 		auto m_vector_ChangedImgBuffer2 = m_memSDRaw.GetTempRawData();
@@ -3104,13 +3156,13 @@ void MainForm::On_LoadPic_Clicked()
 void MainForm::On_ControlOnly_Pressed()
 {
 	m_bControlPressed = true;
-	std::cout << "ControlOnly_Pressed" << std::endl;
+	qDebug() << "ControlOnly_Pressed";
 }
 
 void MainForm::On_ControlOnly_Released()
 {
 	m_bControlPressed = false;
-	std::cout << "ControlOnly_Released" << std::endl;
+	qDebug() << "ControlOnly_Released";
 }
 
 void MainForm::On_SampleBoard_Change_Clicked1()

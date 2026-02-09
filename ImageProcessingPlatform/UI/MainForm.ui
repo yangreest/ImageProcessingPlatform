@@ -889,18 +889,30 @@ QGroupBox  {
           <string>操作：</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_7">
-          <item row="1" column="1">
-           <widget class="QPushButton" name="pushButton_14">
+          <item row="1" column="2">
+           <widget class="QPushButton" name="pushButton_40">
+            <property name="minimumSize">
+             <size>
+              <width>70</width>
+              <height>70</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>70</width>
+              <height>70</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">QPushButton {
-    background-image: url(:/Image/icon/youxuan_1.png);  /* 正常状态图片 */
+    background-image: url(:/Image/icon/shangxia_1.png);  /* 正常状态图片 */
     background-repeat: no-repeat;
     background-position: center;
     border: none;  /* 可选：移除边框 */
 }
 
 QPushButton:hover {
-    background-image: url(:/Image/icon/youxuan_2.png);  /* 悬停状态图片 */
+    background-image: url(:/Image/icon/shangxia_2.png);  /* 悬停状态图片 */
 }</string>
             </property>
             <property name="text">
@@ -946,56 +958,6 @@ QPushButton:hover {
             </property>
            </widget>
           </item>
-          <item row="1" column="2">
-           <widget class="QPushButton" name="pushButton_40">
-            <property name="minimumSize">
-             <size>
-              <width>70</width>
-              <height>70</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>70</width>
-              <height>70</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-    background-image: url(:/Image/icon/shangxia_1.png);  /* 正常状态图片 */
-    background-repeat: no-repeat;
-    background-position: center;
-    border: none;  /* 可选：移除边框 */
-}
-
-QPushButton:hover {
-    background-image: url(:/Image/icon/shangxia_2.png);  /* 悬停状态图片 */
-}</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QPushButton" name="pushButton_28">
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-    background-image: url(:/Image/icon/daochupng_1.png);  /* 正常状态图片 */
-    background-repeat: no-repeat;
-    background-position: center;
-    border: none;  /* 可选：移除边框 */
-}
-
-QPushButton:hover {
-    background-image: url(:/Image/icon/daochupng_2.png);  /* 悬停状态图片 */
-}</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0">
            <widget class="QPushButton" name="pushButton_36">
             <property name="minimumSize">
@@ -1020,6 +982,25 @@ QPushButton:hover {
 
 QPushButton:hover {
     background-image: url(:/Image/icon/duqu_2.png);  /* 悬停状态图片 */
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QPushButton" name="pushButton_11">
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+    background-image: url(:/Image/icon/fanzhuan_1.png);  /* 正常状态图片 */
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;  /* 可选：移除边框 */
+}
+
+QPushButton:hover {
+    background-image: url(:/Image/icon/fanzhuan_2.png);  /* 悬停状态图片 */
 }</string>
             </property>
             <property name="text">
@@ -1058,22 +1039,103 @@ QPushButton:hover {
             </property>
            </widget>
           </item>
-          <item row="0" column="3">
-           <widget class="QPushButton" name="pushButton_11">
+          <item row="1" column="1">
+           <widget class="QPushButton" name="pushButton_14">
             <property name="styleSheet">
              <string notr="true">QPushButton {
-    background-image: url(:/Image/icon/fanzhuan_1.png);  /* 正常状态图片 */
+    background-image: url(:/Image/icon/youxuan_1.png);  /* 正常状态图片 */
     background-repeat: no-repeat;
     background-position: center;
     border: none;  /* 可选：移除边框 */
 }
 
 QPushButton:hover {
-    background-image: url(:/Image/icon/fanzhuan_2.png);  /* 悬停状态图片 */
+    background-image: url(:/Image/icon/youxuan_2.png);  /* 悬停状态图片 */
 }</string>
             </property>
             <property name="text">
              <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="pushButton_28">
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+    background-image: url(:/Image/icon/daochupng_1.png);  /* 正常状态图片 */
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;  /* 可选：移除边框 */
+}
+
+QPushButton:hover {
+    background-image: url(:/Image/icon/daochupng_2.png);  /* 悬停状态图片 */
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QPushButton" name="pushButton_60">
+            <property name="minimumSize">
+             <size>
+              <width>70</width>
+              <height>70</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>70</width>
+              <height>70</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+   /* background-image: url(:/Image/icon/zuoyou_1.png);   正常状态图片 */
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;  /* 可选：移除边框 */
+}
+
+QPushButton:hover {
+     /*background-image: url(:/Image/icon/zuoyou_2.png);  悬停状态图片 */
+}</string>
+            </property>
+            <property name="text">
+             <string>日志</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QPushButton" name="pushButton_61">
+            <property name="minimumSize">
+             <size>
+              <width>70</width>
+              <height>70</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>70</width>
+              <height>70</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+   /* background-image: url(:/Image/icon/zuoyou_1.png);   正常状态图片 */
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;  /* 可选：移除边框 */
+}
+
+QPushButton:hover {
+     /*background-image: url(:/Image/icon/zuoyou_2.png);  悬停状态图片 */
+}</string>
+            </property>
+            <property name="text">
+             <string>设置</string>
             </property>
            </widget>
           </item>

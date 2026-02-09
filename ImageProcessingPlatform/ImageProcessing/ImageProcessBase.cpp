@@ -11,8 +11,8 @@ CImageProcessParam1::CImageProcessParam1()
 
 CImageProcessParam2::CImageProcessParam2()
 {
-	m_wBright = 0;
-	m_wContrast = 0;
+	m_wMaxBright = 0;
+	m_wMinBright = 0;
 }
 
 CImageProcessBase* CImageProcessBase::GetCImageProcessObj(int type)

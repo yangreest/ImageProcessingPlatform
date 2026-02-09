@@ -17,35 +17,36 @@
 #include "Model/ImageCapture.h"
 #include "Protocol/WHSDControlBoradProtocol.h"
 #include "Tools/USBKey.h"
+#include "LogDisplayDialog.h"
 
 #define MaxControlBoardCount 2
+
+// 前置声明消息处理函数
+void customMessageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg);
 
 class MainForm : public QMainWindow
 {
 	Q_OBJECT
-
-
-
 public:
 	// 枚举类
 	// 1: 画线 2: 画矩形 3: 画椭圆 4: 角度 5: 输入文字 6: 弯曲度 7: 截图 8: 删除
-    enum class MouseMode
-    {
-        nNone,
-        DrawLine,
-        Rect,
-        Ellipse,
+	enum class MouseMode
+	{
+		nNone,
+		DrawLine,
+		Rect,
+		Ellipse,
 		Angle,
-        InputText,
-        Curvature,
-        Capture,
-        DeleteTag,
-    };
+		InputText,
+		Curvature,
+		Capture,
+		DeleteTag,
+	};
 
 	MainForm(const std::string& guid, int model, QWidget* parent = nullptr);
 	~MainForm() override;
 
-
+	
 private slots:
 	void ConnectDevice();
 	void On_timer_timeout();
@@ -133,10 +134,17 @@ private slots:
 	void On_deleteTag_Click();
 
 	void On_SaveDealedPic();
+	void On_LogForm_Click();
+	// 供消息处理函数调用的槽函数，接收日志信息
+	void appendLog(const QString& level, const QString& message, const QString& timestamp, const QString& file, const QString& function, const QString& line);
+
+
 signals:
 	void On_Pic_Receive();
 	void On_OnLineLoadSuccess();
 	void On_OnLineLoadFailed();
+
+	void logReceived(const QString& level, const QString& message, const QString& timestamp,const QString& file,const QString& function , const QString& line);
 
 protected:
 	// 重写显示事件
@@ -195,7 +203,7 @@ private:
 
 	void ClearPicOpt();
 
-	void AddOneImgTag(const CImageTag & t);
+	void AddOneImgTag(const CImageTag& t);
 
 	void LoadOnlinePicByThread();
 
@@ -313,7 +321,7 @@ private:
 
 	int m_nLoadedMapType;
 
-
+	LogDisplayDialog* m_pLogDisplayDialog;
 
 	/// <summary>
 	/// 已处理好的图片
