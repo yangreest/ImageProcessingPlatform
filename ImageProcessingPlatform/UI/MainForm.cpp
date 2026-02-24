@@ -83,7 +83,7 @@ MainForm::~MainForm()
 	WHSD_Tools::SafeRelease(m_pMouseEventFilter);
 	WHSD_Tools::SafeRelease(m_pTimer);
 	//SafeReleaseWithEndWork(m_pDeviceCom);
-	WHSD_Tools::SafeReleaseWithEndWork(m_pDeviceLog);
+	WHSD_Tools::SafeReleaseWithEndWork(m_pCTcpClientCom);
 }
 
 void MainForm::appendLog(const QString& level, const QString& message, const QString& timestamp, const QString& file, const QString& function, const QString& line)
@@ -141,7 +141,6 @@ void MainForm::ConnectDevice()
 void MainForm::On_timer_timeout()
 {
 	//刷新线程间数据
-	//m_pDeviceLog->Write("666777");
 	if (m_nShowImgTips >= 0 && m_nShowImgTips < 10)
 	{
 		QPixmap pixmap;
@@ -453,12 +452,18 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 
 		double newX = 0, newY = 0;
 		WHSD_Tools::CalculateOriginalCoordinates(
-			pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()
-				* (m_dImgScale -
-					1) / 2), pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-			m_nRotate * 90, m_dImgScale, m_dImgScale, 0, 0, m_bLeftRightMirror, m_bUpDownMirror,
-			m_memMainQImage.width(), m_memMainQImage.height(), &newX, &newY);
-
+			pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2), 
+			pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
+			m_nRotate * 90, 
+			m_dImgScale, 
+			m_dImgScale,
+			0, 
+			0, 
+			m_bLeftRightMirror, 
+			m_bUpDownMirror,
+			m_memMainQImage.width(), 
+			m_memMainQImage.height(), 
+			&newX, &newY);
 
 		p.m_nEndX = newX;
 		p.m_nEndY = newY;
@@ -477,11 +482,18 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 
 			double newX = 0, newY = 0;
 			WHSD_Tools::CalculateOriginalCoordinates(
-				pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()
-					* (m_dImgScale -
-						1) / 2), pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-				m_nRotate * 90, m_dImgScale, m_dImgScale, 0, 0, m_bLeftRightMirror, m_bUpDownMirror,
-				m_memMainQImage.width(), m_memMainQImage.height(), &newX, &newY);
+				pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2), 
+				pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
+				m_nRotate * 90,
+				m_dImgScale,
+				m_dImgScale,
+				0, 
+				0, 
+				m_bLeftRightMirror,
+				m_bUpDownMirror,
+				m_memMainQImage.width(), 
+				m_memMainQImage.height(),
+				&newX, &newY);
 
 			p.m_nEndX = newX;
 			p.m_nEndY = newY;
@@ -494,11 +506,18 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 
 			double newX = 0, newY = 0;
 			WHSD_Tools::CalculateOriginalCoordinates(
-				pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()
-					* (m_dImgScale -
-						1) / 2), pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-				m_nRotate * 90, m_dImgScale, m_dImgScale, 0, 0, m_bLeftRightMirror, m_bUpDownMirror,
-				m_memMainQImage.width(), m_memMainQImage.height(), &newX, &newY);
+				pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2),
+				pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
+				m_nRotate * 90,
+				m_dImgScale,
+				m_dImgScale,
+				0,
+				0,
+				m_bLeftRightMirror,
+				m_bUpDownMirror,
+				m_memMainQImage.width(),
+				m_memMainQImage.height(),
+				&newX, &newY);
 
 			p.m_nEndX2 = newX;
 			p.m_nEndY2 = newY;
@@ -513,11 +532,18 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 
 		double newX = 0, newY = 0;
 		WHSD_Tools::CalculateOriginalCoordinates(
-			pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()
-				* (m_dImgScale -
-					1) / 2), pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-			m_nRotate * 90, m_dImgScale, m_dImgScale, 0, 0, m_bLeftRightMirror, m_bUpDownMirror,
-			m_memMainQImage.width(), m_memMainQImage.height(), &newX, &newY);
+			pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2),
+			pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
+			m_nRotate * 90,
+			m_dImgScale,
+			m_dImgScale,
+			0,
+			0,
+			m_bLeftRightMirror,
+			m_bUpDownMirror,
+			m_memMainQImage.width(),
+			m_memMainQImage.height(),
+			&newX, &newY);
 
 		auto p2x = newX;
 		auto p2y = newY;
@@ -550,11 +576,18 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 		auto labelSize = ui.label->size();
 		double newX = 0, newY = 0;
 		WHSD_Tools::CalculateOriginalCoordinates(
-			m_nLastMouseX - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()
-				* (m_dImgScale -
-					1) / 2), m_nLastMouseY - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-			m_nRotate * 90, m_dImgScale, m_dImgScale, 0, 0, m_bLeftRightMirror, m_bUpDownMirror,
-			m_memMainQImage.width(), m_memMainQImage.height(), &newX, &newY);
+			m_nLastMouseX - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2),
+			m_nLastMouseY - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
+			m_nRotate * 90,
+			m_dImgScale,
+			m_dImgScale,
+			0,
+			0,
+			m_bLeftRightMirror,
+			m_bUpDownMirror,
+			m_memMainQImage.width(),
+			m_memMainQImage.height(),
+			&newX, &newY);
 
 		CImageTag t;
 		t.m_nTagType = (int)m_eMouseMode - 1;
@@ -568,11 +601,18 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 
 		double newX = 0, newY = 0;
 		WHSD_Tools::CalculateOriginalCoordinates(
-			m_nLastMouseX - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()
-				* (m_dImgScale -
-					1) / 2), m_nLastMouseY - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-			m_nRotate * 90, m_dImgScale, m_dImgScale, 0, 0, m_bLeftRightMirror, m_bUpDownMirror,
-			m_memMainQImage.width(), m_memMainQImage.height(), &newX, &newY);
+			m_nLastMouseX - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2),
+			m_nLastMouseY - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
+			m_nRotate * 90,
+			m_dImgScale,
+			m_dImgScale,
+			0,
+			0,
+			m_bLeftRightMirror,
+			m_bUpDownMirror,
+			m_memMainQImage.width(),
+			m_memMainQImage.height(),
+			&newX, &newY);
 		m_memCImageCapture.m_nPosX = newX;
 		m_memCImageCapture.m_nPosY = newY;
 	}
@@ -583,11 +623,18 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 
 		double newX = 0, newY = 0;
 		WHSD_Tools::CalculateOriginalCoordinates(
-			m_nLastMouseX - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()
-				* (m_dImgScale -
-					1) / 2), m_nLastMouseY - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-			m_nRotate * 90, m_dImgScale, m_dImgScale, 0, 0, m_bLeftRightMirror, m_bUpDownMirror,
-			m_memMainQImage.width(), m_memMainQImage.height(), &newX, &newY);
+			m_nLastMouseX - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2),
+			m_nLastMouseY - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
+			m_nRotate * 90,
+			m_dImgScale,
+			m_dImgScale,
+			0,
+			0,
+			m_bLeftRightMirror,
+			m_bUpDownMirror,
+			m_memMainQImage.width(),
+			m_memMainQImage.height(),
+			&newX, &newY);
 		auto x = newX;
 		auto y = newY;
 		int index = -1, index2 = -1;
@@ -709,12 +756,18 @@ void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos
 
 				double newX = 0, newY = 0;
 				WHSD_Tools::CalculateOriginalCoordinates(
-					pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.
-						width()
-						* (m_dImgScale -
-							1) / 2), pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-					m_nRotate * 90, m_dImgScale, m_dImgScale, 0, 0, m_bLeftRightMirror, m_bUpDownMirror,
-					m_memMainQImage.width(), m_memMainQImage.height(), &newX, &newY);
+					pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2),
+					pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
+					m_nRotate * 90,
+					m_dImgScale,
+					m_dImgScale,
+					0,
+					0,
+					m_bLeftRightMirror,
+					m_bUpDownMirror,
+					m_memMainQImage.width(),
+					m_memMainQImage.height(),
+					&newX, &newY);
 
 				p.m_nEndX = newX;
 				p.m_nEndY = newY;
@@ -733,13 +786,18 @@ void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos
 
 			double newX = 0, newY = 0;
 			WHSD_Tools::CalculateOriginalCoordinates(
-				pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.
-					width()
-					* (m_dImgScale -
-						1) / 2), pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-				m_nRotate * 90, m_dImgScale, m_dImgScale, 0, 0, m_bLeftRightMirror, m_bUpDownMirror,
-				m_memMainQImage.width(), m_memMainQImage.height(), &newX, &newY);
-
+				pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2),
+				pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
+				m_nRotate * 90,
+				m_dImgScale,
+				m_dImgScale,
+				0,
+				0,
+				m_bLeftRightMirror,
+				m_bUpDownMirror,
+				m_memMainQImage.width(),
+				m_memMainQImage.height(),
+				&newX, &newY);
 
 			p.m_nStartX = newX;
 			p.m_nStartY = newY;
@@ -785,14 +843,18 @@ void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos
 
 					double newX = 0, newY = 0;
 					WHSD_Tools::CalculateOriginalCoordinates(
-						pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset -
-							m_memMainQImage.
-							width()
-							* (m_dImgScale -
-								1) / 2),
+						pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset -m_memMainQImage.width()* (m_dImgScale -1) / 2),
 						pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-						m_nRotate * 90, m_dImgScale, m_dImgScale, 0, 0, m_bLeftRightMirror, m_bUpDownMirror,
-						m_memMainQImage.width(), m_memMainQImage.height(), &newX, &newY);
+						m_nRotate * 90,
+						m_dImgScale,
+						m_dImgScale,
+						0,
+						0,
+						m_bLeftRightMirror,
+						m_bUpDownMirror,
+						m_memMainQImage.width(),
+						m_memMainQImage.height(),
+						&newX, &newY);
 
 					auto& t = m_vector_ImgTag.back();
 
@@ -809,14 +871,18 @@ void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos
 
 					double newX = 0, newY = 0;
 					WHSD_Tools::CalculateOriginalCoordinates(
-						pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset -
-							m_memMainQImage.
-							width()
-							* (m_dImgScale -
-								1) / 2),
+						pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset -m_memMainQImage.width()* (m_dImgScale -1) / 2),
 						pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-						m_nRotate * 90, m_dImgScale, m_dImgScale, 0, 0, m_bLeftRightMirror, m_bUpDownMirror,
-						m_memMainQImage.width(), m_memMainQImage.height(), &newX, &newY);
+						m_nRotate * 90,
+						m_dImgScale,
+						m_dImgScale,
+						0,
+						0,
+						m_bLeftRightMirror,
+						m_bUpDownMirror,
+						m_memMainQImage.width(),
+						m_memMainQImage.height(),
+						&newX, &newY);
 
 					auto& t = m_vector_ImgTag.back();
 
@@ -1003,6 +1069,8 @@ void MainForm::InitUI(int model)
 
 	ui.groupBox_10->setVisible(false);
 	ui.groupBox_8->setVisible(false);
+	ui.pushButton_60->setVisible(false);
+	ui.pushButton_61->setVisible(false);
 	if (m_strWorkGuid.empty())
 	{
 		if (m_pConfig->m_memTimsConfig.m_nForceGuid == 1)
@@ -1256,13 +1324,20 @@ void MainForm::InitParam()
 	m_pSampleBoardBase = nullptr;
 	WHSD_Tools::SafeRelease(m_pLogDisplayDialog);
 	m_pLogDisplayDialog = new LogDisplayDialog();
-	m_pDeviceLog = new CWriteLog(WHSD_Tools::GetAbsolutePath("Log\\DeviceLog.txt"), 10000, 250);
-	m_pDeviceLog->BeginWork();
+
 	m_pConfig = new CConfigManager();
 	m_pConfig->Read(WHSD_Tools::GetAbsolutePath("Config.xml"));
 
-	auto xRayResult = std::bind(&MainForm::Callback_XRaySendResult, this, std::placeholders::_1);
+	m_pCTcpClientCom = new CTcpClientCom();
+	m_pCTcpClientCom->SetParam(m_pConfig->m_mCTcpClientParam.m_strIp.c_str(),
+		m_pConfig->m_mCTcpClientParam.m_nPort);
+	m_pCTcpClientCom->RegisterConnectStatusCallBack(std::bind(&MainForm::Callback_TcpClientConnectionChanged, this,
+		std::placeholders::_1, std::placeholders::_2));
+	m_pCTcpClientCom->RegisterReadDataCallBack(std::bind(&MainForm::Callback_TcpClientReadData, this,
+		std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+	m_pCTcpClientCom->BeginWork();
 
+	auto xRayResult = std::bind(&MainForm::Callback_XRaySendResult, this, std::placeholders::_1);
 	{
 		//先初始化主控制板
 		m_apDeviceCom[0] = IDeviceCom::GetIDeviceCom(1);
@@ -1279,7 +1354,6 @@ void MainForm::InitParam()
 			std::placeholders::_1, std::placeholders::_2, 0));
 		pWHSDControlBoardProtocol->RegisterAnswerFunction(
 			std::bind(&IDeviceCom::Write, pDeviceCom, std::placeholders::_1, std::placeholders::_2));
-		pWHSDControlBoardProtocol->RegisterDeviceLog(std::bind(&CWriteLog::Write, m_pDeviceLog, std::placeholders::_1));
 		pWHSDControlBoardProtocol->RegisterDeviceHeartBeat(
 			std::bind(&MainForm::Callback_DeviceHeartBeat, this, std::placeholders::_1, 0));
 		pWHSDControlBoardProtocol->RegisterOTAStatus(std::bind(&MainForm::Callback_OTAStatus, this,
@@ -3016,6 +3090,39 @@ void MainForm::Callback_SampleBoardDeviceRunStatus(const DeviceRunStatus s)
 	m_mutexDeviceInfoLock.lock();
 	m_enumDeviceRunStatus = s;
 	m_mutexDeviceInfoLock.unlock();
+}
+
+void MainForm::Callback_TcpClientConnectionChanged(bool connected, int guid)
+{
+	qDebug() << "TcpClientConnectionChanged:" << connected << "guid:" << guid;
+}
+
+void MainForm::Callback_TcpClientReadData(uint8_t* data, int len, uint64_t nIndex)
+{
+	qDebug() << "TcpClientReadData:" << len << "nIndex:" << nIndex;
+	m_bDownloadedPic = false;
+	std::string input(reinterpret_cast<char*>(data), len);
+	size_t pos = 0;
+	std::vector<std::string> results;
+	// 循环查找所有 '=' 符号
+	while ((pos = input.find('=', pos)) != std::string::npos) {
+		// 跳过 '=' 本身，从下一个字符开始提取
+		size_t start = pos + 1;
+		// 查找下一个分隔符（, 或字符串结束）
+		size_t end = input.find_first_of(", ", start);
+
+		// 提取子串：从start到end（如果end是npos则提取到字符串末尾）
+		std::string value = input.substr(start, end - start);
+		results.push_back(value);
+		// 移动pos到当前end位置，继续查找下一个'='
+		pos = end;
+	}
+	if (results.size() == 2)
+	{
+		m_strWorkGuid = results[0];
+		m_nWorkMode = std::stoi(results[1]);
+		showEvent(nullptr);
+	}
 }
 
 void MainForm::On_SafeChanged_On()

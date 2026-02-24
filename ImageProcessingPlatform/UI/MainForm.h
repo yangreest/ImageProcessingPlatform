@@ -1,5 +1,4 @@
 #pragma once
-
 #include <mutex>
 #include "CameraFrom.h"
 #include "ControlBoardConfigForm.h"
@@ -18,6 +17,7 @@
 #include "Protocol/WHSDControlBoradProtocol.h"
 #include "Tools/USBKey.h"
 #include "LogDisplayDialog.h"
+#include <DeviceCom/TcpClient.h>
 
 #define MaxControlBoardCount 2
 
@@ -163,6 +163,10 @@ private:
 
 	void Callback_SampleBoardDeviceRunStatus(DeviceRunStatus s);
 
+	void Callback_TcpClientConnectionChanged(bool connected, int guid);
+
+    void Callback_TcpClientReadData(uint8_t* data, int len, uint64_t nIndex );
+
 	void Callback_DeviceHeartBeat(const CDeviceHeartBeat& b, int nComdeviceIndex);
 
 	void Callback_GetSampleBoardValue(DeviceValue v, double d);
@@ -273,7 +277,7 @@ private:
 
 	DeviceRunStatus m_enumDeviceRunStatus;
 
-	CWriteLog* m_pDeviceLog;
+	CTcpClientCom* m_pCTcpClientCom;
 
 	int m_nPicCount;
 

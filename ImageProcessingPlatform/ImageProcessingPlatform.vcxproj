@@ -88,7 +88,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <Optimization>MinSpace</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <PreprocessorDefinitions>__DEBUG__;QT_MESSAGELOGCONTEXT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>QT_MESSAGELOGCONTEXT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>D:\3rd\XCloud\lib;D:\3rd\PZMedical\lib;D:\3rd\DRTECH\lib;D:\3rd\HammingElectronic\lib;D:\3rd\Vikey\lib;D:\3rd\opencv_4_12_0\lib</AdditionalLibraryDirectories>

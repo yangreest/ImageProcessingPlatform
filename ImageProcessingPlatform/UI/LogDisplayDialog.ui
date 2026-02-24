@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #404040;</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>1</number>
@@ -36,6 +39,9 @@
      </property>
      <item>
       <widget class="QPushButton" name="m_saveButton">
+       <property name="styleSheet">
+        <string notr="true">color: white;</string>
+       </property>
        <property name="text">
         <string>保存</string>
        </property>
@@ -43,6 +49,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="m_clearButton">
+       <property name="styleSheet">
+        <string notr="true">color: white;</string>
+       </property>
        <property name="text">
         <string>清空</string>
        </property>
@@ -63,6 +72,9 @@
      </item>
      <item>
       <widget class="QCheckBox" name="checkBox_3">
+       <property name="styleSheet">
+        <string notr="true">color: white;</string>
+       </property>
        <property name="text">
         <string>Info</string>
        </property>
@@ -70,6 +82,9 @@
      </item>
      <item>
       <widget class="QCheckBox" name="checkBox">
+       <property name="styleSheet">
+        <string notr="true">color: white;</string>
+       </property>
        <property name="text">
         <string>Debug</string>
        </property>
@@ -77,6 +92,9 @@
      </item>
      <item>
       <widget class="QCheckBox" name="checkBox_2">
+       <property name="styleSheet">
+        <string notr="true">color: white;</string>
+       </property>
        <property name="text">
         <string>Waring</string>
        </property>
@@ -84,6 +102,9 @@
      </item>
      <item>
       <widget class="QCheckBox" name="checkBox_4">
+       <property name="styleSheet">
+        <string notr="true">color: white;</string>
+       </property>
        <property name="text">
         <string>Error</string>
        </property>
@@ -92,7 +113,87 @@
     </layout>
    </item>
    <item>
-    <widget class="QTableWidget" name="m_logTable"/>
+    <widget class="QTableWidget" name="m_logTable">
+     <property name="styleSheet">
+      <string notr="true">/* 表格整体样式：匹配深色主背景 */
+QTableWidget {
+    background-color: #404040;       /* 与软件主背景一致 */
+    alternate-background-color: #484848; /* 隔行变色，增强可读性 */
+    color: #e0e0e0;                  /* 常规文字颜色 */
+    gridline-color: #505050;         /* 网格线颜色，浅于背景增加层次 */
+    border: 1px solid #555555;       /* 表格外边框 */
+    selection-background-color: #2a6fb8; /* 选中单元格背景色（与下拉框统一） */
+    selection-color: #ffffff;        /* 选中单元格文字色 */
+    outline: none;                   /* 去掉默认选中外边框 */
+}
+
+/* 表格表头样式：突出且不刺眼 */
+QHeaderView::section {
+    background-color: #383838;       /* 表头背景（略深于表格） */
+    color: #e8e8e8;                  /* 表头文字色（略亮于单元格） */
+    border: none;                    /* 去掉表头默认边框 */
+    border-bottom: 1px solid #555555;/* 表头底部分隔线 */
+    border-right: 1px solid #505050; /* 表头列分隔线 */
+    padding: 8px;                    /* 表头内边距 */
+    font-weight: 500;                /* 表头文字加粗，突出层级 */
+    text-align: center;              /* 表头文字居中 */
+}
+
+/* 表格单元格细化 */
+QTableWidget::item {
+    padding: 6px 8px;                /* 单元格内边距，避免文字贴边 */
+    border: none;                    /* 去掉单元格默认边框 */
+}
+
+/* 单元格悬停效果（Qt5.15+支持） */
+QTableWidget::item:hover {
+    background-color: #3a3a5a;       /* 悬停背景色（蓝调深灰，与下拉框风格统一） */
+    color: #e8e8e8;                  /* 悬停文字色 */
+}
+
+/* 表格垂直滚动条样式：适配深色主题 */
+QScrollBar:vertical {
+    background-color: #404040;       /* 滚动条背景 */
+    width: 12px;                     /* 滚动条宽度 */
+    margin: 0px 0px 0px 0px;
+}
+QScrollBar::handle:vertical {
+    background-color: #606060;       /* 滚动条滑块 */
+    border-radius: 6px;              /* 圆角，更现代 */
+    min-height: 20px;
+}
+QScrollBar::handle:vertical:hover {
+    background-color: #707070;       /* 滑块悬停色 */
+}
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    background: none;                /* 隐藏上下箭头按钮 */
+}
+
+/* 表格水平滚动条样式（可选） */
+QScrollBar:horizontal {
+    background-color: #404040;
+    height: 12px;
+    margin: 0px 0px 0px 0px;
+}
+QScrollBar::handle:horizontal {
+    background-color: #606060;
+    border-radius: 6px;
+    min-width: 20px;
+}
+QScrollBar::handle:horizontal:hover {
+    background-color: #707070;
+}
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
+    background: none;
+}
+
+/* 可选：表格角落样式 */
+QTableCornerButton::section {
+    background-color: #383838;
+    border: 1px solid #555555;
+}</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

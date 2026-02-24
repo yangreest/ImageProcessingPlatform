@@ -406,6 +406,35 @@ QGroupBox  {
            <layout class="QHBoxLayout" name="horizontalLayout_8">
             <item>
              <widget class="QComboBox" name="comboBox_4">
+              <property name="styleSheet">
+               <string notr="true">/* 主下拉框样式：匹配#404040深色背景 */
+QComboBox {
+    color: #e0e0e0;               /* 常规文字色（浅灰，保证可读性） */
+}
+
+/* 下拉列表容器：核心匹配主背景 */
+QComboBox QAbstractItemView {
+    background-color: #404040;    /* 列表背景与软件主背景完全一致 */
+    border: 1px solid #555555;    /* 列表边框，略亮于背景 */
+    outline: none;                /* 去掉选中时的默认外边框 */
+    color: #e0e0e0;               /* 未选中选项的文字色 */
+    selection-background-color: #2a6fb8;  /* 选中项背景（深蓝色，深色主题经典配色） */
+    selection-color: #ffffff;     /* 选中项文字色（纯白，保证高对比） */
+}
+
+/* 下拉列表项细化：优化交互体验 */
+QComboBox QAbstractItemView::item {
+    height: 30px;                 /* 选项高度，适配深色主题操作手感 */
+    padding-left: 8px;            /* 文字左内边距，避免贴边 */
+    background-color: #404040;    /* 单个选项默认背景（与容器一致） */
+}
+
+/* 悬停状态：浅于选中色，高于默认背景，过渡自然 */
+QComboBox QAbstractItemView::item:hover {
+    background-color: #303050;    /* 悬停背景（蓝调深灰，不刺眼） */
+    color: #e8e8e8;               /* 悬停文字色（略亮于默认） */
+}</string>
+              </property>
               <item>
                <property name="text">
                 <string>电平开启</string>
@@ -420,6 +449,35 @@ QGroupBox  {
             </item>
             <item>
              <widget class="QComboBox" name="comboBox_5">
+              <property name="styleSheet">
+               <string notr="true">/* 主下拉框样式：匹配#404040深色背景 */
+QComboBox {
+    color: #e0e0e0;               /* 常规文字色（浅灰，保证可读性） */
+}
+
+/* 下拉列表容器：核心匹配主背景 */
+QComboBox QAbstractItemView {
+    background-color: #404040;    /* 列表背景与软件主背景完全一致 */
+    border: 1px solid #555555;    /* 列表边框，略亮于背景 */
+    outline: none;                /* 去掉选中时的默认外边框 */
+    color: #e0e0e0;               /* 未选中选项的文字色 */
+    selection-background-color: #2a6fb8;  /* 选中项背景（深蓝色，深色主题经典配色） */
+    selection-color: #ffffff;     /* 选中项文字色（纯白，保证高对比） */
+}
+
+/* 下拉列表项细化：优化交互体验 */
+QComboBox QAbstractItemView::item {
+    height: 30px;                 /* 选项高度，适配深色主题操作手感 */
+    padding-left: 8px;            /* 文字左内边距，避免贴边 */
+    background-color: #404040;    /* 单个选项默认背景（与容器一致） */
+}
+
+/* 悬停状态：浅于选中色，高于默认背景，过渡自然 */
+QComboBox QAbstractItemView::item:hover {
+    background-color: #303050;    /* 悬停背景（蓝调深灰，不刺眼） */
+    color: #e8e8e8;               /* 悬停文字色（略亮于默认） */
+}</string>
+              </property>
               <item>
                <property name="text">
                 <string>高电平开启</string>
@@ -434,6 +492,35 @@ QGroupBox  {
             </item>
             <item>
              <widget class="QComboBox" name="comboBox_2">
+              <property name="styleSheet">
+               <string notr="true">/* 主下拉框样式：匹配#404040深色背景 */
+QComboBox {
+    color: #e0e0e0;               /* 常规文字色（浅灰，保证可读性） */
+}
+
+/* 下拉列表容器：核心匹配主背景 */
+QComboBox QAbstractItemView {
+    background-color: #404040;    /* 列表背景与软件主背景完全一致 */
+    border: 1px solid #555555;    /* 列表边框，略亮于背景 */
+    outline: none;                /* 去掉选中时的默认外边框 */
+    color: #e0e0e0;               /* 未选中选项的文字色 */
+    selection-background-color: #2a6fb8;  /* 选中项背景（深蓝色，深色主题经典配色） */
+    selection-color: #ffffff;     /* 选中项文字色（纯白，保证高对比） */
+}
+
+/* 下拉列表项细化：优化交互体验 */
+QComboBox QAbstractItemView::item {
+    height: 30px;                 /* 选项高度，适配深色主题操作手感 */
+    padding-left: 8px;            /* 文字左内边距，避免贴边 */
+    background-color: #404040;    /* 单个选项默认背景（与容器一致） */
+}
+
+/* 悬停状态：浅于选中色，高于默认背景，过渡自然 */
+QComboBox QAbstractItemView::item:hover {
+    background-color: #303050;    /* 悬停背景（蓝调深灰，不刺眼） */
+    color: #e8e8e8;               /* 悬停文字色（略亮于默认） */
+}</string>
+              </property>
               <item>
                <property name="text">
                 <string>倒计时开启</string>
@@ -706,6 +793,35 @@ QGroupBox  {
             </item>
             <item>
              <widget class="QComboBox" name="comboBox_3">
+              <property name="styleSheet">
+               <string notr="true">/* 主下拉框样式：匹配#404040深色背景 */
+QComboBox {
+    color: #e0e0e0;               /* 常规文字色（浅灰，保证可读性） */
+}
+
+/* 下拉列表容器：核心匹配主背景 */
+QComboBox QAbstractItemView {
+    background-color: #404040;    /* 列表背景与软件主背景完全一致 */
+    border: 1px solid #555555;    /* 列表边框，略亮于背景 */
+    outline: none;                /* 去掉选中时的默认外边框 */
+    color: #e0e0e0;               /* 未选中选项的文字色 */
+    selection-background-color: #2a6fb8;  /* 选中项背景（深蓝色，深色主题经典配色） */
+    selection-color: #ffffff;     /* 选中项文字色（纯白，保证高对比） */
+}
+
+/* 下拉列表项细化：优化交互体验 */
+QComboBox QAbstractItemView::item {
+    height: 30px;                 /* 选项高度，适配深色主题操作手感 */
+    padding-left: 8px;            /* 文字左内边距，避免贴边 */
+    background-color: #404040;    /* 单个选项默认背景（与容器一致） */
+}
+
+/* 悬停状态：浅于选中色，高于默认背景，过渡自然 */
+QComboBox QAbstractItemView::item:hover {
+    background-color: #303050;    /* 悬停背景（蓝调深灰，不刺眼） */
+    color: #e8e8e8;               /* 悬停文字色（略亮于默认） */
+}</string>
+              </property>
               <item>
                <property name="text">
                 <string>低</string>

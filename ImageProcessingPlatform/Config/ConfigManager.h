@@ -51,6 +51,13 @@ public:
 	int m_nDownloadTimeOut;
 };
 
+class CTcpClientParam
+{
+public:
+	std::string m_strIp;
+	int m_nPort;
+};
+
 class CConfigManager
 {
 public:
@@ -59,5 +66,6 @@ public:
 	CSampleBoardConfig m_memCSampleBoardConfig;
 	CCameraConfig m_memCCameraConfig;
 	CTimsConfig m_memTimsConfig;
+	CTcpClientParam m_mCTcpClientParam;
 	void Read(const std::string& filePath);
 };

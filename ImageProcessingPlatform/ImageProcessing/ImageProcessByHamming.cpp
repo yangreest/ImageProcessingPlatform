@@ -99,6 +99,10 @@ bool CImageProcessByHamming::BrightAndContrastProcess(int wid, int hei, uint16_t
 	// 调整亮度和对比度，限制像素值范围
 	cv::Mat dst;
 	src.convertTo(dst, CV_16UC1, 65535.0 / (targetMax - targetMin), -targetMin * 65535.0 / (targetMax - targetMin));
+	if (m_bImgNeedReverse)
+	{
+		dst.convertTo(dst, CV_16UC1, -1, 65535);
+	}
 	//src.convertTo(dst, CV_16UC1, alpha, beta); // 核心调整公式
 	// 裁剪超出0~65535的像素值，避免溢出
 	threshold(dst, dst, MAX_16BIT, MAX_16BIT, cv::THRESH_TRUNC);

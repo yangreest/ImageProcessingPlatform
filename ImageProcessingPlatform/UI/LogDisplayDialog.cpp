@@ -28,17 +28,6 @@ void LogDisplayDialog::setupUI()
 	ui.m_logTable->setColumnWidth(0, 50);
 	ui.m_logTable->setColumnWidth(3, 400);
 
-	// 设置表格样式
-	//ui.m_logTable->setStyleSheet(
-	//    "QTableWidget {"
-	//    "   gridline-color: lightgray;"
-	//    "   alternate-background-color: #f0f0f0;"
-	//    "}"
-	//    "QTableWidget::item:selected {"
-	//    "   background-color: #3399ff;"
-	//    "   color: white;"
-	//    "}"
-	//);
 }
 
 void LogDisplayDialog::setupConnections()

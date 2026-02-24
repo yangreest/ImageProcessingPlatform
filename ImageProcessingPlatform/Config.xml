@@ -36,9 +36,9 @@
 			</Size>
 		</RawFileSize>
 		<Type>1</Type>
-		<UploadPic>http://192.168.1.66:8084/lims/skEntrust/uploadImagesByJson</UploadPic>
-		<DownloadPic>http://192.168.1.66:8084/lims/skEntrust/downLoadImageBySampleId</DownloadPic>
-		<GetGuidInfo>http://192.168.1.66:8084/lims/skEntrust/getSampleNameBySampleId</GetGuidInfo>
+		<UploadPic>https://tims.sidajiance.com/pro-api/lims/skEntrust/uploadImagesByJson</UploadPic>
+		<DownloadPic>https://tims.sidajiance.com/pro-api/lims/skEntrust/downLoadImageBySampleId</DownloadPic>
+		<GetGuidInfo>https://tims.sidajiance.com/pro-api/lims/skEntrust/getSampleNameBySampleId</GetGuidInfo>
 		<DownLoadTimeOut>10000</DownLoadTimeOut>
 	</ImageProcess>
 	<SampleBoard>
@@ -61,4 +61,8 @@
 	<Tims>
 		<ForceGuid>0</ForceGuid>
 	</Tims>
+	<TcpClient>
+		<Ip>127.0.0.1</Ip>
+		<Port>8877</Port>
+	</TcpClient>
 </Config>

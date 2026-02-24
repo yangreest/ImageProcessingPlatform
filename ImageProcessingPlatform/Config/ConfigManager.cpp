@@ -207,6 +207,23 @@ void CConfigManager::Read(const std::string& filePath)
 					}
 				}
 			}
+			{
+                auto sb = config->FirstChildElement("TcpClient");
+                if (sb != nullptr)
+                {
+					auto ipElement = sb->FirstChildElement("Ip");
+					if (ipElement && ipElement->GetText())
+					{
+						m_mCTcpClientParam.m_strIp = ipElement->GetText();
+					}
+
+                    auto nPort = sb->FirstChildElement("Port");
+                    if (nPort != nullptr && nPort->QueryIntText(&nIntTemp) == tinyxml2::XML_SUCCESS)
+                    {
+						m_mCTcpClientParam.m_nPort = nIntTemp;
+                    }
+                }
+			}
 		}
 	}
 }
