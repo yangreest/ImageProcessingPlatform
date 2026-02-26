@@ -105,6 +105,7 @@ private slots:
 	void On_SavePNG_Clicked();
 	void On_SetFMode();
 	void On_NoSetFMode();
+	void On_Dial_ValueChanged(int value);
 
 	void On_DenoiseAndEnhance0();
 	void On_Denoise1();
@@ -259,7 +260,7 @@ private:
 
 	double m_dImgScale; // 显示图片的缩放比例
 
-	int m_nRotate;
+	int m_nRotate; // 旋转角度以0-360为范围
 
 	int m_nImgXOffset;
 

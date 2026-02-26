@@ -71,42 +71,54 @@
       </spacer>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox_3">
+      <widget class="QCheckBox" name="cBInfo">
        <property name="styleSheet">
         <string notr="true">color: white;</string>
        </property>
        <property name="text">
         <string>Info</string>
        </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox">
+      <widget class="QCheckBox" name="cBDebug">
        <property name="styleSheet">
         <string notr="true">color: white;</string>
        </property>
        <property name="text">
         <string>Debug</string>
        </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox_2">
+      <widget class="QCheckBox" name="cBWaring">
        <property name="styleSheet">
         <string notr="true">color: white;</string>
        </property>
        <property name="text">
         <string>Waring</string>
        </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox_4">
+      <widget class="QCheckBox" name="cBError">
        <property name="styleSheet">
         <string notr="true">color: white;</string>
        </property>
        <property name="text">
         <string>Error</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

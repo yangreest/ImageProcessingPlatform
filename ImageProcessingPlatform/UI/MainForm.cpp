@@ -47,12 +47,7 @@ void customMessageHandler(QtMsgType type, const QMessageLogContext& context, con
 
 	// 格式化日志：时间 + 级别 + 信息 + 代码位置(文件名+行号)
 	QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz");
-	QString logText = QString("%1  (%2:%3:%4)")
-		.arg(msg)
-		.arg(context.file)
-		.arg(context.line)
-		.arg(context.function);
-
+	
 	// 通过全局指针调用主窗口方法，将日志添加到TextEdit
 	if (g_mainForm) {
 		// 直接调用（本示例在主线程使用，线程安全；多线程场景建议改用信号槽）
@@ -454,7 +449,7 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 		WHSD_Tools::CalculateOriginalCoordinates(
 			pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2), 
 			pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-			m_nRotate * 90, 
+			m_nRotate /** 90*/, 
 			m_dImgScale, 
 			m_dImgScale,
 			0, 
@@ -484,7 +479,7 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 			WHSD_Tools::CalculateOriginalCoordinates(
 				pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2), 
 				pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-				m_nRotate * 90,
+				m_nRotate /** 90*/,
 				m_dImgScale,
 				m_dImgScale,
 				0, 
@@ -508,7 +503,7 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 			WHSD_Tools::CalculateOriginalCoordinates(
 				pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2),
 				pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-				m_nRotate * 90,
+				m_nRotate /** 90*/,
 				m_dImgScale,
 				m_dImgScale,
 				0,
@@ -534,7 +529,7 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 		WHSD_Tools::CalculateOriginalCoordinates(
 			pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2),
 			pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-			m_nRotate * 90,
+			m_nRotate /** 90*/,
 			m_dImgScale,
 			m_dImgScale,
 			0,
@@ -578,7 +573,7 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 		WHSD_Tools::CalculateOriginalCoordinates(
 			m_nLastMouseX - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2),
 			m_nLastMouseY - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-			m_nRotate * 90,
+			m_nRotate /** 90*/,
 			m_dImgScale,
 			m_dImgScale,
 			0,
@@ -603,7 +598,7 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 		WHSD_Tools::CalculateOriginalCoordinates(
 			m_nLastMouseX - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2),
 			m_nLastMouseY - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-			m_nRotate * 90,
+			m_nRotate /** 90*/,
 			m_dImgScale,
 			m_dImgScale,
 			0,
@@ -625,7 +620,7 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 		WHSD_Tools::CalculateOriginalCoordinates(
 			m_nLastMouseX - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2),
 			m_nLastMouseY - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-			m_nRotate * 90,
+			m_nRotate /** 90*/,
 			m_dImgScale,
 			m_dImgScale,
 			0,
@@ -758,7 +753,7 @@ void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos
 				WHSD_Tools::CalculateOriginalCoordinates(
 					pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2),
 					pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-					m_nRotate * 90,
+					m_nRotate /** 90*/,
 					m_dImgScale,
 					m_dImgScale,
 					0,
@@ -788,7 +783,7 @@ void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos
 			WHSD_Tools::CalculateOriginalCoordinates(
 				pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2),
 				pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-				m_nRotate * 90,
+				m_nRotate /** 90*/,
 				m_dImgScale,
 				m_dImgScale,
 				0,
@@ -845,7 +840,7 @@ void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos
 					WHSD_Tools::CalculateOriginalCoordinates(
 						pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset -m_memMainQImage.width()* (m_dImgScale -1) / 2),
 						pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-						m_nRotate * 90,
+						m_nRotate /** 90*/,
 						m_dImgScale,
 						m_dImgScale,
 						0,
@@ -873,7 +868,7 @@ void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos
 					WHSD_Tools::CalculateOriginalCoordinates(
 						pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset -m_memMainQImage.width()* (m_dImgScale -1) / 2),
 						pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-						m_nRotate * 90,
+						m_nRotate /** 90*/,
 						m_dImgScale,
 						m_dImgScale,
 						0,
@@ -943,7 +938,11 @@ void MainForm::On_ImgLeftDoubleClick()
 {
 	if (m_eMouseMode == MouseMode::nNone)
 	{
-		m_nRotate++;
+		m_nRotate += 90;
+        m_nRotate = m_nRotate % 360;
+		ui.dial->blockSignals(true);
+		ui.dial->setValue(m_nRotate);
+        ui.dial->blockSignals(false);
 		PaintImg();
 	}
 }
@@ -1069,8 +1068,8 @@ void MainForm::InitUI(int model)
 
 	ui.groupBox_10->setVisible(false);
 	ui.groupBox_8->setVisible(false);
-	ui.pushButton_60->setVisible(false);
-	ui.pushButton_61->setVisible(false);
+	//ui.pushButton_60->setVisible(false);
+	//ui.pushButton_61->setVisible(false);
 	if (m_strWorkGuid.empty())
 	{
 		if (m_pConfig->m_memTimsConfig.m_nForceGuid == 1)
@@ -1266,6 +1265,8 @@ void MainForm::BindAction()
 	connect(ui.pushButton_57, &QPushButton::clicked, this, &MainForm::On_deleteTag_Click);
 	connect(ui.pushButton_59, &QPushButton::clicked, this, &MainForm::On_SaveDealedPic);
 	connect(ui.pushButton_60, &QPushButton::clicked, this, &MainForm::On_LogForm_Click);
+
+	connect(ui.dial , &QDial::valueChanged, this, &MainForm::On_Dial_ValueChanged);
 }
 
 void MainForm::InitParam()
@@ -1552,13 +1553,21 @@ void MainForm::On_ImgReverse_Click()
 
 void MainForm::On_RotateLeft_Click()
 {
-	m_nRotate = m_nRotate + 3;
+	m_nRotate = m_nRotate + 270;
+	m_nRotate = m_nRotate % 360;
+	ui.dial->blockSignals(true);
+	ui.dial->setValue(m_nRotate);
+	ui.dial->blockSignals(false);
 	PaintImg();
 }
 
 void MainForm::On_RotateRight_Click()
 {
-	m_nRotate++;
+	m_nRotate += 90;
+	m_nRotate = m_nRotate % 360;
+    ui.dial->blockSignals(true);
+	ui.dial->setValue(m_nRotate);
+    ui.dial->blockSignals(false);
 	PaintImg();
 }
 
@@ -2149,7 +2158,7 @@ QImage MainForm::PaintTag()
 				ss << "angel:" << jd << "°";
 
 				painter2.translate(s.m_nStartX, s.m_nStartX);
-				painter2.rotate(0 - (m_nRotate % 4) * 90); // 平移到绘制起点（旋转中心）
+				painter2.rotate(0 - (m_nRotate % 360) /** 90*/); // 平移到绘制起点（旋转中心）
 				painter2.drawText(0, 0, ss.str().c_str());
 				painter2.restore();
 			}
@@ -2158,7 +2167,7 @@ QImage MainForm::PaintTag()
 		case 4:
 		{
 			painter2.translate(s.m_nStartX, s.m_nStartX);
-			painter2.rotate(0 - (m_nRotate % 4) * 90); // 平移到绘制起点（旋转中心）
+			painter2.rotate(0 - (m_nRotate % 360) /** 90*/); // 平移到绘制起点（旋转中心）
 			painter2.drawText(0, 0, s.m_strContent.c_str());
 			painter2.restore();
 			break;
@@ -2222,7 +2231,7 @@ QImage MainForm::PaintTag()
 				ss << "L:" << len << ",H:" << hei;
 
 				painter2.translate(s.m_nEndX2, s.m_nEndY2);
-				painter2.rotate(0 - (m_nRotate % 4) * 90); // 平移到绘制起点（旋转中心）
+				painter2.rotate(0 - (m_nRotate % 360) /** 90*/); // 平移到绘制起点（旋转中心）
 				painter2.drawText(5, 5, ss.str().c_str());
 				painter2.restore();
 			}
@@ -2255,10 +2264,10 @@ void MainForm::PaintImg()
 	);
 	{
 		//旋转
-		auto rt = m_nRotate % 4;
+		auto rt = m_nRotate % 360;
 		if (rt != 0)
 		{
-			memMainQImage = memMainQImage.transformed(QTransform().rotate(rt * 90));
+			memMainQImage = memMainQImage.transformed(QTransform().rotate(rt/* * 90*/));
 		}
 		//镜像
 		if (m_bLeftRightMirror)
@@ -2795,6 +2804,17 @@ void MainForm::On_NoSetFMode()
 {
 	auto cmds = CWHSDControlBoardProtocol::SetFactoryMode(false);
 	m_apDeviceCom[0]->Write(cmds.data(), cmds.size());
+}
+
+void MainForm::On_Dial_ValueChanged(int value)
+{
+	qDebug() << "On_Dial_ValueChanged " << value;
+	qInfo() << "On_Dial_ValueChanged " << value;
+	qCritical() << "On_Dial_ValueChanged " << value;
+	qWarning() << "On_Dial_ValueChanged " << value;
+
+	m_nRotate = value;
+	PaintImg();
 }
 
 void MainForm::On_DenoiseAndEnhance0()

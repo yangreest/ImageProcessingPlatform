@@ -1255,6 +1255,25 @@ QPushButton:hover {
             </property>
            </widget>
           </item>
+          <item row="2" column="2">
+           <widget class="QDial" name="dial">
+            <property name="maximumSize">
+             <size>
+              <width>70</width>
+              <height>70</height>
+             </size>
+            </property>
+            <property name="maximum">
+             <number>359</number>
+            </property>
+            <property name="wrapping">
+             <bool>true</bool>
+            </property>
+            <property name="notchesVisible">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>

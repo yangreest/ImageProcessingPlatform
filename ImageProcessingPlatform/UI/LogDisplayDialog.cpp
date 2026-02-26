@@ -16,6 +16,9 @@ LogDisplayDialog::~LogDisplayDialog()
 
 void LogDisplayDialog::setupUI()
 {
+	// 将界面设置置顶
+    setWindowFlags(Qt::WindowStaysOnTopHint);
+
 	// 创建表格
 	//m_logTable = new QTableWidget(this);
 	ui.m_logTable->setColumnCount(7);
@@ -38,6 +41,30 @@ void LogDisplayDialog::setupConnections()
 
 void LogDisplayDialog::addLogEntry(const QString& level, const QString& message, const QString& timestamp, const QString& file, const QString& function, const QString& line)
 {
+	// 对传入的
+	// 设置级别（根据级别设置颜色）
+	QTableWidgetItem* levelItem = new QTableWidgetItem(level);
+	levelItem->setTextAlignment(Qt::AlignCenter);
+	if (level.toUpper() == "[CRIT]") {
+		if (!ui.cBError->isChecked()) return;
+		levelItem->setBackground(QColor(255, 200, 200));  // 红色背景
+		levelItem->setForeground(QColor(255, 200, 200));
+	}
+	else if (level.toUpper() == "[WARN]") {
+        if (!ui.cBWaring->isChecked()) return;
+		levelItem->setBackground(QColor(255, 255, 200));  // 黄色背景
+        levelItem->setForeground(QColor(255, 255, 200));
+	}
+	else if (level.toUpper() == "[INFO]") {
+        if (!ui.cBInfo->isChecked()) return;
+		levelItem->setBackground(QColor(200, 255, 200));  // 绿色背景
+        levelItem->setForeground(QColor(200, 255, 200));
+	}
+	else if(level.toUpper() == "[DEBUG]")
+	{
+		if (!ui.cBDebug->isChecked()) return;
+	}
+
 	int row = ui.m_logTable->rowCount();
 	ui.m_logTable->insertRow(row);
 
@@ -51,18 +78,7 @@ void LogDisplayDialog::addLogEntry(const QString& level, const QString& message,
 	timeItem->setTextAlignment(Qt::AlignCenter);
 	ui.m_logTable->setItem(row, 1, timeItem);
 
-	// 设置级别（根据级别设置颜色）
-	QTableWidgetItem* levelItem = new QTableWidgetItem(level);
-	levelItem->setTextAlignment(Qt::AlignCenter);
-	if (level.toLower() == "error") {
-		levelItem->setBackground(QColor(255, 200, 200));  // 红色背景
-	}
-	else if (level.toLower() == "warning") {
-		levelItem->setBackground(QColor(255, 255, 200));  // 黄色背景
-	}
-	else if (level.toLower() == "info") {
-		levelItem->setBackground(QColor(200, 255, 200));  // 绿色背景
-	}
+	
 	ui.m_logTable->setItem(row, 2, levelItem);
 
 	// 设置消息
