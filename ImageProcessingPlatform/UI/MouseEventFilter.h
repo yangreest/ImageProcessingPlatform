@@ -13,8 +13,8 @@ signals:
 	void mousePositionChanged(Qt::MouseButton button, const QPoint& pos);
 	void mousePressed(Qt::MouseButton button, const QPoint& pos);
 	void mouseReleased(Qt::MouseButton button, const QPoint& pos);
-	void wheelUp();
-	void wheelDown();
+	void wheelUp(const QPoint& pos);
+	void wheelDown(const QPoint& pos);
 	void leftDoubleClicked();
 	void rightDoubleClicked();
 

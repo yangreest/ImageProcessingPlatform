@@ -25,6 +25,7 @@
 
 #define MY_WARNING(t) 	{AlertForm f("警告", t);f.showModal();qWarning() << t; }//QMessageBox::warning(this, "警告", t)
 #define MY_INFO(t) {AlertForm f("提示", t);f.showModal();qInfo()<< t; }//QMessageBox::information(this, "提示", t)
+#define MY_ERROR(t) {AlertForm f("错误", t);f.showModal();qCritical() << t; }//QMessageBox::critical(this, "错误", t)
 
 #define HeartbeatFaultTolerance 5
 
@@ -47,7 +48,7 @@ void customMessageHandler(QtMsgType type, const QMessageLogContext& context, con
 
 	// 格式化日志：时间 + 级别 + 信息 + 代码位置(文件名+行号)
 	QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz");
-	
+
 	// 通过全局指针调用主窗口方法，将日志添加到TextEdit
 	if (g_mainForm) {
 		// 直接调用（本示例在主线程使用，线程安全；多线程场景建议改用信号槽）
@@ -429,6 +430,8 @@ void MainForm::On_Right_Release()
 
 void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 {
+	ui.label_43->setText("("+QString::number(pos.x()) + "," + QString::number(pos.y())+")");
+
 	if (m_bNeedChangePicInfo) // 鼠标右键控制图片的灰度
 	{
 		auto bv = 6;
@@ -447,17 +450,17 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 
 		double newX = 0, newY = 0;
 		WHSD_Tools::CalculateOriginalCoordinates(
-			pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2), 
+			pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
 			pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-			m_nRotate /** 90*/, 
-			m_dImgScale, 
+			m_nRotate /** 90*/,
 			m_dImgScale,
-			0, 
-			0, 
-			m_bLeftRightMirror, 
+			m_dImgScale,
+			0,
+			0,
+			m_bLeftRightMirror,
 			m_bUpDownMirror,
-			m_memMainQImage.width(), 
-			m_memMainQImage.height(), 
+			m_memMainQImage.width(),
+			m_memMainQImage.height(),
 			&newX, &newY);
 
 		p.m_nEndX = newX;
@@ -477,16 +480,16 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 
 			double newX = 0, newY = 0;
 			WHSD_Tools::CalculateOriginalCoordinates(
-				pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2), 
+				pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
 				pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
 				m_nRotate /** 90*/,
 				m_dImgScale,
 				m_dImgScale,
-				0, 
-				0, 
+				0,
+				0,
 				m_bLeftRightMirror,
 				m_bUpDownMirror,
-				m_memMainQImage.width(), 
+				m_memMainQImage.width(),
 				m_memMainQImage.height(),
 				&newX, &newY);
 
@@ -501,7 +504,7 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 
 			double newX = 0, newY = 0;
 			WHSD_Tools::CalculateOriginalCoordinates(
-				pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2),
+				pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
 				pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
 				m_nRotate /** 90*/,
 				m_dImgScale,
@@ -520,14 +523,14 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 		PaintImg();
 	}
 	// 处理截图模式下的鼠标移动（模式7），更新截图区域的尺寸和位置
-	if (m_eMouseMode == MouseMode::Capture)
+	if (m_eMouseMode == MouseMode::Capture && m_bCapturePressed)
 	{
 		auto labelSize = ui.label->size();
 
 
 		double newX = 0, newY = 0;
 		WHSD_Tools::CalculateOriginalCoordinates(
-			pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2),
+			pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
 			pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
 			m_nRotate /** 90*/,
 			m_dImgScale,
@@ -565,13 +568,15 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 
 	m_nLastMouseY = pos.y();
 
+	//qDebug() << "button" << button << "pos" << pos << "m_eMouseMode" << (int)m_eMouseMode;
+
 	if (m_eMouseMode == MouseMode::DrawLine || m_eMouseMode == MouseMode::Rect || m_eMouseMode == MouseMode::Ellipse || (m_eMouseMode == MouseMode::Angle && m_nMouseClickCount == 0) ||
 		(m_eMouseMode == MouseMode::Curvature && m_nMouseClickCount == 0))
 	{
 		auto labelSize = ui.label->size();
 		double newX = 0, newY = 0;
 		WHSD_Tools::CalculateOriginalCoordinates(
-			m_nLastMouseX - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2),
+			m_nLastMouseX - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
 			m_nLastMouseY - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
 			m_nRotate /** 90*/,
 			m_dImgScale,
@@ -596,7 +601,7 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 
 		double newX = 0, newY = 0;
 		WHSD_Tools::CalculateOriginalCoordinates(
-			m_nLastMouseX - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2),
+			m_nLastMouseX - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
 			m_nLastMouseY - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
 			m_nRotate /** 90*/,
 			m_dImgScale,
@@ -610,6 +615,7 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 			&newX, &newY);
 		m_memCImageCapture.m_nPosX = newX;
 		m_memCImageCapture.m_nPosY = newY;
+		m_bCapturePressed = true;
 	}
 	if (m_eMouseMode == MouseMode::DeleteTag)
 	{
@@ -618,7 +624,7 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 
 		double newX = 0, newY = 0;
 		WHSD_Tools::CalculateOriginalCoordinates(
-			m_nLastMouseX - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2),
+			m_nLastMouseX - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
 			m_nLastMouseY - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
 			m_nRotate /** 90*/,
 			m_dImgScale,
@@ -728,14 +734,18 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 
 void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos)
 {
+	//qDebug() << "button" << button << "pos" << pos << "m_eMouseMode" << (int)m_eMouseMode;
+
 	if (button == Qt::LeftButton)
 	{
 		switch (m_eMouseMode)
 		{
 		case MouseMode::nNone:
 		{
+			//qDebug() << "m_nImgXOffset " << m_nImgXOffset << " m_nImgYOffset " << m_nImgYOffset;
 			m_nImgXOffset = m_nImgXOffset + (pos.x() - m_nLastMouseX);
 			m_nImgYOffset = m_nImgYOffset + (pos.y() - m_nLastMouseY);
+			//qDebug() << "m_nImgXOffset " << m_nImgXOffset << " m_nImgYOffset " << m_nImgYOffset;
 			PaintImg();
 			break;
 		}
@@ -751,7 +761,7 @@ void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos
 
 				double newX = 0, newY = 0;
 				WHSD_Tools::CalculateOriginalCoordinates(
-					pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2),
+					pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
 					pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
 					m_nRotate /** 90*/,
 					m_dImgScale,
@@ -781,9 +791,9 @@ void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos
 
 			double newX = 0, newY = 0;
 			WHSD_Tools::CalculateOriginalCoordinates(
-				pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width()* (m_dImgScale -1) / 2),
+				pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
 				pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-				m_nRotate /** 90*/,
+				m_nRotate /**90*/,
 				m_dImgScale,
 				m_dImgScale,
 				0,
@@ -838,7 +848,7 @@ void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos
 
 					double newX = 0, newY = 0;
 					WHSD_Tools::CalculateOriginalCoordinates(
-						pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset -m_memMainQImage.width()* (m_dImgScale -1) / 2),
+						pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
 						pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
 						m_nRotate /** 90*/,
 						m_dImgScale,
@@ -866,7 +876,7 @@ void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos
 
 					double newX = 0, newY = 0;
 					WHSD_Tools::CalculateOriginalCoordinates(
-						pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset -m_memMainQImage.width()* (m_dImgScale -1) / 2),
+						pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
 						pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
 						m_nRotate /** 90*/,
 						m_dImgScale,
@@ -894,6 +904,7 @@ void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos
 		{
 			m_memCImageCapture.m_bSaved = true;
 			m_eMouseMode = MouseMode::nNone;
+			m_bCapturePressed = false;
 			PaintImg();
 			break;
 		}
@@ -906,19 +917,27 @@ void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos
 	m_bNeedChangePicInfo = false;
 }
 
-void MainForm::On_ImgLabelWheelUp()
+void MainForm::On_ImgLabelWheelUp(const QPoint& pos)
 {
+	qDebug() << "pos " << pos;
 	m_dImgScale = m_dImgScale * 1.1;
 	m_dImgScale = std::max(m_dImgScale, 0.1);
 	m_dImgScale = std::min(m_dImgScale, 10.0);
+	QPoint offset = CalcImgOffset(pos);
+	m_nImgXOffset = offset.x();
+	m_nImgYOffset = offset.y();
 	PaintImg();
 }
 
-void MainForm::On_ImgLabelWheelDown()
+void MainForm::On_ImgLabelWheelDown(const QPoint& pos)
 {
+	qDebug() << "pos " << pos;
 	m_dImgScale = m_dImgScale / 1.1;
 	m_dImgScale = std::max(m_dImgScale, 0.1);
 	m_dImgScale = std::min(m_dImgScale, 10.0);
+	QPoint offset = CalcImgOffset(pos);
+	m_nImgXOffset = offset.x();
+	m_nImgYOffset = offset.y();
 	PaintImg();
 }
 
@@ -929,6 +948,7 @@ void MainForm::On_ImgRightDoubleClick()
 		m_dImgScale = 1;
 		m_nImgXOffset = 0;
 		m_nImgYOffset = 0;
+		m_nLastImg = QRect();
 		m_nRotate = 0;
 		PaintImg();
 	}
@@ -939,10 +959,10 @@ void MainForm::On_ImgLeftDoubleClick()
 	if (m_eMouseMode == MouseMode::nNone)
 	{
 		m_nRotate += 90;
-        m_nRotate = m_nRotate % 360;
+		m_nRotate = m_nRotate % 360;
 		ui.dial->blockSignals(true);
 		ui.dial->setValue(m_nRotate);
-        ui.dial->blockSignals(false);
+		ui.dial->blockSignals(false);
 		PaintImg();
 	}
 }
@@ -950,6 +970,7 @@ void MainForm::On_ImgLeftDoubleClick()
 void MainForm::showEvent(QShowEvent* event)
 {
 	QMainWindow::showEvent(event);
+	qDebug() << "Process Version:" << m_pImageProcess->GetVersion();
 	switch (m_nWorkMode)
 	{
 	case 1:
@@ -1165,6 +1186,7 @@ void MainForm::BindAction()
 	connect(m_pKeyEventFilter, &KeyEventFilter::controlOnlyPressed, this, &MainForm::On_ControlOnly_Pressed);
 	connect(m_pKeyEventFilter, &KeyEventFilter::controlOnlyReleased, this, &MainForm::On_ControlOnly_Released);
 	m_pMouseEventFilter = new MouseEventFilter(this);
+	ui.label->setMouseTracking(true);
 	ui.label->installEventFilter(m_pMouseEventFilter);
 	connect(m_pMouseEventFilter, &MouseEventFilter::mousePositionChanged, this, &MainForm::On_ImgLabelMouseMove);
 	connect(m_pMouseEventFilter, &MouseEventFilter::mousePressed, this, &MainForm::On_ImgLabelMousePress);
@@ -1266,7 +1288,7 @@ void MainForm::BindAction()
 	connect(ui.pushButton_59, &QPushButton::clicked, this, &MainForm::On_SaveDealedPic);
 	connect(ui.pushButton_60, &QPushButton::clicked, this, &MainForm::On_LogForm_Click);
 
-	connect(ui.dial , &QDial::valueChanged, this, &MainForm::On_Dial_ValueChanged);
+	connect(ui.dial, &QDial::valueChanged, this, &MainForm::On_Dial_ValueChanged);
 }
 
 void MainForm::InitParam()
@@ -1315,6 +1337,8 @@ void MainForm::InitParam()
 	m_nRotate = 0;
 	m_nImgXOffset = 0;
 	m_nImgYOffset = 0;
+	m_nLastImg = QRect();
+	m_bCapturePressed = false;
 	m_dImgScale = 1;
 	m_pCameraFrom = nullptr;
 	m_nWifi = 0;
@@ -1393,6 +1417,7 @@ void MainForm::InitParam()
 	}
 
 	m_pImageProcess = CImageProcessBase::GetCImageProcessObj(m_pConfig->m_memCImageProcessConfig.m_nType);
+	
 	ui.pushButton_32->setEnabled(m_pConfig->m_memCSampleBoardConfig.m_nExposureType == 1);
 }
 
@@ -1490,6 +1515,7 @@ void MainForm::Callback_ShowImgOnLabel_2()
 	ui.horizontalSlider->setValue(m_nStdDev);
 	ui.horizontalSlider_2->setValue(m_nMean);
 
+	ClearPicOpt();
 
 	QImage image(m_vector_LastImgBuffer.data(), m_memSDRaw.m_wPicWidth, m_memSDRaw.m_wPicHeight,
 		m_memSDRaw.m_wPicWidth * sizeof(uint16_t),
@@ -1565,9 +1591,9 @@ void MainForm::On_RotateRight_Click()
 {
 	m_nRotate += 90;
 	m_nRotate = m_nRotate % 360;
-    ui.dial->blockSignals(true);
+	ui.dial->blockSignals(true);
 	ui.dial->setValue(m_nRotate);
-    ui.dial->blockSignals(false);
+	ui.dial->blockSignals(false);
 	PaintImg();
 }
 
@@ -2344,13 +2370,15 @@ void MainForm::PaintImg()
 		auto lbw = labelSize.width();
 		auto lbh = labelSize.height();
 		auto wd = memMainQImage.width();
+		m_nLastImg.setWidth(wd);
 		auto ht = memMainQImage.height();
-		auto xb =
-			(labelSize.width() - memMainQImage.width()) / 2 + m_nImgXOffset - memMainQImage.width() * (m_dImgScale -
-				1) / 2;
-		auto yb =
-			(labelSize.height() - memMainQImage.height()) / 2 + m_nImgYOffset - memMainQImage.height() * (m_dImgScale -
-				1) / 2;
+		m_nLastImg.setHeight(ht);
+		auto xb = (labelSize.width() - memMainQImage.width()) / 2 + m_nImgXOffset   /* - memMainQImage.width() * (m_dImgScale - 1) / 2*/;
+		m_nLastImg.setX(xb);
+		auto yb = (labelSize.height() - memMainQImage.height()) / 2 + m_nImgYOffset /*- memMainQImage.height() * (m_dImgScale - 1) / 2*/;
+		m_nLastImg.setY(yb);
+		qDebug() << "m_nImgXOffset" << m_nImgXOffset << "m_nImgYOffset" << m_nImgYOffset;
+		qDebug() << "lbw:" << lbw << "lbh:" << lbh << "wd:" << wd << "ht:" << ht << "xb:" << xb << "yb:" << yb;
 		painter.drawImage(xb, yb, memMainQImage);
 
 		//painter.drawImage
@@ -2929,6 +2957,7 @@ void MainForm::ClearPicOpt()
 	//m_nRotate = 0;
 	m_nImgXOffset = 0;
 	m_nImgYOffset = 0;
+	m_nLastImg = QRect();
 	m_memCImageCapture.Clear();
 }
 
@@ -2953,6 +2982,19 @@ std::string MainForm::ChangeUIImg(const std::string& s, const bool ac)
 		".png);background-repeat:no-repeat;background-position:center;border:none;min-width:70px;max-width:70px;min-height:70px;max-height:70px;}QPushButton:hover{background-image:url(:/Image/icon/"
 		+ s + "_2.png);}";
 	return result;
+}
+
+QPoint MainForm::CalcImgOffset(QPoint mPoint)
+{
+	qDebug()<< "mPoint " << mPoint;
+	QSize labelSize = ui.label->size();
+    qDebug() << "labelSize " << labelSize;
+	QPoint offset_temp = mPoint - (mPoint - m_nLastImg.topLeft()) * m_dImgScale;
+    qDebug() << "offset_temp " << offset_temp;
+	QPoint offset = QPoint((labelSize.width() - m_nLastImg.width() * m_dImgScale) / 2 - offset_temp.x(),
+		(labelSize.height() - m_nLastImg.height() * m_dImgScale) / 2 - offset_temp.y());
+    qDebug() << "offset " << offset;
+	return offset;
 }
 
 void MainForm::ReadPicFromMem(int index)

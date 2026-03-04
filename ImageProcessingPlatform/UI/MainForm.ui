@@ -920,11 +920,17 @@ QComboBox QAbstractItemView::item:hover {
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
        <widget class="QLabel" name="label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="styleSheet">
          <string notr="true">background-color: #888888;</string>
         </property>
         <property name="text">
-         <string>.</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -932,20 +938,40 @@ QComboBox QAbstractItemView::item:hover {
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_2">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: white;</string>
-        </property>
-        <property name="text">
-         <string>图像快捷操作：鼠标拖放移动，鼠标滚轮放大缩小，鼠标左键双击旋转90°，鼠标右键双击还原</string>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout_17">
+        <item>
+         <widget class="QLabel" name="label_43">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: white;</string>
+          </property>
+          <property name="text">
+           <string>(xxx,xxx)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: white;</string>
+          </property>
+          <property name="text">
+           <string>图像快捷操作：鼠标拖放移动，鼠标滚轮放大缩小，鼠标左键双击旋转90°，鼠标右键双击还原</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>

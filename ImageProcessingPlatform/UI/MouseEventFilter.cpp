@@ -30,14 +30,15 @@ bool MouseEventFilter::eventFilter(QObject* obj, QEvent* event)
 	case QEvent::Wheel:
 	{
 		auto wheelEvent = dynamic_cast<QWheelEvent*>(event);
+		auto mouseEvent = (QMouseEvent*)(event);
 		// Qt 5.14+ 推荐方法
 		if (wheelEvent->angleDelta().y() > 0)
 		{
-			emit wheelUp();
+			emit wheelUp(mouseEvent->pos());
 		}
 		else
 		{
-			emit wheelDown();
+			emit wheelDown(mouseEvent->pos());
 		}
 		return false; // 继续处理事件
 	}

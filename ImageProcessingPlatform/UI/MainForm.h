@@ -61,8 +61,8 @@ private slots:
 	void On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos);
 	void On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos);
 	void On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos);
-	void On_ImgLabelWheelUp();
-	void On_ImgLabelWheelDown();
+	void On_ImgLabelWheelUp(const QPoint& pos);
+	void On_ImgLabelWheelDown(const QPoint& pos);
 	void On_ImgRightDoubleClick();
 	void On_ImgLeftDoubleClick();
 	void On_SafeChanged_On();
@@ -212,7 +212,10 @@ private:
 
 	void LoadOnlinePicByThread();
 
-	std::string ChangeUIImg(const std::string& s, bool ac);
+	std::string ChangeUIImg(const std::string& s, bool ac); 
+
+	//计算缩放的偏移值
+    QPoint CalcImgOffset(QPoint mPoint);
 
 	Ui::MainFormClass ui;
 
@@ -269,6 +272,10 @@ private:
 	int m_nLastMouseX;
 
 	int m_nLastMouseY;
+
+	QRect m_nLastImg;// QImage的尺寸
+
+	bool m_bCapturePressed;
 
 	std::mutex m_mutexDeviceInfoLock;
 
