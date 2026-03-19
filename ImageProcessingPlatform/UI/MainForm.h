@@ -17,7 +17,11 @@
 #include "Protocol/WHSDControlBoradProtocol.h"
 #include "Tools/USBKey.h"
 #include "LogDisplayDialog.h"
+#include "TragListDialog.h"
 #include <DeviceCom/TcpClient.h>
+#include <opencv2/opencv.hpp>
+#include <dcmtk/dcmdata/dctk.h>
+#include <dcmtk/dcmimgle/dcmimage.h>
 
 #define MaxControlBoardCount 2
 
@@ -101,11 +105,14 @@ private slots:
 	void On_PreviousPic_Click2();
 	void On_NextPic_Click2();
 	void On_OnLineLoadFailed_Slots();
+	void On_SaveImage_Clicked();
 	void On_SaveRaw_Clicked();
 	void On_SavePNG_Clicked();
 	void On_SetFMode();
 	void On_NoSetFMode();
 	void On_Dial_ValueChanged(int value);
+
+	void On_AddTag();
 
 	void On_DenoiseAndEnhance0();
 	void On_Denoise1();
@@ -136,6 +143,7 @@ private slots:
 
 	void On_SaveDealedPic();
 	void On_LogForm_Click();
+	void On_TragListForm_Click();
 	// 供消息处理函数调用的槽函数，接收日志信息
 	void appendLog(const QString& level, const QString& message, const QString& timestamp, const QString& file, const QString& function, const QString& line);
 
@@ -212,7 +220,11 @@ private:
 
 	void LoadOnlinePicByThread();
 
+	void ImgPixLocation(QPoint pos);
+
 	std::string ChangeUIImg(const std::string& s, bool ac); 
+
+	int saveMatToDcm(const cv::Mat& img, const std::string& savePath);
 
 	//计算缩放的偏移值
     QPoint CalcImgOffset(QPoint mPoint);
@@ -257,9 +269,9 @@ private:
 
 	bool m_bUpDownMirror;
 
-	bool m_bControlPressed;// 是否按下了控制键 用于按住旋转图像
+	//bool m_bControlPressed;// 是否按下了控制键 用于按住旋转图像
 
-	bool m_bNeedRoteImg; // 是否需要旋转图片
+	bool m_bMousePressed;
 
 	double m_dImgScale; // 显示图片的缩放比例
 
@@ -274,8 +286,6 @@ private:
 	int m_nLastMouseY;
 
 	QRect m_nLastImg;// QImage的尺寸
-
-	bool m_bCapturePressed;
 
 	std::mutex m_mutexDeviceInfoLock;
 
@@ -334,6 +344,7 @@ private:
 	int m_nLoadedMapType;
 
 	LogDisplayDialog* m_pLogDisplayDialog;
+	TragListDialog* m_pTragListDialog;
 
 	/// <summary>
 	/// 已处理好的图片

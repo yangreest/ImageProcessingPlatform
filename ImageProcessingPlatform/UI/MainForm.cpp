@@ -21,7 +21,13 @@
 #include "Tools/HttpClient.h"
 #include "Tools/Tools.h"
 
-#include <opencv2/opencv.hpp>
+#include <iphlpapi.h>
+#pragma comment(lib, "iphlpapi.lib")  // 自动链接库
+
+#include <lm.h>  // 包含网络管理函数的头文件
+#pragma comment(lib, "netapi32.lib")  // 自动链接库
+
+
 
 #define MY_WARNING(t) 	{AlertForm f("警告", t);f.showModal();qWarning() << t; }//QMessageBox::warning(this, "警告", t)
 #define MY_INFO(t) {AlertForm f("提示", t);f.showModal();qInfo()<< t; }//QMessageBox::information(this, "提示", t)
@@ -430,7 +436,7 @@ void MainForm::On_Right_Release()
 
 void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 {
-	ui.label_43->setText("("+QString::number(pos.x()) + "," + QString::number(pos.y())+")");
+	ImgPixLocation(pos);
 
 	if (m_bNeedChangePicInfo) // 鼠标右键控制图片的灰度
 	{
@@ -441,6 +447,12 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 		ui.horizontalSlider_2->setValue(ui.horizontalSlider_2->value() - dy);
 		On_SliderValueChanged2(0);
 	}
+
+	if (!m_bMousePressed)
+	{
+		return;
+	}
+
 	if ((m_eMouseMode == MouseMode::DrawLine || m_eMouseMode == MouseMode::Rect || m_eMouseMode == MouseMode::Ellipse || (m_eMouseMode == MouseMode::Curvature && m_nMouseClickCount == 0))
 		&& !m_vector_ImgTag.empty())
 	{
@@ -523,7 +535,7 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 		PaintImg();
 	}
 	// 处理截图模式下的鼠标移动（模式7），更新截图区域的尺寸和位置
-	if (m_eMouseMode == MouseMode::Capture && m_bCapturePressed)
+	if (m_eMouseMode == MouseMode::Capture )
 	{
 		auto labelSize = ui.label->size();
 
@@ -559,9 +571,10 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 	{
 		m_bNeedChangePicInfo = true;
 	}
-	if (button == Qt::LeftButton && m_bControlPressed)
+	if (button == Qt::LeftButton)
 	{
-		m_bNeedRoteImg = true;
+		m_bMousePressed = true;
+		//m_bCapturePressed = true;
 	}
 
 	m_nLastMouseX = pos.x();
@@ -615,7 +628,7 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 			&newX, &newY);
 		m_memCImageCapture.m_nPosX = newX;
 		m_memCImageCapture.m_nPosY = newY;
-		m_bCapturePressed = true;
+		
 	}
 	if (m_eMouseMode == MouseMode::DeleteTag)
 	{
@@ -738,6 +751,7 @@ void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos
 
 	if (button == Qt::LeftButton)
 	{
+		m_bMousePressed = false;
 		switch (m_eMouseMode)
 		{
 		case MouseMode::nNone:
@@ -904,7 +918,7 @@ void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos
 		{
 			m_memCImageCapture.m_bSaved = true;
 			m_eMouseMode = MouseMode::nNone;
-			m_bCapturePressed = false;
+			//m_bCapturePressed = false;
 			PaintImg();
 			break;
 		}
@@ -1251,7 +1265,7 @@ void MainForm::BindAction()
 	connect(ui.pushButton_9, &QPushButton::clicked, this, &MainForm::On_SavePic_Click);
 
 	//connect(ui.pushButton_29, &QPushButton::clicked, this, &MainForm::On_SaveRaw_Clicked);
-	connect(ui.pushButton_28, &QPushButton::clicked, this, &MainForm::On_SavePNG_Clicked);
+	connect(ui.pushButton_28, &QPushButton::clicked, this, &MainForm::On_SaveImage_Clicked/*On_SavePNG_Clicked*/);
 	connect(ui.pushButton_30, &QPushButton::clicked, this, &MainForm::On_SetFMode);
 	connect(ui.pushButton_29, &QPushButton::clicked, this, &MainForm::On_NoSetFMode);
 
@@ -1260,7 +1274,7 @@ void MainForm::BindAction()
 	connect(ui.pushButton_38, &QPushButton::clicked, this, &MainForm::On_Denoise2);
 	connect(ui.pushButton_31, &QPushButton::clicked, this, &MainForm::On_Denoise3);
 
-	//connect(ui.pushButton_53, &QPushButton::clicked, this, &MainForm::On_Enhance0);
+	connect(ui.pushButton_53, &QPushButton::clicked, this, &MainForm::On_AddTag);
 	connect(ui.pushButton_42, &QPushButton::clicked, this, &MainForm::On_Enhance1);
 	connect(ui.pushButton_46, &QPushButton::clicked, this, &MainForm::On_Enhance2);
 	connect(ui.pushButton_45, &QPushButton::clicked, this, &MainForm::On_Enhance3);
@@ -1273,7 +1287,7 @@ void MainForm::BindAction()
 	connect(ui.pushButton_54, &QPushButton::clicked, this, &MainForm::On_Curvature_Click);
 	connect(ui.pushButton_47, &QPushButton::clicked, this, &MainForm::On_Angle_Click);
 
-	connect(ui.pushButton_56, &QPushButton::clicked, this, &MainForm::On_SaveRaw_Clicked);
+	connect(ui.pushButton_56, &QPushButton::clicked, this, &MainForm::On_SaveImage_Clicked/*On_SaveRaw_Clicked*/);
 	connect(ui.pushButton_55, &QPushButton::clicked, this, &MainForm::On_Capture_Click);
 	connect(ui.pushButton_8, &QPushButton::clicked, this, &MainForm::On_NoCapture_Click);
 	connect(ui.pushButton_8, &QPushButton::clicked, this, &MainForm::On_NoCapture_Click);
@@ -1287,6 +1301,7 @@ void MainForm::BindAction()
 	connect(ui.pushButton_57, &QPushButton::clicked, this, &MainForm::On_deleteTag_Click);
 	connect(ui.pushButton_59, &QPushButton::clicked, this, &MainForm::On_SaveDealedPic);
 	connect(ui.pushButton_60, &QPushButton::clicked, this, &MainForm::On_LogForm_Click);
+	connect(ui.pushButton_62, &QPushButton::clicked, this, &MainForm::On_TragListForm_Click);
 
 	connect(ui.dial, &QDial::valueChanged, this, &MainForm::On_Dial_ValueChanged);
 }
@@ -1332,13 +1347,14 @@ void MainForm::InitParam()
 	m_nPicCount = 0;
 	m_bLeftRightMirror = false;
 	m_bUpDownMirror = false;
-	m_bControlPressed = false;
+	//m_bControlPressed = false;
 	m_pLogDisplayDialog = nullptr;
+	m_pTragListDialog = nullptr;
 	m_nRotate = 0;
 	m_nImgXOffset = 0;
 	m_nImgYOffset = 0;
 	m_nLastImg = QRect();
-	m_bCapturePressed = false;
+	m_bMousePressed = false;
 	m_dImgScale = 1;
 	m_pCameraFrom = nullptr;
 	m_nWifi = 0;
@@ -1349,6 +1365,9 @@ void MainForm::InitParam()
 	m_pSampleBoardBase = nullptr;
 	WHSD_Tools::SafeRelease(m_pLogDisplayDialog);
 	m_pLogDisplayDialog = new LogDisplayDialog();
+
+	WHSD_Tools::SafeRelease(m_pTragListDialog);
+    m_pTragListDialog = new TragListDialog();
 
 	m_pConfig = new CConfigManager();
 	m_pConfig->Read(WHSD_Tools::GetAbsolutePath("Config.xml"));
@@ -1649,6 +1668,12 @@ void MainForm::On_LogForm_Click()
 {
 	if (m_pLogDisplayDialog)
 		m_pLogDisplayDialog->show();
+}
+
+void MainForm::On_TragListForm_Click()
+{
+	if (m_pTragListDialog)
+		m_pTragListDialog->show();
 }
 
 void MainForm::On_TurnOnAll_Click()
@@ -2192,10 +2217,10 @@ QImage MainForm::PaintTag()
 		}
 		case 4:
 		{
-			painter2.translate(s.m_nStartX, s.m_nStartX);
+			painter2.translate(s.m_nStartX, s.m_nStartY); // 这是个bug
 			painter2.rotate(0 - (m_nRotate % 360) /** 90*/); // 平移到绘制起点（旋转中心）
 			painter2.drawText(0, 0, s.m_strContent.c_str());
-			painter2.restore();
+			painter2.restore(); // 恢复到原始坐标系
 			break;
 		}
 		case 5:
@@ -2645,6 +2670,31 @@ void MainForm::LoadOnlinePicByThread()
 	}
 }
 
+void MainForm::ImgPixLocation(QPoint pos)
+{
+
+	auto labelSize = ui.label->size();
+
+	double newX = 0, newY = 0;
+	WHSD_Tools::CalculateOriginalCoordinates(
+		pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
+		pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
+		m_nRotate /**90*/,
+		m_dImgScale,
+		m_dImgScale,
+		0,
+		0,
+		m_bLeftRightMirror,
+		m_bUpDownMirror,
+		m_memMainQImage.width(),
+		m_memMainQImage.height(),
+		&newX, &newY);
+
+	ui.label_43->setText("(" + QString::number((int)newX) + "," + QString::number((int)newY) + ")");
+
+
+}
+
 // 软件通过 启动界面调用加载图像方法
 void MainForm::DownloadPic()
 {
@@ -2736,6 +2786,237 @@ void MainForm::On_OnLineLoadFailed_Slots()
 	if (pixmap.load(QString::fromStdString(WHSD_Tools::GetExeDirectory() + "\\" + "jjsb.png")))
 	{
 		ui.label->setPixmap(pixmap.scaled(ui.label->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+	}
+}
+
+int MainForm::saveMatToDcm(const cv::Mat & img, const std::string& savePath)
+{
+	// 必须是灰度图（医学DICOM标准）
+	if (img.channels() != 1) {
+		std::cerr << "仅支持灰度图保存为DCM" << std::endl;
+		return -1;
+	}
+
+	int rows = img.rows;
+	int cols = img.cols;
+	int channels = img.channels();
+
+	// 创建DCM文件对象
+	DcmFileFormat dcmff;
+	DcmDataset* ds = dcmff.getDataset();
+
+	// ====================== 必须填写的DICOM头部信息 ======================
+	ds->putAndInsertString(DCM_SOPClassUID, "1.2.840.10008.5.1.4.1.1.2"); // 灰度CT图像
+	ds->putAndInsertString(DCM_PatientName, "Test");
+	ds->putAndInsertString(DCM_PatientID, "12345");
+	ds->putAndInsertUint16(DCM_Rows, rows);
+	ds->putAndInsertUint16(DCM_Columns, cols);
+	// 根据图像类型设置位深度
+	int bitsAllocated = 0;
+	int bitsStored = 0;
+	int highBit = 0;
+	int pixelRepresentation = 0;
+
+	switch (img.depth()) {
+	case CV_8U:
+		bitsAllocated = 8;
+		bitsStored = 8;
+		highBit = 7;
+		pixelRepresentation = 0; // 无符号
+		break;
+	case CV_16U:
+		bitsAllocated = 16;
+		bitsStored = 16;
+		highBit = 15;
+		pixelRepresentation = 0; // 无符号
+		break;
+	case CV_16S:
+		bitsAllocated = 16;
+		bitsStored = 16;
+		highBit = 15;
+		pixelRepresentation = 1; // 有符号
+		break;
+	default:
+		std::cerr << "不支持的图像深度: " << img.depth() << std::endl;
+		return -1;
+	}
+	ds->putAndInsertUint16(DCM_BitsAllocated, bitsAllocated);
+	ds->putAndInsertUint16(DCM_BitsStored, bitsStored);
+	ds->putAndInsertUint16(DCM_HighBit, highBit);
+	ds->putAndInsertUint16(DCM_PixelRepresentation, pixelRepresentation);
+	ds->putAndInsertString(DCM_PhotometricInterpretation, "MONOCHROME2");
+	ds->putAndInsertUint16(DCM_SamplesPerPixel, channels);
+
+	// ====================== 写入OpenCV像素数据 ======================
+	std::vector<uint8_t> pixels;
+
+	switch (img.depth()) {
+	case CV_8U: {
+		// 8位无符号整型
+		for (int y = 0; y < rows; y++) {
+			for (int x = 0; x < cols; x++) {
+				pixels.push_back(static_cast<uint8_t>(img.at<uint8_t>(y, x)));
+			}
+		}
+		break;
+	}
+	case CV_16U: {
+		// 16位无符号整型 - DICOM使用小端字节序
+		for (int y = 0; y < rows; y++) {
+			for (int x = 0; x < cols; x++) {
+				uint16_t pixelValue = static_cast<uint16_t>(img.at<uint16_t>(y, x));
+				// 小端字节序：低位字节在前
+				pixels.push_back(static_cast<uint8_t>(pixelValue & 0xFF));         // 低字节
+				pixels.push_back(static_cast<uint8_t>((pixelValue >> 8) & 0xFF));  // 高字节
+			}
+		}
+		break;
+	}
+	case CV_16S: {
+		// 16位有符号整型 - DICOM使用小端字节序
+		for (int y = 0; y < rows; y++) {
+			for (int x = 0; x < cols; x++) {
+				int16_t pixelValue = static_cast<int16_t>(img.at<int16_t>(y, x));
+				// 小端字节序：低位字节在前
+				pixels.push_back(static_cast<uint8_t>(pixelValue & 0xFF));         // 低字节
+				pixels.push_back(static_cast<uint8_t>((pixelValue >> 8) & 0xFF));  // 高字节
+			}
+		}
+		break;
+	}
+	default:
+		std::cerr << "不支持的图像深度: " << img.depth() << std::endl;
+		return -1;
+	}
+
+	// 把数据写入DCM
+	dcmff.getDataset()->putAndInsertUint8Array(
+		DCM_PixelData,
+		pixels.data(),
+		pixels.size()
+	);
+
+	// 保存文件
+	OFCondition ok = dcmff.saveFile(savePath.c_str(), EXS_LittleEndianExplicit);
+
+	if (ok.good()) {
+		std::cout << "✅ 保存DCM成功：" << savePath << std::endl;
+		return 0;
+	}
+	else {
+		std::cerr << "❌ 保存失败" << std::endl;
+		return -1;
+	}
+}
+
+void MainForm::On_SaveImage_Clicked()
+{
+	QString format = "处理后的图像(PNG) (*.png);;原始图像(RAW) (*.raw);;医学影像(DCM) (*.dcm)";
+	QString defaultSuffix;
+
+	// 创建文件对话框
+	QFileDialog dialog(this);
+	dialog.setWindowTitle("保存图像文件");
+	dialog.setNameFilter(format);
+	dialog.setDefaultSuffix(defaultSuffix);
+
+	// 设置初始文件名
+	QString initialFileName = QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss");
+	dialog.selectFile(initialFileName);
+
+	if (dialog.exec() == QFileDialog::Accepted) {
+		QString filePath = dialog.selectedFiles().first();
+
+		if (filePath.isEmpty()) {
+			MY_WARNING("未选择文件路径！");
+			return;
+		}
+		// 选择的 format 类型
+        QString selectedOption = dialog.selectedNameFilter();
+        if (selectedOption == "原始图像(RAW) (*.raw)") { 
+			auto tp = m_memSDRaw.GetOriginalRawData();
+			if (tp.empty())
+			{
+				MY_WARNING("无图片！");
+				return;
+			}
+			filePath.append(".raw");
+			std::string apth = filePath.toLocal8Bit().constData();
+			if (WHSD_Tools::SaveDataToFile2_Raw(tp.data(), tp.size(), apth))
+			{
+				MY_INFO("保存成功");
+				return;
+			}
+		}
+		else if (selectedOption == "医学影像(DCM) (*.dcm)")
+		{
+			auto buf = m_memSDRaw.GetOriginalRawData();
+			//将图像保存到cv::Mat
+			std::vector<uint16_t> data_16bit;
+			data_16bit.reserve(m_memSDRaw.m_wPicWidth * m_memSDRaw.m_wPicHeight);
+			for (size_t i = 0; i < buf.size(); i += 2)
+			{
+				// 小端模式：低字节在前，高字节在后
+				uint16_t pixel_value = static_cast<uint16_t>(buf[i]) |
+					(static_cast<uint16_t>(buf[i + 1]) << 8);
+				data_16bit.push_back(pixel_value);
+			}
+			// 3. 构建16位单通道cv::Mat
+			// CV_16UC1 表示：16位无符号整型、单通道
+			cv::Mat img(m_memSDRaw.m_wPicHeight, m_memSDRaw.m_wPicWidth, CV_16UC1);
+			// 4. 将转换后的数据拷贝到Mat中 (使用memcpy保证效率)
+			memcpy(img.data, data_16bit.data(), data_16bit.size() * sizeof(uint16_t));
+			if (img.empty())
+			{
+				MY_WARNING("无图片！");
+			}
+			filePath+= ".dcm";
+			std::string apth = filePath.toLocal8Bit().constData();
+			if(saveMatToDcm(img, apth) == 0)
+			{
+				MY_INFO("保存成功");
+			}
+			else
+			{
+                MY_WARNING("保存失败");
+			}
+		}
+        else if (selectedOption == "处理后的图像(PNG) (*.png)")
+        {
+			// 验证图像数据
+			auto isImageValid = [](const QImage& image) {
+				// 检查图像是否为空
+				if (image.isNull())
+				{
+					return false;
+				}
+
+				// 检查图像尺寸是否有效
+				if (image.width() <= 0 || image.height() <= 0)
+				{
+					return false;
+				}
+
+				// 检查图像格式是否有效
+				if (image.format() == QImage::Format_Invalid)
+				{
+					return false;
+				}
+
+				return true;
+				};
+			// 保存处理后的PNG图像
+			if (!isImageValid(m_memDealedImg)) {
+				MY_WARNING("处理后的图像无效！");
+				return;
+			}
+			filePath += ".png";
+			if (m_memDealedImg.save(filePath))
+			{
+				MY_INFO("保存成功");
+				return;
+			}
+        }
 	}
 }
 
@@ -2842,6 +3123,17 @@ void MainForm::On_Dial_ValueChanged(int value)
 	qWarning() << "On_Dial_ValueChanged " << value;
 
 	m_nRotate = value;
+	PaintImg();
+}
+
+void MainForm::On_AddTag()
+{
+	CImageTag p;
+	p.m_nTagType = 4;
+	p.m_nStartX = 100;
+    p.m_nStartY = 100;
+	p.m_strContent = "测试";
+	AddOneImgTag(p);
 	PaintImg();
 }
 
@@ -3324,13 +3616,13 @@ void MainForm::On_LoadPic_Clicked()
 
 void MainForm::On_ControlOnly_Pressed()
 {
-	m_bControlPressed = true;
+	//m_bControlPressed = true;
 	qDebug() << "ControlOnly_Pressed";
 }
 
 void MainForm::On_ControlOnly_Released()
 {
-	m_bControlPressed = false;
+	//m_bControlPressed = false;
 	qDebug() << "ControlOnly_Released";
 }
 

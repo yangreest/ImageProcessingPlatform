@@ -25,7 +25,7 @@ void LogDisplayDialog::setupUI()
 	ui.m_logTable->setHorizontalHeaderLabels(QStringList() << tr("序号") << tr("时间") << tr("级别") << tr("消息") << tr("文件名") << tr("函数名") << tr("行号"));
 	ui.m_logTable->setSelectionBehavior(QAbstractItemView::SelectRows);  // 整行选择
 	ui.m_logTable->setSelectionMode(QAbstractItemView::ExtendedSelection); // 支持多选
-	ui.m_logTable->setAlternatingRowColors(true);
+	ui.m_logTable->setAlternatingRowColors(true); // 设置交替颜色
 	ui.m_logTable->horizontalHeader()->setStretchLastSection(true);
 	ui.m_logTable->verticalHeader()->setVisible(false);
 	ui.m_logTable->setColumnWidth(0, 50);

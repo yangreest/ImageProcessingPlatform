@@ -1300,6 +1300,37 @@ QPushButton:hover {
             </property>
            </widget>
           </item>
+          <item row="2" column="3">
+           <widget class="QPushButton" name="pushButton_62">
+            <property name="minimumSize">
+             <size>
+              <width>70</width>
+              <height>70</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>70</width>
+              <height>70</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+   /* background-image: url(:/Image/icon/zuoyou_1.png);   正常状态图片 */
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;  /* 可选：移除边框 */
+}
+
+QPushButton:hover {
+     /*background-image: url(:/Image/icon/zuoyou_2.png);  悬停状态图片 */
+}</string>
+            </property>
+            <property name="text">
+             <string>标记集合</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
