@@ -92,6 +92,8 @@ private slots:
 	void On_TurnOffCamera_Click();
 	void On_ShowConfigFormClick();
 	void On_SliderValueChanged2(int value);
+	void On_SliderValueChanged3(int value);
+	void On_SliderValueChanged4(int value);
 	void On_SavePicByGuid_Click();
 	void On_DeletePic_Click();
 	void On_PreviousPic_Click();

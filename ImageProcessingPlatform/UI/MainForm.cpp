@@ -1252,6 +1252,9 @@ void MainForm::BindAction()
 	connect(ui.horizontalSlider_2, &QSlider::valueChanged, this, &MainForm::On_SliderValueChanged2);
 	connect(ui.horizontalSlider, &QSlider::valueChanged, this, &MainForm::On_SliderValueChanged2);
 
+	connect(ui.horizontalSlider_3, &QSlider::valueChanged, this, &MainForm::On_SliderValueChanged3);
+	connect(ui.horizontalSlider_4, &QSlider::valueChanged, this, &MainForm::On_SliderValueChanged4);
+
 	connect(ui.pushButton_13, &QPushButton::clicked, this, &MainForm::On_SavePicByGuid_Click);
 	connect(ui.pushButton_22, &QPushButton::clicked, this, &MainForm::On_DeletePic_Click);
 	connect(ui.pushButton_35, &QPushButton::clicked, this, &MainForm::On_PreviousPic_Click);
@@ -1832,6 +1835,20 @@ void MainForm::On_SliderValueChanged2(int value)
 	QString fileExt = QFileInfo(qFilePath).suffix().toLower();
 
 	*/
+}
+
+void MainForm::On_SliderValueChanged3(int value)
+{
+	ui.lineEdit_5->setText(QString::number(value));
+	m_memImageProcessParam1.m_nDenoise = value;
+	On_SliderValueChanged();
+}
+
+void MainForm::On_SliderValueChanged4(int value)
+{
+	ui.lineEdit_6->setText(QString::number(value));
+	m_memImageProcessParam1.m_nEnhance = value;
+	On_SliderValueChanged();
 }
 
 void MainForm::On_SavePicByGuid_Click()
@@ -3147,36 +3164,42 @@ void MainForm::On_DenoiseAndEnhance0()
 void MainForm::On_Denoise1()
 {
 	m_memImageProcessParam1.m_nDenoise = 3;
+	ui.horizontalSlider_3->setValue(3);
 	On_SliderValueChanged();
 }
 
 void MainForm::On_Denoise2()
 {
 	m_memImageProcessParam1.m_nDenoise = 7;
+	ui.horizontalSlider_3->setValue(7);
 	On_SliderValueChanged();
 }
 
 void MainForm::On_Denoise3()
 {
 	m_memImageProcessParam1.m_nDenoise = 10;
+	ui.horizontalSlider_3->setValue(10);
 	On_SliderValueChanged();
 }
 
 void MainForm::On_Enhance1()
 {
 	m_memImageProcessParam1.m_nEnhance = 2;
+	ui.horizontalSlider_4->setValue(2);
 	On_SliderValueChanged();
 }
 
 void MainForm::On_Enhance2()
 {
 	m_memImageProcessParam1.m_nEnhance = 4;
+	ui.horizontalSlider_4->setValue(4);
 	On_SliderValueChanged();
 }
 
 void MainForm::On_Enhance3()
 {
-	m_memImageProcessParam1.m_nEnhance = 6;
+	m_memImageProcessParam1.m_nEnhance = 10;
+	ui.horizontalSlider_4->setValue(10);
 	On_SliderValueChanged();
 }
 
