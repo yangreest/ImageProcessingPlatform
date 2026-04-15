@@ -535,7 +535,7 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 		PaintImg();
 	}
 	// 处理截图模式下的鼠标移动（模式7），更新截图区域的尺寸和位置
-	if (m_eMouseMode == MouseMode::Capture )
+	if (m_eMouseMode == MouseMode::Capture)
 	{
 		auto labelSize = ui.label->size();
 
@@ -628,7 +628,7 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 			&newX, &newY);
 		m_memCImageCapture.m_nPosX = newX;
 		m_memCImageCapture.m_nPosY = newY;
-		
+
 	}
 	if (m_eMouseMode == MouseMode::DeleteTag)
 	{
@@ -1370,7 +1370,7 @@ void MainForm::InitParam()
 	m_pLogDisplayDialog = new LogDisplayDialog();
 
 	WHSD_Tools::SafeRelease(m_pTragListDialog);
-    m_pTragListDialog = new TragListDialog();
+	m_pTragListDialog = new TragListDialog();
 
 	m_pConfig = new CConfigManager();
 	m_pConfig->Read(WHSD_Tools::GetAbsolutePath("Config.xml"));
@@ -1439,7 +1439,7 @@ void MainForm::InitParam()
 	}
 
 	m_pImageProcess = CImageProcessBase::GetCImageProcessObj(m_pConfig->m_memCImageProcessConfig.m_nType);
-	
+
 	ui.pushButton_32->setEnabled(m_pConfig->m_memCSampleBoardConfig.m_nExposureType == 1);
 }
 
@@ -2806,7 +2806,7 @@ void MainForm::On_OnLineLoadFailed_Slots()
 	}
 }
 
-int MainForm::saveMatToDcm(const cv::Mat & img, const std::string& savePath)
+int MainForm::saveMatToDcm(const cv::Mat& img, const std::string& savePath)
 {
 	// 必须是灰度图（医学DICOM标准）
 	if (img.channels() != 1) {
@@ -2928,7 +2928,7 @@ int MainForm::saveMatToDcm(const cv::Mat & img, const std::string& savePath)
 
 void MainForm::On_SaveImage_Clicked()
 {
-	QString format = "处理后的图像(PNG) (*.png);;原始图像(RAW) (*.raw);;医学影像(DCM) (*.dcm)";
+	QString format = "处理后的图像(PNG) (*.png);;原始图像(RAW) (*.raw);;医学影像(DCM) (*.dcm);;原始图像(TIF) (*.tif)";
 	QString defaultSuffix;
 
 	// 创建文件对话框
@@ -2949,8 +2949,8 @@ void MainForm::On_SaveImage_Clicked()
 			return;
 		}
 		// 选择的 format 类型
-        QString selectedOption = dialog.selectedNameFilter();
-        if (selectedOption == "原始图像(RAW) (*.raw)") { 
+		QString selectedOption = dialog.selectedNameFilter();
+		if (selectedOption == "原始图像(RAW) (*.raw)") {
 			auto tp = m_memSDRaw.GetOriginalRawData();
 			if (tp.empty())
 			{
@@ -2987,19 +2987,19 @@ void MainForm::On_SaveImage_Clicked()
 			{
 				MY_WARNING("无图片！");
 			}
-			filePath+= ".dcm";
+			filePath += ".dcm";
 			std::string apth = filePath.toLocal8Bit().constData();
-			if(saveMatToDcm(img, apth) == 0)
+			if (saveMatToDcm(img, apth) == 0)
 			{
 				MY_INFO("保存成功");
 			}
 			else
 			{
-                MY_WARNING("保存失败");
+				MY_WARNING("保存失败");
 			}
 		}
-        else if (selectedOption == "处理后的图像(PNG) (*.png)")
-        {
+		else if (selectedOption == "处理后的图像(PNG) (*.png)")
+		{
 			// 验证图像数据
 			auto isImageValid = [](const QImage& image) {
 				// 检查图像是否为空
@@ -3033,7 +3033,21 @@ void MainForm::On_SaveImage_Clicked()
 				MY_INFO("保存成功");
 				return;
 			}
-        }
+		}
+		else if (selectedOption == "原始图像(TIF) (*.tif)")
+		{
+			std::vector<uint8_t> data_8bit = m_vecNeedShowBuffer;// m_memSDRaw.GetTempRawData();
+			
+			// 3. 构建16位单通道cv::Mat
+			// CV_16UC1 表示：16位无符号整型、单通道
+			cv::Mat img(m_memSDRaw.m_wPicHeight, m_memSDRaw.m_wPicWidth, CV_8UC1);
+			// 4. 将转换后的数据拷贝到Mat中 (使用memcpy保证效率)
+			memcpy(img.data, data_8bit.data(), data_8bit.size() * sizeof(uint8_t));
+			
+			filePath += ".tif";
+			std::string apth = filePath.toLocal8Bit().constData();
+			cv::imwrite(apth, img);
+		}
 	}
 }
 
@@ -3148,7 +3162,7 @@ void MainForm::On_AddTag()
 	CImageTag p;
 	p.m_nTagType = 4;
 	p.m_nStartX = 100;
-    p.m_nStartY = 100;
+	p.m_nStartY = 100;
 	p.m_strContent = "测试";
 	AddOneImgTag(p);
 	PaintImg();
@@ -3301,14 +3315,14 @@ std::string MainForm::ChangeUIImg(const std::string& s, const bool ac)
 
 QPoint MainForm::CalcImgOffset(QPoint mPoint)
 {
-	qDebug()<< "mPoint " << mPoint;
+	qDebug() << "mPoint " << mPoint;
 	QSize labelSize = ui.label->size();
-    qDebug() << "labelSize " << labelSize;
+	qDebug() << "labelSize " << labelSize;
 	QPoint offset_temp = mPoint - (mPoint - m_nLastImg.topLeft()) * m_dImgScale;
-    qDebug() << "offset_temp " << offset_temp;
+	qDebug() << "offset_temp " << offset_temp;
 	QPoint offset = QPoint((labelSize.width() - m_nLastImg.width() * m_dImgScale) / 2 - offset_temp.x(),
 		(labelSize.height() - m_nLastImg.height() * m_dImgScale) / 2 - offset_temp.y());
-    qDebug() << "offset " << offset;
+	qDebug() << "offset " << offset;
 	return offset;
 }
 
