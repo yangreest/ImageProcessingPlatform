@@ -96,6 +96,47 @@ void MainForm::appendLog(const QString& level, const QString& message, const QSt
 	}
 }
 
+bool MainForm::saveToFile(const QList<Algorithm>& list, const QString& filePath)
+{
+	QJsonArray arr;
+	for (const auto& a : list) {
+		arr.append(a.toJson());
+	}
+
+	QJsonDocument doc(arr);
+	QFile file(filePath);
+
+	if (!file.open(QIODevice::WriteOnly)) {
+		return false;
+	}
+
+	file.write(doc.toJson());
+	file.close();
+	return true;
+}
+
+QList<Algorithm> MainForm::loadFromFile(const QString& filePath)
+{
+	QList<Algorithm> result;
+	QFile file(filePath);
+
+	if (!file.open(QIODevice::ReadOnly)) {
+		return result;
+	}
+
+	QByteArray data = file.readAll();
+	QJsonDocument doc = QJsonDocument::fromJson(data);
+	QJsonArray arr = doc.array();
+
+	for (const auto& v : arr) {
+		Algorithm a;
+		a.fromJson(v.toObject());
+		result.append(a);
+	}
+
+	return result;
+}
+
 void MainForm::ConnectDevice()
 {
 	if (m_strWorkGuid.empty() && m_pConfig->m_memTimsConfig.m_nForceGuid > 0)
@@ -1158,6 +1199,12 @@ void MainForm::InitUI(int model)
 	ui.lineEdit_3->setText(QString::number(cw));
 	ui.label_40->setVisible(m_pConfig->m_memControlBoardConfig.m_bEnableIp2);
 	//ui.groupBox_8->setTitle(QString::fromStdString("图像处理_" + m_pImageProcess->GetVersion() + "："));
+	QString jsonPath = QString("%1\\algorithm.json").arg(WHSD_Tools::GetExeDirectory());
+	QList<Algorithm> loadList = loadFromFile(jsonPath);
+	for (auto& a : loadList)
+	{
+		ui.comboBox->addItem(a.m_strName, QVariant::fromValue(a));
+	}
 }
 
 void MainForm::SetAllVis(const bool v)
@@ -1255,6 +1302,11 @@ void MainForm::BindAction()
 	connect(ui.horizontalSlider_3, &QSlider::valueChanged, this, &MainForm::On_SliderValueChanged3);
 	connect(ui.horizontalSlider_4, &QSlider::valueChanged, this, &MainForm::On_SliderValueChanged4);
 
+	connect(ui.lineEdit_3, &QLineEdit::textChanged, this, &MainForm::on_lineEdit_TextChanged);
+	connect(ui.lineEdit_4, &QLineEdit::textChanged, this, &MainForm::on_lineEdit_TextChanged);
+	connect(ui.lineEdit_5, &QLineEdit::textChanged, this, &MainForm::on_lineEdit_TextChanged);
+	connect(ui.lineEdit_6, &QLineEdit::textChanged, this, &MainForm::on_lineEdit_TextChanged);
+
 	connect(ui.pushButton_13, &QPushButton::clicked, this, &MainForm::On_SavePicByGuid_Click);
 	connect(ui.pushButton_22, &QPushButton::clicked, this, &MainForm::On_DeletePic_Click);
 	connect(ui.pushButton_35, &QPushButton::clicked, this, &MainForm::On_PreviousPic_Click);
@@ -1305,6 +1357,9 @@ void MainForm::BindAction()
 	connect(ui.pushButton_59, &QPushButton::clicked, this, &MainForm::On_SaveDealedPic);
 	connect(ui.pushButton_60, &QPushButton::clicked, this, &MainForm::On_LogForm_Click);
 	connect(ui.pushButton_62, &QPushButton::clicked, this, &MainForm::On_TragListForm_Click);
+
+	connect(ui.pushButtonAutoAdjust, &QPushButton::clicked, this, &MainForm::On_pushButtonAutoAdjust_Click);
+	connect(ui.pushButtonFixedParam, &QPushButton::clicked, this, &MainForm::On_pushButtonFixedParam_Click);
 
 	connect(ui.dial, &QDial::valueChanged, this, &MainForm::On_Dial_ValueChanged);
 }
@@ -1635,6 +1690,65 @@ void MainForm::On_deleteTag_Click()
 	m_eMouseMode = MouseMode::DeleteTag;
 	ClearPicOpt();
 	PaintImg();
+}
+
+void MainForm::On_pushButtonAutoAdjust_Click()
+{
+	// 循环获取ui.comboBox中的参数执行计算
+	int currentIndex = ui.comboBox->currentIndex();
+	if (currentIndex < ui.comboBox->count() - 1 && currentIndex >= 0)
+	{
+		currentIndex++;
+	}
+	else {
+		currentIndex = 0;
+	}
+	Algorithm data = ui.comboBox->itemData(currentIndex).value<Algorithm>();
+	ui.comboBox->setCurrentIndex(currentIndex);
+	ui.lineEdit_3->setText(QString::number(data.m_nP3));
+	ui.lineEdit_4->setText(QString::number(data.m_nP4));
+	ui.lineEdit_5->setText(QString::number(data.m_nP5));
+	ui.lineEdit_6->setText(QString::number(data.m_nP6));
+}
+
+void MainForm::On_pushButtonFixedParam_Click()
+{
+	QMessageBox msgBox;
+	msgBox.setWindowTitle("如何固定参数");
+	msgBox.setText("是否需要将参数固定到当前的选项中？");
+	msgBox.setIcon(QMessageBox::Question);
+
+	// 添加自定义按钮
+	QAbstractButton* btn1 = msgBox.addButton("覆盖", QMessageBox::AcceptRole);
+	QAbstractButton* btn2 = msgBox.addButton("新增", QMessageBox::RejectRole);
+	QAbstractButton* btn3 = msgBox.addButton("取消", QMessageBox::RejectRole);
+
+	msgBox.exec();
+
+	if (msgBox.clickedButton() == btn1) {
+		qDebug() << "点击了覆盖";
+		AddComboBoxItem(ui.comboBox->currentText());
+	}
+	else if (msgBox.clickedButton() == btn2) {
+		qDebug() << "点击了新增";
+		QInputDialog dialog(this);
+		dialog.setWindowTitle("请输入参数名称");
+		dialog.setInputMode(QInputDialog::TextInput);
+		dialog.setLabelText("请输入参数名称：");
+		if (dialog.exec() == QDialog::Accepted)
+		{
+			QString inputText = dialog.textValue();
+			if (!inputText.isEmpty())
+			{
+				// 处理输入内容
+				qDebug() << "输入的参数名称：" << inputText;
+			}
+			AddComboBoxItem(inputText);
+		}
+	}
+	else if (msgBox.clickedButton() == btn3) {
+		qDebug() << "点击了取消";
+	}
 }
 
 void MainForm::On_SaveDealedPic()
@@ -2680,9 +2794,10 @@ void MainForm::ReadSavedFiles(int index)
 void MainForm::LoadOnlinePicByThread()
 {
 	auto si = m_vector_NeedDownLoadPic.size();
-	for (int i = 1; i < si; ++i)
+	for (int i = 0; i < si; ++i)
 	{
 		const auto& downloadUrl = m_vector_NeedDownLoadPic[i];
+		qDebug() << "下载图片 pic" << i << " " << downloadUrl;
 		m_mapLoadedMap[i] = HttpClient::DownloadFileToVector(downloadUrl);
 	}
 }
@@ -2758,23 +2873,6 @@ void MainForm::DownloadPic()
 						}
 						std::thread td2(&MainForm::LoadOnlinePicByThread, this);
 						td2.detach();
-						//for (const QJsonValue& imgVal : imgsArray)
-						//{
-						//	// 检查数组元素是否为对象
-						//	if (!imgVal.isObject())
-						//	{
-						//		//qDebug() << "数组元素不是有效的对象！";
-						//		continue;
-						//	}
-						//	auto imgObj = imgVal.toObject();
-
-						//	// 提取PicData（检查是否存在且为字符串）
-						//	if (imgObj.contains("PicData") && imgObj["PicData"].isString())
-						//	{
-						//		auto picData = imgObj["PicData"].toString();
-						//		m_mapLoadedMap[index++] = WHSD_Tools::Base64Decode(picData.toStdString());
-						//	}
-						//}
 						loadSuccess = true;
 					}
 				}
@@ -3037,13 +3135,13 @@ void MainForm::On_SaveImage_Clicked()
 		else if (selectedOption == "原始图像(TIF) (*.tif)")
 		{
 			std::vector<uint8_t> data_8bit = m_vecNeedShowBuffer;// m_memSDRaw.GetTempRawData();
-			
+
 			// 3. 构建16位单通道cv::Mat
 			// CV_16UC1 表示：16位无符号整型、单通道
 			cv::Mat img(m_memSDRaw.m_wPicHeight, m_memSDRaw.m_wPicWidth, CV_8UC1);
 			// 4. 将转换后的数据拷贝到Mat中 (使用memcpy保证效率)
 			memcpy(img.data, data_8bit.data(), data_8bit.size() * sizeof(uint8_t));
-			
+
 			filePath += ".tif";
 			std::string apth = filePath.toLocal8Bit().constData();
 			cv::imwrite(apth, img);
@@ -3148,13 +3246,25 @@ void MainForm::On_NoSetFMode()
 
 void MainForm::On_Dial_ValueChanged(int value)
 {
-	qDebug() << "On_Dial_ValueChanged " << value;
 	qInfo() << "On_Dial_ValueChanged " << value;
-	qCritical() << "On_Dial_ValueChanged " << value;
-	qWarning() << "On_Dial_ValueChanged " << value;
-
 	m_nRotate = value;
 	PaintImg();
+}
+
+void MainForm::on_lineEdit_TextChanged(const QString& text)
+{
+	int value = ui.lineEdit_5->text().toInt();
+	m_memImageProcessParam1.m_nDenoise = value;
+	ui.horizontalSlider_3->setValue(value);
+	value = ui.lineEdit_6->text().toInt();
+	ui.horizontalSlider_4->setValue(value);
+	m_memImageProcessParam1.m_nEnhance = value;
+
+	value = ui.lineEdit_4->text().toInt();
+	ui.horizontalSlider->setValue(value);
+	value = ui.lineEdit_3->text().toInt();
+	ui.horizontalSlider_2->setValue(value);
+	//On_SliderValueChanged();
 }
 
 void MainForm::On_AddTag()
@@ -3326,6 +3436,34 @@ QPoint MainForm::CalcImgOffset(QPoint mPoint)
 	return offset;
 }
 
+void MainForm::AddComboBoxItem(QString itemName)
+{
+	if (ui.comboBox->findText(itemName) == -1)
+	{
+		ui.comboBox->addItem(itemName);
+	}
+	int index = ui.comboBox->findText(itemName);
+
+	Algorithm a;
+	a.m_strName = itemName;
+	a.m_nP3 = ui.lineEdit_3->text().toInt();
+	a.m_nP4 = ui.lineEdit_4->text().toInt();
+	a.m_nP5 = ui.lineEdit_5->text().toInt();
+	a.m_nP6 = ui.lineEdit_6->text().toInt();
+
+	// 将p3 p4 p5 p6 存储在 comboBox 的 itemData 中
+	ui.comboBox->setItemData(index, QVariant::fromValue(a));
+
+	QList<Algorithm> algList;
+	for (int i = 0; i < ui.comboBox->count(); i++)
+	{
+		Algorithm a = ui.comboBox->itemData(i).value<Algorithm>();
+		algList << a;
+	}
+	QString jsonPath = QString("%1\\algorithm.json").arg(WHSD_Tools::GetExeDirectory());
+	saveToFile(algList, jsonPath);
+}
+
 void MainForm::ReadPicFromMem(int index)
 {
 	bool needReadOrgPic = true;
@@ -3488,6 +3626,12 @@ void MainForm::Callback_TcpClientConnectionChanged(bool connected, int guid)
 	qDebug() << "TcpClientConnectionChanged:" << connected << "guid:" << guid;
 }
 
+/*
+* 函数名：Callback_TcpClientReadData
+* 描述：TCP客户端收到数据，用于报告专责获取服务器的数据
+* 参数： data 数据指针
+* 返回：
+*/
 void MainForm::Callback_TcpClientReadData(uint8_t* data, int len, uint64_t nIndex)
 {
 	qDebug() << "TcpClientReadData:" << len << "nIndex:" << nIndex;
@@ -3512,6 +3656,8 @@ void MainForm::Callback_TcpClientReadData(uint8_t* data, int len, uint64_t nInde
 	{
 		m_strWorkGuid = results[0];
 		m_nWorkMode = std::stoi(results[1]);
+		m_mapLoadedMap.clear();
+		m_vector_NeedDownLoadPic.clear();
 		showEvent(nullptr);
 	}
 }
@@ -3750,4 +3896,24 @@ void MainForm::On_XRayStop_clicked()
 	{
 		p->Write(cmds.data(), cmds.size());
 	}
+}
+
+QJsonObject Algorithm::toJson() const
+{
+	QJsonObject obj;
+	obj["name"] = m_strName;
+	obj["p3"] = m_nP3;
+	obj["p4"] = m_nP4;
+	obj["p5"] = m_nP5;
+	obj["p6"] = m_nP6;
+	return obj;
+}
+
+void Algorithm::fromJson(const QJsonObject& obj)
+{
+	m_strName = obj["name"].toString();
+	m_nP3 = obj["p3"].toInt();
+	m_nP4 = obj["p4"].toInt();
+	m_nP5 = obj["p5"].toInt();
+	m_nP6 = obj["p6"].toInt();
 }

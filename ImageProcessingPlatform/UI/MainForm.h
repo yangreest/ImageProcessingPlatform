@@ -28,6 +28,21 @@
 // 前置声明消息处理函数
 void customMessageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg);
 
+class Algorithm
+{
+public:
+	QString m_strName;
+	int m_nP3;
+	int m_nP4;
+	int m_nP5;
+	int m_nP6;
+	// 转为 JSON 对象
+	QJsonObject toJson() const;
+
+	// 从 JSON 对象读取
+	void fromJson(const QJsonObject& obj);
+};
+
 class MainForm : public QMainWindow
 {
 	Q_OBJECT
@@ -50,7 +65,7 @@ public:
 	MainForm(const std::string& guid, int model, QWidget* parent = nullptr);
 	~MainForm() override;
 
-	
+
 private slots:
 	void ConnectDevice();
 	void On_timer_timeout();
@@ -114,6 +129,8 @@ private slots:
 	void On_NoSetFMode();
 	void On_Dial_ValueChanged(int value);
 
+	void on_lineEdit_TextChanged(const QString& text);
+
 	void On_AddTag();
 
 	void On_DenoiseAndEnhance0();
@@ -142,6 +159,8 @@ private slots:
 	void On_RecoverImgTag_Click();
 
 	void On_deleteTag_Click();
+	void On_pushButtonAutoAdjust_Click();
+	void On_pushButtonFixedParam_Click();
 
 	void On_SaveDealedPic();
 	void On_LogForm_Click();
@@ -149,13 +168,15 @@ private slots:
 	// 供消息处理函数调用的槽函数，接收日志信息
 	void appendLog(const QString& level, const QString& message, const QString& timestamp, const QString& file, const QString& function, const QString& line);
 
+	bool saveToFile(const QList<Algorithm>& list, const QString& filePath);
+	QList<Algorithm> loadFromFile(const QString& filePath);
 
 signals:
 	void On_Pic_Receive();
 	void On_OnLineLoadSuccess();
 	void On_OnLineLoadFailed();
 
-	void logReceived(const QString& level, const QString& message, const QString& timestamp,const QString& file,const QString& function , const QString& line);
+	void logReceived(const QString& level, const QString& message, const QString& timestamp, const QString& file, const QString& function, const QString& line);
 
 protected:
 	// 重写显示事件
@@ -176,7 +197,7 @@ private:
 
 	void Callback_TcpClientConnectionChanged(bool connected, int guid);
 
-    void Callback_TcpClientReadData(uint8_t* data, int len, uint64_t nIndex );
+	void Callback_TcpClientReadData(uint8_t* data, int len, uint64_t nIndex);
 
 	void Callback_DeviceHeartBeat(const CDeviceHeartBeat& b, int nComdeviceIndex);
 
@@ -224,12 +245,14 @@ private:
 
 	void ImgPixLocation(QPoint pos);
 
-	std::string ChangeUIImg(const std::string& s, bool ac); 
+	std::string ChangeUIImg(const std::string& s, bool ac);
 
 	int saveMatToDcm(const cv::Mat& img, const std::string& savePath);
 
 	//计算缩放的偏移值
-    QPoint CalcImgOffset(QPoint mPoint);
+	QPoint CalcImgOffset(QPoint mPoint);
+
+	void AddComboBoxItem(QString itemName);
 
 	Ui::MainFormClass ui;
 

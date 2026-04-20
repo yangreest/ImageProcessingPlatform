@@ -36,9 +36,12 @@
 			</Size>
 		</RawFileSize>
 		<Type>1</Type>
-		<UploadPic>https://tims.sidajiance.com/pro-api/lims/skEntrust/uploadImagesByJson</UploadPic>
-		<DownloadPic>https://tims.sidajiance.com/pro-api/lims/skEntrust/downLoadImageBySampleId</DownloadPic>
-		<GetGuidInfo>https://tims.sidajiance.com/pro-api/lims/skEntrust/getSampleNameBySampleId</GetGuidInfo>
+		<!--<UploadPic>https://tims.sidajiance.com:8083/pro-api/lims/skEntrust/uploadImagesByJson</UploadPic>
+		<DownloadPic>https://tims.sidajiance.com:8083/pro-api/lims/skEntrust/downLoadImageBySampleId</DownloadPic>
+		<GetGuidInfo>https://tims.sidajiance.com:8083/pro-api/lims/skEntrust/getSampleNameBySampleId</GetGuidInfo>-->
+		<UploadPic>https://tims.sidajiance.com:8083/test-api/lims/skEntrust/uploadImagesByJson</UploadPic>
+		<DownloadPic>https://tims.sidajiance.com:8083/test-api/lims/skEntrust/downLoadImageBySampleId</DownloadPic>
+		<GetGuidInfo>https://tims.sidajiance.com:8083/test-api/lims/skEntrust/getSampleNameBySampleId</GetGuidInfo>
 		<DownLoadTimeOut>10000</DownLoadTimeOut>
 	</ImageProcess>
 	<SampleBoard>

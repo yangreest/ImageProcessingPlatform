@@ -34,8 +34,8 @@ int main(int argc, char* argv[])
 		model = std::atoi(argv[2]);
 	}
 
-	//guid = "99100045037";
-	//model = 2;
+	guid = "99100046123"; 
+	model = 2;
 
 	QApplication app(argc, argv);
 	MainForm window(guid, model);
