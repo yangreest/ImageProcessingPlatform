@@ -390,7 +390,7 @@ void MainForm::On_timer_timeout()
 			ui.pushButton_45->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojizengqiang", false)));
 			break;
 		}
-		case 6:
+		case 10:
 		{
 			ui.pushButton_42->setStyleSheet(QString::fromStdString(ChangeUIImg("putongzengqiang", false)));
 			ui.pushButton_46->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojizengqiang", false)));
@@ -469,141 +469,11 @@ void MainForm::On_Right_PressDown()
 	m_apDeviceCom[0]->Write(cmds.data(), cmds.size());
 }
 
+
 void MainForm::On_Right_Release()
 {
 	auto cmds = CWHSDControlBoardProtocol::DeviceStop(0x01);
 	m_apDeviceCom[0]->Write(cmds.data(), cmds.size());
-}
-
-void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
-{
-	ImgPixLocation(pos);
-
-	if (m_bNeedChangePicInfo) // 鼠标右键控制图片的灰度
-	{
-		auto bv = 6;
-		auto dx = (pos.x() - m_nLastMouseX) * bv;
-		auto dy = (pos.y() - m_nLastMouseY) * bv;
-		ui.horizontalSlider->setValue(ui.horizontalSlider->value() + dx);
-		ui.horizontalSlider_2->setValue(ui.horizontalSlider_2->value() - dy);
-		On_SliderValueChanged2(0);
-	}
-
-	if (!m_bMousePressed)
-	{
-		return;
-	}
-
-	if ((m_eMouseMode == MouseMode::DrawLine || m_eMouseMode == MouseMode::Rect || m_eMouseMode == MouseMode::Ellipse || (m_eMouseMode == MouseMode::Curvature && m_nMouseClickCount == 0))
-		&& !m_vector_ImgTag.empty())
-	{
-		auto& p = m_vector_ImgTag.back();
-		auto labelSize = ui.label->size();
-
-
-		double newX = 0, newY = 0;
-		WHSD_Tools::CalculateOriginalCoordinates(
-			pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
-			pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-			m_nRotate /** 90*/,
-			m_dImgScale,
-			m_dImgScale,
-			0,
-			0,
-			m_bLeftRightMirror,
-			m_bUpDownMirror,
-			m_memMainQImage.width(),
-			m_memMainQImage.height(),
-			&newX, &newY);
-
-		p.m_nEndX = newX;
-		p.m_nEndY = newY;
-
-		PaintImg();
-	}
-
-	// 处理四边形标记模式下的鼠标移动（模式4），根据点击次数更新不同的端点坐标
-	if (m_eMouseMode == MouseMode::Angle && !m_vector_ImgTag.empty())
-	{
-		if (m_nMouseClickCount == 0)
-		{
-			auto& p = m_vector_ImgTag.back();
-			auto labelSize = ui.label->size();
-
-
-			double newX = 0, newY = 0;
-			WHSD_Tools::CalculateOriginalCoordinates(
-				pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
-				pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-				m_nRotate /** 90*/,
-				m_dImgScale,
-				m_dImgScale,
-				0,
-				0,
-				m_bLeftRightMirror,
-				m_bUpDownMirror,
-				m_memMainQImage.width(),
-				m_memMainQImage.height(),
-				&newX, &newY);
-
-			p.m_nEndX = newX;
-			p.m_nEndY = newY;
-		}
-		if (m_nMouseClickCount == 1)
-		{
-			auto& p = m_vector_ImgTag.back();
-			auto labelSize = ui.label->size();
-
-
-			double newX = 0, newY = 0;
-			WHSD_Tools::CalculateOriginalCoordinates(
-				pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
-				pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-				m_nRotate /** 90*/,
-				m_dImgScale,
-				m_dImgScale,
-				0,
-				0,
-				m_bLeftRightMirror,
-				m_bUpDownMirror,
-				m_memMainQImage.width(),
-				m_memMainQImage.height(),
-				&newX, &newY);
-
-			p.m_nEndX2 = newX;
-			p.m_nEndY2 = newY;
-		}
-		PaintImg();
-	}
-	// 处理截图模式下的鼠标移动（模式7），更新截图区域的尺寸和位置
-	if (m_eMouseMode == MouseMode::Capture)
-	{
-		auto labelSize = ui.label->size();
-
-
-		double newX = 0, newY = 0;
-		WHSD_Tools::CalculateOriginalCoordinates(
-			pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
-			pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-			m_nRotate /** 90*/,
-			m_dImgScale,
-			m_dImgScale,
-			0,
-			0,
-			m_bLeftRightMirror,
-			m_bUpDownMirror,
-			m_memMainQImage.width(),
-			m_memMainQImage.height(),
-			&newX, &newY);
-
-		auto p2x = newX;
-		auto p2y = newY;
-		m_memCImageCapture.m_nPicW = std::abs(m_memCImageCapture.m_nPosX - p2x);
-		m_memCImageCapture.m_nPicH = std::abs(m_memCImageCapture.m_nPosY - p2y);
-		m_memCImageCapture.m_nPosX = std::min(m_memCImageCapture.m_nPosX, (int)p2x);
-		m_memCImageCapture.m_nPosY = std::min(m_memCImageCapture.m_nPosY, (int)p2y);
-		PaintImg();
-	}
 }
 
 void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
@@ -783,6 +653,135 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 			PaintImg();
 		}
 		m_eMouseMode = MouseMode::nNone;
+	}
+}
+
+void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
+{
+	ImgPixLocation(pos);
+
+	if (m_bNeedChangePicInfo) // 鼠标右键控制图片的灰度
+	{
+		auto bv = 6;
+		auto dx = (pos.x() - m_nLastMouseX) * bv;
+		auto dy = (pos.y() - m_nLastMouseY) * bv;
+		ui.horizontalSlider->setValue(ui.horizontalSlider->value() + dx);
+		ui.horizontalSlider_2->setValue(ui.horizontalSlider_2->value() - dy);
+		On_SliderValueChanged2(0);
+	}
+
+	if (!m_bMousePressed)
+	{
+		return;
+	}
+
+	if ((m_eMouseMode == MouseMode::DrawLine || m_eMouseMode == MouseMode::Rect || m_eMouseMode == MouseMode::Ellipse || (m_eMouseMode == MouseMode::Curvature && m_nMouseClickCount == 0))
+		&& !m_vector_ImgTag.empty())
+	{
+		auto& p = m_vector_ImgTag.back();
+		auto labelSize = ui.label->size();
+
+
+		double newX = 0, newY = 0;
+		WHSD_Tools::CalculateOriginalCoordinates(
+			pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
+			pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
+			m_nRotate /** 90*/,
+			m_dImgScale,
+			m_dImgScale,
+			0,
+			0,
+			m_bLeftRightMirror,
+			m_bUpDownMirror,
+			m_memMainQImage.width(),
+			m_memMainQImage.height(),
+			&newX, &newY);
+
+		p.m_nEndX = newX;
+		p.m_nEndY = newY;
+
+		PaintImg();
+	}
+
+	// 处理四边形标记模式下的鼠标移动（模式4），根据点击次数更新不同的端点坐标
+	if (m_eMouseMode == MouseMode::Angle && !m_vector_ImgTag.empty())
+	{
+		if (m_nMouseClickCount == 0)
+		{
+			auto& p = m_vector_ImgTag.back();
+			auto labelSize = ui.label->size();
+
+
+			double newX = 0, newY = 0;
+			WHSD_Tools::CalculateOriginalCoordinates(
+				pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
+				pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
+				m_nRotate /** 90*/,
+				m_dImgScale,
+				m_dImgScale,
+				0,
+				0,
+				m_bLeftRightMirror,
+				m_bUpDownMirror,
+				m_memMainQImage.width(),
+				m_memMainQImage.height(),
+				&newX, &newY);
+
+			p.m_nEndX = newX;
+			p.m_nEndY = newY;
+		}
+		if (m_nMouseClickCount == 1)
+		{
+			auto& p = m_vector_ImgTag.back();
+			auto labelSize = ui.label->size();
+
+
+			double newX = 0, newY = 0;
+			WHSD_Tools::CalculateOriginalCoordinates(
+				pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
+				pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
+				m_nRotate /** 90*/,
+				m_dImgScale,
+				m_dImgScale,
+				0,
+				0,
+				m_bLeftRightMirror,
+				m_bUpDownMirror,
+				m_memMainQImage.width(),
+				m_memMainQImage.height(),
+				&newX, &newY);
+
+			p.m_nEndX2 = newX;
+			p.m_nEndY2 = newY;
+		}
+		PaintImg();
+	}
+	// 处理截图模式下的鼠标移动（模式7），更新截图区域的尺寸和位置
+	if (m_eMouseMode == MouseMode::Capture)
+	{
+		auto labelSize = ui.label->size();
+		double newX = 0, newY = 0;
+		WHSD_Tools::CalculateOriginalCoordinates(
+			pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
+			pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
+			m_nRotate /** 90*/,
+			m_dImgScale,
+			m_dImgScale,
+			0,
+			0,
+			m_bLeftRightMirror,
+			m_bUpDownMirror,
+			m_memMainQImage.width(),
+			m_memMainQImage.height(),
+			&newX, &newY);
+
+		auto p2x = newX;
+		auto p2y = newY;
+		m_memCImageCapture.m_nPicW = std::abs(m_memCImageCapture.m_nPosX - p2x);
+		m_memCImageCapture.m_nPicH = std::abs(m_memCImageCapture.m_nPosY - p2y);
+		m_memCImageCapture.m_nPosX = std::min(m_memCImageCapture.m_nPosX, (int)p2x);
+		m_memCImageCapture.m_nPosY = std::min(m_memCImageCapture.m_nPosY, (int)p2y);
+		PaintImg();
 	}
 }
 
@@ -2080,6 +2079,8 @@ void MainForm::On_UploadAllPic_Click2()
 	jsonObj.insert("ImgType", 1);
 	jsonObj.insert("Imgs", picArray);
 	QJsonDocument doc(jsonObj);
+
+	qDebug() << jsonObj;
 	bool success = false;
 	auto [t4, t5, t6] = HttpClient::Post(m_pConfig->m_memTimsConfig.m_strUploadPic, doc.toJson(),
 		"application/json", {}, 20000);
@@ -2088,6 +2089,7 @@ void MainForm::On_UploadAllPic_Click2()
 		auto jsonStr = QString::fromStdString(t2);
 		QJsonParseError parseError;
 		QJsonDocument doc = QJsonDocument::fromJson(jsonStr.toUtf8(), &parseError);
+		qDebug() << jsonStr.toUtf8();
 		// 检查解析是否成功
 		if (parseError.error == QJsonParseError::NoError)
 		{
@@ -2847,6 +2849,7 @@ void MainForm::DownloadPic()
 		{
 			// 2. 提取 JSON 对象（假设根节点是对象）
 			auto rootObj = doc.object();
+			qDebug() << "MainForm::DownloadPic code " << rootObj;
 			auto code = rootObj["code"].toInt();
 			if (code == 200)
 			{

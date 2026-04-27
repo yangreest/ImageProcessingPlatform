@@ -124,8 +124,8 @@ void LogDisplayDialog::onSaveButtonClicked()
 	QString fileName = QFileDialog::getSaveFileName(
 		this,
 		tr("保存日志文件"),
-		QDir::homePath() + "/logs_" + QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss") + ".csv",
-		tr("文本文件 (*.csv);;所有文件 (*)")
+		QDir::homePath() + "/logs_" + QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss") + ".log",
+		tr("文本文件 (*.log);;所有文件 (*)")
 	);
 
 	if (!fileName.isEmpty()) {
@@ -148,7 +148,7 @@ bool LogDisplayDialog::saveLogsToFile(const QString& fileName)
 	QTextStream out(&file);
 
 	// 写入表头
-	out << "序号,时间,级别,消息,文件名,函数名,行号\n";
+	//out << "序号,时间,级别,消息,文件名,函数名,行号\n";
 
 	// 写入日志数据
 	for (int row = 0; row < ui.m_logTable->rowCount(); ++row) {
@@ -159,7 +159,7 @@ bool LogDisplayDialog::saveLogsToFile(const QString& fileName)
 		QString file = ui.m_logTable->item(row, 4) ? ui.m_logTable->item(row, 4)->text() : "";
 		QString function = ui.m_logTable->item(row, 5) ? ui.m_logTable->item(row, 5)->text() : "";
 		QString line = ui.m_logTable->item(row, 6) ? ui.m_logTable->item(row, 6)->text() : "";
-		out << index << "," << time << "," << level << "," << message << "," << file << "," << function << "," << line << "\n";
+		out << index << " " << time << " " << level << " " << message << " " << file << " " << function << " " << line << "\n";
 	}
 
 	file.close();

@@ -52,14 +52,14 @@ public:
 	enum class MouseMode
 	{
 		nNone,
-		DrawLine,
-		Rect,
-		Ellipse,
-		Angle,
-		InputText,
-		Curvature,
-		Capture,
-		DeleteTag,
+		DrawLine,// 1: 画线
+		Rect,// 2: 画矩形
+		Ellipse, // 3: 画椭圆
+		Angle, // 4: 角度
+		InputText, // 5: 输入文字
+		Curvature,	// 6: 弯曲度
+		Capture,	// 7: 截图
+		DeleteTag, // 8: 删除
 	};
 
 	MainForm(const std::string& guid, int model, QWidget* parent = nullptr);
