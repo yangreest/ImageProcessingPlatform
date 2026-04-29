@@ -22,6 +22,7 @@
 #include <opencv2/opencv.hpp>
 #include <dcmtk/dcmdata/dctk.h>
 #include <dcmtk/dcmimgle/dcmimage.h>
+#include "CalibInputForm.h"
 
 #define MaxControlBoardCount 2
 
@@ -146,6 +147,7 @@ private slots:
 	void On_Ellipse_Click();
 	void On_MoveLast_Click();
 	void On_InputText_Click();
+	void On_CalibText_Click();
 	void On_Curvature_Click();
 	void On_Angle_Click();
 
@@ -418,4 +420,7 @@ private:
 	bool m_bImgNeedReverse;
 
 	bool m_bDownloadedPic;
+
+	float m_fRatio;
+	CalibInputForm* m_pCalibInputForm;
 };

@@ -2084,7 +2084,7 @@ QPushButton:hover {
              <widget class="QPushButton" name="pushButton_9">
               <property name="maximumSize">
                <size>
-                <width>48</width>
+                <width>70</width>
                 <height>70</height>
                </size>
               </property>

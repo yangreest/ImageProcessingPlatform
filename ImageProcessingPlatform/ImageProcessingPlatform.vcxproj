@@ -144,6 +144,7 @@
     <ClCompile Include="Tools\USBKey.cpp" />
     <ClCompile Include="Tools\XInputHelper.cpp" />
     <ClCompile Include="UI\AlertForm.cpp" />
+    <ClCompile Include="UI\CalibInputForm.cpp" />
     <ClCompile Include="UI\CameraFrom.cpp" />
     <ClCompile Include="UI\CloseEventFilter.cpp" />
     <ClCompile Include="UI\ControlBoardConfigForm.cpp" />
@@ -154,6 +155,7 @@
     <ClCompile Include="UI\TragListDialog.cpp" />
     <QtRcc Include="UI\MainForm.qrc" />
     <QtUic Include="UI\AlertForm.ui" />
+    <QtUic Include="UI\CalibInputForm.ui" />
     <QtUic Include="UI\CameraFrom.ui" />
     <QtUic Include="UI\ControlBoardConfigForm.ui" />
     <QtUic Include="UI\LogDisplayDialog.ui" />
@@ -183,6 +185,7 @@
     <ClInclude Include="Model\ImageTag.h" />
     <ClInclude Include="Tools\USBKey.h" />
     <ClInclude Include="Tools\XInputHelper.h" />
+    <QtMoc Include="UI\CalibInputForm.h" />
     <ClInclude Include="UI\FormWithShowModal.h" />
     <QtMoc Include="UI\TragListDialog.h" />
     <QtMoc Include="UI\LogDisplayDialog.h" />

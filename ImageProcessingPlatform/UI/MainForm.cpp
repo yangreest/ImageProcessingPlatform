@@ -18,6 +18,7 @@
 #include "AlertForm.h"
 #include "CloseEventFilter.h"
 #include "SingleInputForm.h"
+
 #include "Tools/HttpClient.h"
 #include "Tools/Tools.h"
 
@@ -830,6 +831,10 @@ void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos
 
 				p.m_nEndX = newX;
 				p.m_nEndY = newY;
+				if (m_eMouseMode == MouseMode::DrawLine)
+				{
+					p.m_strContent = "Line";
+				}
 			}
 
 			PaintImg();
@@ -1323,12 +1328,11 @@ void MainForm::BindAction()
 	connect(ui.pushButton_30, &QPushButton::clicked, this, &MainForm::On_SetFMode);
 	connect(ui.pushButton_29, &QPushButton::clicked, this, &MainForm::On_NoSetFMode);
 
-	//connect(ui.pushButton_52, &QPushButton::clicked, this, &MainForm::On_Denoise0);
+
 	connect(ui.pushButton_33, &QPushButton::clicked, this, &MainForm::On_Denoise1);
 	connect(ui.pushButton_38, &QPushButton::clicked, this, &MainForm::On_Denoise2);
 	connect(ui.pushButton_31, &QPushButton::clicked, this, &MainForm::On_Denoise3);
 
-	connect(ui.pushButton_53, &QPushButton::clicked, this, &MainForm::On_AddTag);
 	connect(ui.pushButton_42, &QPushButton::clicked, this, &MainForm::On_Enhance1);
 	connect(ui.pushButton_46, &QPushButton::clicked, this, &MainForm::On_Enhance2);
 	connect(ui.pushButton_45, &QPushButton::clicked, this, &MainForm::On_Enhance3);
@@ -1336,8 +1340,10 @@ void MainForm::BindAction()
 	connect(ui.pushButton_48, &QPushButton::clicked, this, &MainForm::On_DrawLine_Click);
 	connect(ui.pushButton_34, &QPushButton::clicked, this, &MainForm::On_Rect_Click);
 	connect(ui.pushButton_49, &QPushButton::clicked, this, &MainForm::On_Ellipse_Click);
-	connect(ui.pushButton_51, &QPushButton::clicked, this, &MainForm::On_MoveLast_Click);
 	connect(ui.pushButton_50, &QPushButton::clicked, this, &MainForm::On_InputText_Click);
+	connect(ui.pushButton_51, &QPushButton::clicked, this, &MainForm::On_MoveLast_Click);
+	connect(ui.pushButton_52, &QPushButton::clicked, this, &MainForm::On_CalibText_Click);
+	//connect(ui.pushButton_53, &QPushButton::clicked, this, &MainForm::On_AddTag);
 	connect(ui.pushButton_54, &QPushButton::clicked, this, &MainForm::On_Curvature_Click);
 	connect(ui.pushButton_47, &QPushButton::clicked, this, &MainForm::On_Angle_Click);
 
@@ -1425,6 +1431,10 @@ void MainForm::InitParam()
 
 	WHSD_Tools::SafeRelease(m_pTragListDialog);
 	m_pTragListDialog = new TragListDialog();
+
+	WHSD_Tools::SafeRelease(m_pCalibInputForm);
+	m_pCalibInputForm = new CalibInputForm(0);
+	m_fRatio = m_pCalibInputForm->fRatio;
 
 	m_pConfig = new CConfigManager();
 	m_pConfig->Read(WHSD_Tools::GetAbsolutePath("Config.xml"));
@@ -1866,6 +1876,7 @@ void MainForm::On_ShowConfigFormClick()
 
 void MainForm::On_SliderValueChanged()
 {
+	qDebug() << "On_SliderValueChanged";
 	auto ck = ui.horizontalSlider->value();
 	auto cw = ui.horizontalSlider_2->value();
 	m_memImageProcessParam2.m_wMaxBright = cw;
@@ -1875,15 +1886,18 @@ void MainForm::On_SliderValueChanged()
 		std::lock_guard<std::mutex> g(m_mutexLastImgMutex);
 		auto m_vector_LastImgBuffer = m_memSDRaw.GetOriginalRawData();
 		auto m_vector_ChangedImgBuffer2 = m_memSDRaw.GetTempRawData();
-		if (m_pImageProcess->ImageProcess1(m_memSDRaw.m_wPicWidth, m_memSDRaw.m_wPicHeight,
-			m_vector_LastImgBuffer.data(),
-			&m_memImageProcessParam1, &m_vector_ChangedImgBuffer2))
+		if (m_pImageProcess->ImageProcess1(m_memSDRaw.m_wPicWidth
+										  ,m_memSDRaw.m_wPicHeight
+			                              ,m_vector_LastImgBuffer.data(),
+			                              &m_memImageProcessParam1,
+			                              &m_vector_ChangedImgBuffer2))
 		{
 			m_memSDRaw.SetTempRawData(&m_vector_ChangedImgBuffer2);
-			if (m_pImageProcess->BrightAndContrastProcess(m_memSDRaw.m_wPicWidth, m_memSDRaw.m_wPicHeight,
-				reinterpret_cast<uint16_t*>(m_vector_ChangedImgBuffer2.
-					data()),
-				&m_memImageProcessParam2, &m_vecNeedShowBuffer))
+			if (m_pImageProcess->BrightAndContrastProcess(m_memSDRaw.m_wPicWidth
+				                                         ,m_memSDRaw.m_wPicHeight
+				                                         ,reinterpret_cast<uint16_t*>(m_vector_ChangedImgBuffer2.data())
+				                                         ,&m_memImageProcessParam2
+				                                         ,&m_vecNeedShowBuffer))
 			{
 			}
 		}
@@ -1897,6 +1911,7 @@ void MainForm::On_SliderValueChanged()
 
 void MainForm::On_SliderValueChanged2(int value)
 {
+	qDebug() << "On_SliderValueChanged2" << value;
 	auto ck = ui.horizontalSlider->value();
 	auto cw = ui.horizontalSlider_2->value();
 	m_memImageProcessParam2.m_wMaxBright = cw;
@@ -1912,46 +1927,15 @@ void MainForm::On_SliderValueChanged2(int value)
 	ui.lineEdit_3->setText(QString::number(cw));
 	ui.lineEdit_4->setText(QString::number(ck));
 
-	QSettings settings("河南四达", "Star_HMI"); // 公司名和应用名
-	//auto cl = settings.value("CK", QDir::currentPath()).toUInt();
-	//auto cw = settings.value("CW", QDir::currentPath()).toUInt();
-
-	settings.setValue("CK", ck);
-	settings.setValue("CW", cw);
-	/*
-
-		QString filter = "RAW文件 (*.raw);;SDRAW文件 (*.sdraw);;所有文件 (*)";
-	QSettings settings("河南四达", "Star_HMI"); // 公司名和应用名
-	QString lastPath = settings.value("LastFileDialogPath", QDir::currentPath()).toString();
-	QString pa = QDir::homePath();
-	if (!lastPath.isEmpty())
-	{
-		pa = lastPath;
-	}
-	// 打开文件选择对话框
-	QString qFilePath = QFileDialog::getOpenFileName(
-		this, // 父窗口指针
-		tr("选择文件"), // 对话框标题
-		pa, // 初始目录（这里使用用户主目录）
-		filter // 文件过滤器
-	);
-
-	// 判断用户是否选择了文件
-	if (qFilePath.isEmpty())
-	{
-		return;
-	}
-	QFileInfo fileInfo(qFilePath);
-	QString currentPath = fileInfo.path();
-	settings.setValue("LastFileDialogPath", currentPath);
-	// 获取文件后缀并判断类型
-	QString fileExt = QFileInfo(qFilePath).suffix().toLower();
-
-	*/
+	//QSettings settings("河南四达", "Star_HMI"); // 公司名和应用名
+	//
+	//settings.setValue("CK", ck);
+	//settings.setValue("CW", cw);
 }
 
 void MainForm::On_SliderValueChanged3(int value)
 {
+	qDebug() << "On_SliderValueChanged3" << value;
 	ui.lineEdit_5->setText(QString::number(value));
 	m_memImageProcessParam1.m_nDenoise = value;
 	On_SliderValueChanged();
@@ -1959,6 +1943,7 @@ void MainForm::On_SliderValueChanged3(int value)
 
 void MainForm::On_SliderValueChanged4(int value)
 {
+    qDebug() << "On_SliderValueChanged4" << value;
 	ui.lineEdit_6->setText(QString::number(value));
 	m_memImageProcessParam1.m_nEnhance = value;
 	On_SliderValueChanged();
@@ -2268,37 +2253,45 @@ QImage MainForm::PaintTag()
 {
 	QImage q(m_memMainQImage.width(), m_memMainQImage.height(), QImage::Format_ARGB32);
 	QPainter painter2(&q);
-	painter2.setRenderHint(QPainter::TextAntialiasing); // 抗锯齿
+	painter2.setRenderHint(QPainter::TextAntialiasing); // 反走样
 	painter2.drawImage(0, 0, m_memMainQImage);
 	QPen pen;
-	pen.setWidth(1);
+	pen.setWidth(2);
 	pen.setColor(Qt::red);
 	painter2.setPen(pen);
 	for (const auto& s : m_vector_ImgTag)
 	{
 		//pen.setColor(s.m_bSelected ? Qt::green : Qt::red);
 		painter2.save();
-
+		// 0、线 1、矩形 2、椭圆 3、角度、 4、文字 5、弯曲度
 		switch (s.m_nTagType)
 		{
-		case 0:
+		case 0: // 线
 		{
 			painter2.drawLine(s.m_nStartX, s.m_nStartY, s.m_nEndX, s.m_nEndY);
+			painter2.translate((s.m_nEndX + s.m_nStartX) * 0.5, (s.m_nEndY + s.m_nStartY) * 0.5);
+			painter2.rotate(0 - (m_nRotate % 360) /** 90*/); // 平移到绘制起点（旋转中心）
+			// 计算像素长度
+			int n = sqrt(pow(s.m_nEndX - s.m_nStartX, 2) + pow(s.m_nEndY - s.m_nStartY, 2));
+			float f = n * m_fRatio;
+
+			painter2.drawText(20, -20, QString("%1 毫米").arg(f)); // 绘制文字的用法 
+			painter2.restore();
 			break;
 		}
-		case 1:
+		case 1: // 矩形
 		{
 			painter2.drawRect(std::min(s.m_nStartX, s.m_nEndX), std::min(s.m_nStartY, s.m_nEndY),
 				std::abs(s.m_nStartX - s.m_nEndX), std::abs(s.m_nStartY - s.m_nEndY));
 			break;
 		}
-		case 2:
+		case 2: // 椭圆
 		{
 			painter2.drawEllipse(std::min(s.m_nStartX, s.m_nEndX), std::min(s.m_nStartY, s.m_nEndY),
 				std::abs(s.m_nStartX - s.m_nEndX), std::abs(s.m_nStartY - s.m_nEndY));
 			break;
 		}
-		case 3:
+		case 3: // 角度
 		{
 			painter2.drawLine(s.m_nStartX, s.m_nStartY, s.m_nEndX, s.m_nEndY);
 			if (s.m_nEndX2 != 0 && s.m_nEndY2 != 0)
@@ -2339,16 +2332,16 @@ QImage MainForm::PaintTag()
 				auto jd = calculateAngleABC(s.m_nStartX, s.m_nStartY, s.m_nEndX, s.m_nEndY, s.m_nEndX2, s.m_nEndY2);
 
 				std::stringstream ss;
-				ss << "angel:" << jd << "°";
+				ss << "角度:" << jd << "°";
 
-				painter2.translate(s.m_nStartX, s.m_nStartX);
+				painter2.translate(s.m_nStartX, s.m_nStartY);
 				painter2.rotate(0 - (m_nRotate % 360) /** 90*/); // 平移到绘制起点（旋转中心）
 				painter2.drawText(0, 0, ss.str().c_str());
-				painter2.restore();
+				painter2.restore();// 恢复到原始坐标系
 			}
 			break;
 		}
-		case 4:
+		case 4: // 文本
 		{
 			painter2.translate(s.m_nStartX, s.m_nStartY); // 这是个bug
 			painter2.rotate(0 - (m_nRotate % 360) /** 90*/); // 平移到绘制起点（旋转中心）
@@ -2356,7 +2349,7 @@ QImage MainForm::PaintTag()
 			painter2.restore(); // 恢复到原始坐标系
 			break;
 		}
-		case 5:
+		case 5: // 弯曲度
 		{
 			painter2.drawLine(s.m_nStartX, s.m_nStartY, s.m_nEndX, s.m_nEndY);
 			if (s.m_nEndX2 != 0 && s.m_nEndY2 != 0)
@@ -2412,7 +2405,7 @@ QImage MainForm::PaintTag()
 				auto hei = calculateDistance(dx, dy, s.m_nEndX2, s.m_nEndY2);
 
 				std::stringstream ss;
-				ss << "L:" << len << ",H:" << hei;
+				ss << "长:" << len * m_fRatio << "毫米; 高:" << hei * m_fRatio << "毫米";
 
 				painter2.translate(s.m_nEndX2, s.m_nEndY2);
 				painter2.rotate(0 - (m_nRotate % 360) /** 90*/); // 平移到绘制起点（旋转中心）
@@ -2791,7 +2784,6 @@ void MainForm::ReadSavedFiles(int index)
 		}
 	}
 }
-
 
 void MainForm::LoadOnlinePicByThread()
 {
@@ -3256,6 +3248,7 @@ void MainForm::On_Dial_ValueChanged(int value)
 
 void MainForm::on_lineEdit_TextChanged(const QString& text)
 {
+	qDebug() << "on_lineEdit_TextChanged " << text;
 	int value = ui.lineEdit_5->text().toInt();
 	m_memImageProcessParam1.m_nDenoise = value;
 	ui.horizontalSlider_3->setValue(value);
@@ -3267,7 +3260,6 @@ void MainForm::on_lineEdit_TextChanged(const QString& text)
 	ui.horizontalSlider->setValue(value);
 	value = ui.lineEdit_3->text().toInt();
 	ui.horizontalSlider_2->setValue(value);
-	//On_SliderValueChanged();
 }
 
 void MainForm::On_AddTag()
@@ -3367,6 +3359,38 @@ void MainForm::On_InputText_Click()
 	m_eMouseMode = MouseMode::InputText;
 	ClearPicOpt();
 	PaintImg();
+}
+
+void MainForm::On_CalibText_Click()
+{
+	if (m_vector_ImgTag.size() < 1)
+	{
+		MY_WARNING("请先选择标定线段");
+		return;
+	}
+	int n = 0;
+	for (auto& p : m_vector_ImgTag)
+	{
+		if (p.m_nTagType == 0)
+		{
+			// 计算像素长度
+			n = sqrt(pow(p.m_nEndX - p.m_nStartX, 2) + pow(p.m_nEndY - p.m_nStartY, 2));
+			break;
+		}
+		else
+		{
+			continue;
+		}
+	}
+	if (n == 0)
+	{
+		MY_WARNING("请先选择标定线段");
+		return;
+	}
+
+	m_pCalibInputForm = new CalibInputForm(n);
+	m_pCalibInputForm->showModal();
+	m_fRatio = m_pCalibInputForm->fRatio;
 }
 
 void MainForm::On_Curvature_Click()
