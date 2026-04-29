@@ -115,8 +115,8 @@ bool CImageProcessByHamming::BrightAndContrastProcess(int wid, int hei, uint16_t
 	dst8bit.convertTo(dst8bit, CV_8UC1);
 	memcpy(result->data(), dst8bit.data, wid * hei * sizeof(uint8_t));
 
-	qDebug() << "自适应调整参数：";
-	qDebug() << "最大值：" << targetMax << "，最小值：" << targetMin;
+	//qDebug() << "自适应调整参数：";
+	//qDebug() << "最大值：" << targetMax << "，最小值：" << targetMin;
 	//std::cout << "对比度系数alpha：" << alpha << "，亮度偏移beta：" << beta << std::endl;
 	return true;
 }

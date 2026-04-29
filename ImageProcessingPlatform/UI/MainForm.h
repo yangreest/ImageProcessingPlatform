@@ -1,6 +1,8 @@
 #pragma once
 #include <mutex>
 #include "CameraFrom.h"
+#include <QtConcurrent>
+#include <QFutureWatcher>
 #include "ControlBoardConfigForm.h"
 #include "ui_MainForm.h"
 #include "SampleBoard/SampleBoardBase.h"
@@ -107,9 +109,16 @@ private slots:
 	void On_TurnOnCamera_Click();
 	void On_TurnOffCamera_Click();
 	void On_ShowConfigFormClick();
-	void On_SliderValueChanged2(int value);
-	void On_SliderValueChanged3(int value);
-	void On_SliderValueChanged4(int value);
+	//void On_SliderValueChanged2(int value);
+	//void On_SliderValueChanged3(int value);
+	//void On_SliderValueChanged4(int value);
+	// 滑块 -> 输入框
+	void onSliderValueChanged(int value, QSlider* slider, QLineEdit* edit);
+	// 输入框 -> 滑块
+	void onEditTextChanged(const QString& text, QSlider* slider, QLineEdit* edit);
+
+	// 耗时任务完成后执行（更新UI）
+	void onLongTaskFinished();
 	void On_SavePicByGuid_Click();
 	void On_DeletePic_Click();
 	void On_PreviousPic_Click();
@@ -130,7 +139,7 @@ private slots:
 	void On_NoSetFMode();
 	void On_Dial_ValueChanged(int value);
 
-	void on_lineEdit_TextChanged(const QString& text);
+	//void on_lineEdit_TextChanged(const QString& text);
 
 	void On_AddTag();
 
@@ -423,4 +432,16 @@ private:
 
 	float m_fRatio;
 	CalibInputForm* m_pCalibInputForm;
+
+	// 初始化一组控件的绑定关系
+	void initControlPair(QSlider* slider, QLineEdit* edit);
+
+	// 执行耗时任务（后台线程）
+	void doLongTimeWork();
+
+	// 控件更新锁：防止信号相互触发死循环
+	bool m_isUpdating = false;
+
+	// 线程监视器：处理耗时任务
+	QFutureWatcher<void>* m_taskWatcher;
 };

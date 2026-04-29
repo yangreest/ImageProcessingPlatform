@@ -666,9 +666,9 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 		auto bv = 6;
 		auto dx = (pos.x() - m_nLastMouseX) * bv;
 		auto dy = (pos.y() - m_nLastMouseY) * bv;
-		ui.horizontalSlider->setValue(ui.horizontalSlider->value() + dx);
-		ui.horizontalSlider_2->setValue(ui.horizontalSlider_2->value() - dy);
-		On_SliderValueChanged2(0);
+		ui.horizontalSlider_3->setValue(ui.horizontalSlider_3->value() + dx);
+		ui.horizontalSlider_4->setValue(ui.horizontalSlider_4->value() - dy);
+		//On_SliderValueChanged2(0);
 	}
 
 	if (!m_bMousePressed)
@@ -1185,22 +1185,22 @@ void MainForm::InitUI(int model)
 	}
 	ui.comboBox_5->setCurrentIndex(1);
 
-	QSettings settings("河南四达", "Star_HMI"); // 公司名和应用名
-	auto ck = settings.value("CK", QDir::currentPath()).toUInt();
-	auto cw = settings.value("CW", QDir::currentPath()).toUInt();
+	//QSettings settings("河南四达", "Star_HMI"); // 公司名和应用名
+	//auto ck = settings.value("CK", QDir::currentPath()).toUInt();
+	//auto cw = settings.value("CW", QDir::currentPath()).toUInt();
 
-	if (ck == 0)
-	{
-		ck = 20000;
-	}
-	if (cw == 0)
-	{
-		cw = 10000;
-	}
-	ui.horizontalSlider->setValue(ck);
-	ui.lineEdit_4->setText(QString::number(ck));
-	ui.horizontalSlider_2->setValue(cw);
-	ui.lineEdit_3->setText(QString::number(cw));
+	//if (ck == 0)
+	//{
+	//	ck = 20000;
+	//}
+	//if (cw == 0)
+	//{
+	//	cw = 10000;
+	//}
+	//ui.horizontalSlider->setValue(ck);
+	//ui.lineEdit_4->setText(QString::number(ck));
+	//ui.horizontalSlider_2->setValue(cw);
+	//ui.lineEdit_3->setText(QString::number(cw));
 	ui.label_40->setVisible(m_pConfig->m_memControlBoardConfig.m_bEnableIp2);
 	//ui.groupBox_8->setTitle(QString::fromStdString("图像处理_" + m_pImageProcess->GetVersion() + "："));
 	QString jsonPath = QString("%1\\algorithm.json").arg(WHSD_Tools::GetExeDirectory());
@@ -1300,16 +1300,27 @@ void MainForm::BindAction()
 	connect(ui.pushButton_17, &QPushButton::clicked, this, &MainForm::On_TurnOffCamera_Click);
 	connect(ui.pushButton_27, &QPushButton::clicked, this, &MainForm::On_ShowConfigFormClick);
 
-	connect(ui.horizontalSlider_2, &QSlider::valueChanged, this, &MainForm::On_SliderValueChanged2);
-	connect(ui.horizontalSlider, &QSlider::valueChanged, this, &MainForm::On_SliderValueChanged2);
+	//connect(ui.horizontalSlider_2, &QSlider::valueChanged, this, &MainForm::On_SliderValueChanged2);
+	//connect(ui.horizontalSlider, &QSlider::valueChanged, this, &MainForm::On_SliderValueChanged2);
 
-	connect(ui.horizontalSlider_3, &QSlider::valueChanged, this, &MainForm::On_SliderValueChanged3);
-	connect(ui.horizontalSlider_4, &QSlider::valueChanged, this, &MainForm::On_SliderValueChanged4);
+	//connect(ui.horizontalSlider_3, &QSlider::valueChanged, this, &MainForm::On_SliderValueChanged3);
+	//connect(ui.horizontalSlider_4, &QSlider::valueChanged, this, &MainForm::On_SliderValueChanged4);
 
-	connect(ui.lineEdit_3, &QLineEdit::textChanged, this, &MainForm::on_lineEdit_TextChanged);
-	connect(ui.lineEdit_4, &QLineEdit::textChanged, this, &MainForm::on_lineEdit_TextChanged);
-	connect(ui.lineEdit_5, &QLineEdit::textChanged, this, &MainForm::on_lineEdit_TextChanged);
-	connect(ui.lineEdit_6, &QLineEdit::textChanged, this, &MainForm::on_lineEdit_TextChanged);
+	// 初始化线程监视器
+	m_taskWatcher = new QFutureWatcher<void>(this);
+	connect(m_taskWatcher, &QFutureWatcher<void>::finished,
+		this, &MainForm::onLongTaskFinished);
+
+	 // 绑定四组控件
+	initControlPair(ui.horizontalSlider_3, ui.lineEdit_3);
+	initControlPair(ui.horizontalSlider_4, ui.lineEdit_4);
+	initControlPair(ui.horizontalSlider_5, ui.lineEdit_5);
+	initControlPair(ui.horizontalSlider_6, ui.lineEdit_6);
+
+	//connect(ui.lineEdit_3, &QLineEdit::textChanged, this, &MainForm::on_lineEdit_TextChanged);
+	//connect(ui.lineEdit_4, &QLineEdit::textChanged, this, &MainForm::on_lineEdit_TextChanged);
+	//connect(ui.lineEdit_5, &QLineEdit::textChanged, this, &MainForm::on_lineEdit_TextChanged);
+	//connect(ui.lineEdit_6, &QLineEdit::textChanged, this, &MainForm::on_lineEdit_TextChanged);
 
 	connect(ui.pushButton_13, &QPushButton::clicked, this, &MainForm::On_SavePicByGuid_Click);
 	connect(ui.pushButton_22, &QPushButton::clicked, this, &MainForm::On_DeletePic_Click);
@@ -1595,12 +1606,25 @@ bool MainForm::CheckPassword()
 void MainForm::Callback_ShowImgOnLabel_2()
 {
 	auto m_vector_LastImgBuffer = m_memSDRaw.GetOriginalRawData();
-	// 获取图像的 均值和标准差
-	int m_nMean, m_nStdDev;
-	m_pImageProcess->calculateMaxandMinBright(m_vector_LastImgBuffer, m_nMean, m_nStdDev);
-	ui.horizontalSlider->setValue(m_nStdDev);
-	ui.horizontalSlider_2->setValue(m_nMean);
-
+	
+	if (ui.comboBox->count() < 1)
+	{
+		// 获取图像的 均值和标准差
+		int m_nMaxValue, m_nMinValue;
+		m_pImageProcess->calculateMaxandMinBright(m_vector_LastImgBuffer, m_nMaxValue, m_nMinValue);
+		ui.horizontalSlider_4->setValue(m_nMinValue);
+		ui.horizontalSlider_3->setValue(m_nMaxValue);
+	}
+	else
+	{
+		int currentIndex = ui.comboBox->currentIndex();
+		Algorithm data = ui.comboBox->itemData(currentIndex).value<Algorithm>();
+		ui.lineEdit_3->setText(QString::number(data.m_nP3));
+		ui.lineEdit_4->setText(QString::number(data.m_nP4));
+		ui.lineEdit_5->setText(QString::number(data.m_nP5));
+		ui.lineEdit_6->setText(QString::number(data.m_nP6));
+	}
+	
 	ClearPicOpt();
 
 	QImage image(m_vector_LastImgBuffer.data(), m_memSDRaw.m_wPicWidth, m_memSDRaw.m_wPicHeight,
@@ -1608,8 +1632,7 @@ void MainForm::Callback_ShowImgOnLabel_2()
 		QImage::Format_Grayscale16);
 	m_memMainQImage = image.convertToFormat(QImage::Format_Grayscale16).scaled(ui.label->size(), Qt::KeepAspectRatio,
 		Qt::SmoothTransformation);
-	On_SliderValueChanged();
-	//PaintImg();
+	doLongTimeWork();
 }
 
 void MainForm::ShowImgOnLabel()
@@ -1874,13 +1897,42 @@ void MainForm::On_ShowConfigFormClick()
 	}
 }
 
+void MainForm::onSliderValueChanged(int value, QSlider* slider, QLineEdit* edit)
+{
+	if (m_isUpdating) return; // 上锁：屏蔽递归触发
+	m_isUpdating = true;
+
+	edit->setText(QString::number(value)); // 只更新UI，不触发信号
+
+	m_isUpdating = false;
+
+	// 触发耗时任务（后台线程）
+	doLongTimeWork();
+}
+
+void MainForm::onEditTextChanged(const QString& text, QSlider* slider, QLineEdit* edit)
+{
+	if (m_isUpdating) return; // 上锁：屏蔽递归触发
+	m_isUpdating = true;
+
+	bool ok;
+	int val = text.toInt(&ok);
+	if (ok) slider->setValue(val); // 只更新UI，不触发信号
+
+	m_isUpdating = false;
+
+	// 触发耗时任务（后台线程）
+	doLongTimeWork();
+}
+
 void MainForm::On_SliderValueChanged()
 {
 	qDebug() << "On_SliderValueChanged";
-	auto ck = ui.horizontalSlider->value();
-	auto cw = ui.horizontalSlider_2->value();
-	m_memImageProcessParam2.m_wMaxBright = cw;
-	m_memImageProcessParam2.m_wMinBright = ck;
+	m_memImageProcessParam2.m_wMaxBright = ui.horizontalSlider_3->value();
+	m_memImageProcessParam2.m_wMinBright = ui.horizontalSlider_4->value();
+
+	m_memImageProcessParam1.m_nDenoise = ui.horizontalSlider_5->value();
+    m_memImageProcessParam1.m_nEnhance = ui.horizontalSlider_6->value();
 
 	{
 		std::lock_guard<std::mutex> g(m_mutexLastImgMutex);
@@ -1902,51 +1954,54 @@ void MainForm::On_SliderValueChanged()
 			}
 		}
 	}
-
-
-	ui.lineEdit_3->setText(QString::number(cw));
-	ui.lineEdit_4->setText(QString::number(ck));
+	//ui.lineEdit_3->setText(QString::number(cw));
+	//ui.lineEdit_4->setText(QString::number(ck));
 	ShowImgOnLabel();
 }
 
-void MainForm::On_SliderValueChanged2(int value)
-{
-	qDebug() << "On_SliderValueChanged2" << value;
-	auto ck = ui.horizontalSlider->value();
-	auto cw = ui.horizontalSlider_2->value();
-	m_memImageProcessParam2.m_wMaxBright = cw;
-	m_memImageProcessParam2.m_wMinBright = ck;
-	{
-		std::lock_guard<std::mutex> g(m_mutexLastImgMutex);
-		auto m_vector_ChangedImgBuffer2 = m_memSDRaw.GetTempRawData();
-		m_pImageProcess->BrightAndContrastProcess(m_memSDRaw.m_wPicWidth, m_memSDRaw.m_wPicHeight,
-			(uint16_t*)m_vector_ChangedImgBuffer2.data(),
-			&m_memImageProcessParam2, &m_vecNeedShowBuffer);
-	}
-	ShowImgOnLabel();
-	ui.lineEdit_3->setText(QString::number(cw));
-	ui.lineEdit_4->setText(QString::number(ck));
+//void MainForm::On_SliderValueChanged2(int value)
+//{
+//	qDebug() << "On_SliderValueChanged2" << value;
+//	auto ck = ui.horizontalSlider->value();
+//	auto cw = ui.horizontalSlider_2->value();
+//	m_memImageProcessParam2.m_wMaxBright = cw;
+//	m_memImageProcessParam2.m_wMinBright = ck;
+//	{
+//		std::lock_guard<std::mutex> g(m_mutexLastImgMutex);
+//		auto m_vector_ChangedImgBuffer2 = m_memSDRaw.GetTempRawData();
+//		m_pImageProcess->BrightAndContrastProcess(m_memSDRaw.m_wPicWidth, m_memSDRaw.m_wPicHeight,
+//			(uint16_t*)m_vector_ChangedImgBuffer2.data(),
+//			&m_memImageProcessParam2, &m_vecNeedShowBuffer);
+//	}
+//	ShowImgOnLabel();
+//	ui.lineEdit_3->setText(QString::number(cw));
+//	ui.lineEdit_4->setText(QString::number(ck));
+//
+//	//QSettings settings("河南四达", "Star_HMI"); // 公司名和应用名
+//	//
+//	//settings.setValue("CK", ck);
+//	//settings.setValue("CW", cw);
+//}
 
-	//QSettings settings("河南四达", "Star_HMI"); // 公司名和应用名
-	//
-	//settings.setValue("CK", ck);
-	//settings.setValue("CW", cw);
-}
+//void MainForm::On_SliderValueChanged3(int value)
+//{
+//	qDebug() << "On_SliderValueChanged3" << value;
+//	ui.lineEdit_5->setText(QString::number(value));
+//	m_memImageProcessParam1.m_nDenoise = value;
+//	On_SliderValueChanged();
+//}
+//
+//void MainForm::On_SliderValueChanged4(int value)
+//{
+//    qDebug() << "On_SliderValueChanged4" << value;
+//	ui.lineEdit_6->setText(QString::number(value));
+//	m_memImageProcessParam1.m_nEnhance = value;
+//	On_SliderValueChanged();
+//}
 
-void MainForm::On_SliderValueChanged3(int value)
+void MainForm::onLongTaskFinished()
 {
-	qDebug() << "On_SliderValueChanged3" << value;
-	ui.lineEdit_5->setText(QString::number(value));
-	m_memImageProcessParam1.m_nDenoise = value;
-	On_SliderValueChanged();
-}
-
-void MainForm::On_SliderValueChanged4(int value)
-{
-    qDebug() << "On_SliderValueChanged4" << value;
-	ui.lineEdit_6->setText(QString::number(value));
-	m_memImageProcessParam1.m_nEnhance = value;
-	On_SliderValueChanged();
+	qDebug() << "onLongTaskFinished";
 }
 
 void MainForm::On_SavePicByGuid_Click()
@@ -2528,8 +2583,6 @@ void MainForm::PaintImg()
 		m_nLastImg.setX(xb);
 		auto yb = (labelSize.height() - memMainQImage.height()) / 2 + m_nImgYOffset /*- memMainQImage.height() * (m_dImgScale - 1) / 2*/;
 		m_nLastImg.setY(yb);
-		qDebug() << "m_nImgXOffset" << m_nImgXOffset << "m_nImgYOffset" << m_nImgYOffset;
-		qDebug() << "lbw:" << lbw << "lbh:" << lbh << "wd:" << wd << "ht:" << ht << "xb:" << xb << "yb:" << yb;
 		painter.drawImage(xb, yb, memMainQImage);
 
 		//painter.drawImage
@@ -3246,21 +3299,21 @@ void MainForm::On_Dial_ValueChanged(int value)
 	PaintImg();
 }
 
-void MainForm::on_lineEdit_TextChanged(const QString& text)
-{
-	qDebug() << "on_lineEdit_TextChanged " << text;
-	int value = ui.lineEdit_5->text().toInt();
-	m_memImageProcessParam1.m_nDenoise = value;
-	ui.horizontalSlider_3->setValue(value);
-	value = ui.lineEdit_6->text().toInt();
-	ui.horizontalSlider_4->setValue(value);
-	m_memImageProcessParam1.m_nEnhance = value;
-
-	value = ui.lineEdit_4->text().toInt();
-	ui.horizontalSlider->setValue(value);
-	value = ui.lineEdit_3->text().toInt();
-	ui.horizontalSlider_2->setValue(value);
-}
+//void MainForm::on_lineEdit_TextChanged(const QString& text)
+//{
+//	qDebug() << "on_lineEdit_TextChanged " << text;
+//	int value = ui.lineEdit_5->text().toInt();
+//	m_memImageProcessParam1.m_nDenoise = value;
+//	ui.horizontalSlider_3->setValue(value);
+//	value = ui.lineEdit_6->text().toInt();
+//	ui.horizontalSlider_4->setValue(value);
+//	m_memImageProcessParam1.m_nEnhance = value;
+//
+//	value = ui.lineEdit_4->text().toInt();
+//	ui.horizontalSlider->setValue(value);
+//	value = ui.lineEdit_3->text().toInt();
+//	ui.horizontalSlider_2->setValue(value);
+//}
 
 void MainForm::On_AddTag()
 {
@@ -3282,44 +3335,32 @@ void MainForm::On_DenoiseAndEnhance0()
 
 void MainForm::On_Denoise1()
 {
-	m_memImageProcessParam1.m_nDenoise = 3;
-	ui.horizontalSlider_3->setValue(3);
-	On_SliderValueChanged();
+	ui.horizontalSlider_5->setValue(3);
 }
 
 void MainForm::On_Denoise2()
 {
-	m_memImageProcessParam1.m_nDenoise = 7;
-	ui.horizontalSlider_3->setValue(7);
-	On_SliderValueChanged();
+	ui.horizontalSlider_5->setValue(7);
 }
 
 void MainForm::On_Denoise3()
 {
-	m_memImageProcessParam1.m_nDenoise = 10;
-	ui.horizontalSlider_3->setValue(10);
-	On_SliderValueChanged();
+	ui.horizontalSlider_5->setValue(10);
 }
 
 void MainForm::On_Enhance1()
 {
-	m_memImageProcessParam1.m_nEnhance = 2;
-	ui.horizontalSlider_4->setValue(2);
-	On_SliderValueChanged();
+	ui.horizontalSlider_6->setValue(2);
 }
 
 void MainForm::On_Enhance2()
 {
-	m_memImageProcessParam1.m_nEnhance = 4;
-	ui.horizontalSlider_4->setValue(4);
-	On_SliderValueChanged();
+	ui.horizontalSlider_6->setValue(4);
 }
 
 void MainForm::On_Enhance3()
 {
-	m_memImageProcessParam1.m_nEnhance = 10;
-	ui.horizontalSlider_4->setValue(10);
-	On_SliderValueChanged();
+	ui.horizontalSlider_6->setValue(10);
 }
 
 void MainForm::On_DrawLine_Click()
@@ -3489,6 +3530,32 @@ void MainForm::AddComboBoxItem(QString itemName)
 	}
 	QString jsonPath = QString("%1\\algorithm.json").arg(WHSD_Tools::GetExeDirectory());
 	saveToFile(algList, jsonPath);
+}
+
+void MainForm::initControlPair(QSlider* slider, QLineEdit* edit)
+{
+	// 滑块值改变 → 更新输入框
+	connect(slider, &QSlider::valueChanged, this, [=](int value) {
+		onSliderValueChanged(value, slider, edit);
+		});
+
+	// 输入框文本改变 → 更新滑块
+	connect(edit, &QLineEdit::textChanged, this, [=](const QString& text) {
+		onEditTextChanged(text, slider, edit);
+		});
+}
+
+void MainForm::doLongTimeWork()
+{
+	// 如果已有任务在执行，直接忽略（防抖+防重复）
+	if (m_taskWatcher->isRunning()) return;
+
+	// 后台线程执行耗时操作（不卡UI）
+	QFuture<void> future = QtConcurrent::run([=]() {
+		On_SliderValueChanged();
+		});
+
+	m_taskWatcher->setFuture(future);
 }
 
 void MainForm::ReadPicFromMem(int index)
