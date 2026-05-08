@@ -1354,7 +1354,7 @@ void MainForm::BindAction()
 	connect(ui.pushButton_50, &QPushButton::clicked, this, &MainForm::On_InputText_Click);
 	connect(ui.pushButton_51, &QPushButton::clicked, this, &MainForm::On_MoveLast_Click);
 	connect(ui.pushButton_52, &QPushButton::clicked, this, &MainForm::On_CalibText_Click);
-	connect(ui.pushButton_53, &QPushButton::clicked, this, &MainForm::On_Text_Click);
+	//connect(ui.pushButton_53, &QPushButton::clicked, this, &MainForm::On_AddTag);
 	connect(ui.pushButton_54, &QPushButton::clicked, this, &MainForm::On_Curvature_Click);
 	connect(ui.pushButton_47, &QPushButton::clicked, this, &MainForm::On_Angle_Click);
 
@@ -3432,17 +3432,6 @@ void MainForm::On_CalibText_Click()
 	m_pCalibInputForm = new CalibInputForm(n);
 	m_pCalibInputForm->showModal();
 	m_fRatio = m_pCalibInputForm->fRatio;
-}
-
-void MainForm::On_Text_Click()
-{
-	QString stylePath = QString("%1\\styles\\flatgray.css").arg(WHSD_Tools::GetExeDirectory());
-	QFile file(stylePath); // qrc 路径
-	if (file.open(QFile::ReadOnly)) 
-	{
-		QString styleSheet = QLatin1String(file.readAll());
-		qApp->setStyleSheet(styleSheet);
-	}
 }
 
 void MainForm::On_Curvature_Click()

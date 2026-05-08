@@ -157,7 +157,6 @@ private slots:
 	void On_MoveLast_Click();
 	void On_InputText_Click();
 	void On_CalibText_Click();
-	void On_Text_Click();
 	void On_Curvature_Click();
 	void On_Angle_Click();
 
