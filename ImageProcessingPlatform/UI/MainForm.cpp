@@ -335,92 +335,92 @@ void MainForm::On_timer_timeout()
 	ui.label_46->setText(QString::number(m_anHeartBeatCount[0]));
 	ui.label_40->setText(QString::number(m_anHeartBeatCount[1]));
 
-	{
-		switch (m_memImageProcessParam1.m_nDenoise)
-		{
-		case 0:
-		{
-			ui.pushButton_33->setStyleSheet(QString::fromStdString(ChangeUIImg("putongjiangzao", false)));
-			ui.pushButton_38->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojijiangzao", false)));
-			ui.pushButton_31->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojijiangzao", false)));
-			break;
-		}
-		case 3:
-		{
-			ui.pushButton_33->setStyleSheet(QString::fromStdString(ChangeUIImg("putongjiangzao", true)));
-			ui.pushButton_38->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojijiangzao", false)));
-			ui.pushButton_31->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojijiangzao", false)));
-			break;
-		}
-		case 7:
-		{
-			ui.pushButton_33->setStyleSheet(QString::fromStdString(ChangeUIImg("putongjiangzao", false)));
-			ui.pushButton_38->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojijiangzao", true)));
-			ui.pushButton_31->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojijiangzao", false)));
-			break;
-		}
-		case 10:
-		{
-			ui.pushButton_33->setStyleSheet(QString::fromStdString(ChangeUIImg("putongjiangzao", false)));
-			ui.pushButton_38->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojijiangzao", false)));
-			ui.pushButton_31->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojijiangzao", true)));
-			break;
-		}
-		}
+	//{
+	//	switch (m_memImageProcessParam1.m_nDenoise)
+	//	{
+	//	case 0:
+	//	{
+	//		ui.pushButton_33->setStyleSheet(QString::fromStdString(ChangeUIImg("putongjiangzao", false)));
+	//		ui.pushButton_38->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojijiangzao", false)));
+	//		ui.pushButton_31->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojijiangzao", false)));
+	//		break;
+	//	}
+	//	case 3:
+	//	{
+	//		ui.pushButton_33->setStyleSheet(QString::fromStdString(ChangeUIImg("putongjiangzao", true)));
+	//		ui.pushButton_38->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojijiangzao", false)));
+	//		ui.pushButton_31->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojijiangzao", false)));
+	//		break;
+	//	}
+	//	case 7:
+	//	{
+	//		ui.pushButton_33->setStyleSheet(QString::fromStdString(ChangeUIImg("putongjiangzao", false)));
+	//		ui.pushButton_38->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojijiangzao", true)));
+	//		ui.pushButton_31->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojijiangzao", false)));
+	//		break;
+	//	}
+	//	case 10:
+	//	{
+	//		ui.pushButton_33->setStyleSheet(QString::fromStdString(ChangeUIImg("putongjiangzao", false)));
+	//		ui.pushButton_38->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojijiangzao", false)));
+	//		ui.pushButton_31->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojijiangzao", true)));
+	//		break;
+	//	}
+	//	}
 
-		switch (m_memImageProcessParam1.m_nEnhance)
-		{
-		case 0:
-		{
-			ui.pushButton_42->setStyleSheet(QString::fromStdString(ChangeUIImg("putongzengqiang", false)));
-			ui.pushButton_46->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojizengqiang", false)));
-			ui.pushButton_45->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojizengqiang", false)));
-			break;
-		}
-		case 2:
-		{
-			ui.pushButton_42->setStyleSheet(QString::fromStdString(ChangeUIImg("putongzengqiang", true)));
-			ui.pushButton_46->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojizengqiang", false)));
-			ui.pushButton_45->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojizengqiang", false)));
-			break;
-		}
-		case 4:
-		{
-			ui.pushButton_42->setStyleSheet(QString::fromStdString(ChangeUIImg("putongzengqiang", false)));
-			ui.pushButton_46->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojizengqiang", true)));
-			ui.pushButton_45->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojizengqiang", false)));
-			break;
-		}
-		case 10:
-		{
-			ui.pushButton_42->setStyleSheet(QString::fromStdString(ChangeUIImg("putongzengqiang", false)));
-			ui.pushButton_46->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojizengqiang", false)));
-			ui.pushButton_45->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojizengqiang", true)));
-			break;
-		}
-		}
-	}
+	//	switch (m_memImageProcessParam1.m_nEnhance)
+	//	{
+	//	case 0:
+	//	{
+	//		ui.pushButton_42->setStyleSheet(QString::fromStdString(ChangeUIImg("putongzengqiang", false)));
+	//		ui.pushButton_46->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojizengqiang", false)));
+	//		ui.pushButton_45->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojizengqiang", false)));
+	//		break;
+	//	}
+	//	case 2:
+	//	{
+	//		ui.pushButton_42->setStyleSheet(QString::fromStdString(ChangeUIImg("putongzengqiang", true)));
+	//		ui.pushButton_46->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojizengqiang", false)));
+	//		ui.pushButton_45->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojizengqiang", false)));
+	//		break;
+	//	}
+	//	case 4:
+	//	{
+	//		ui.pushButton_42->setStyleSheet(QString::fromStdString(ChangeUIImg("putongzengqiang", false)));
+	//		ui.pushButton_46->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojizengqiang", true)));
+	//		ui.pushButton_45->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojizengqiang", false)));
+	//		break;
+	//	}
+	//	case 10:
+	//	{
+	//		ui.pushButton_42->setStyleSheet(QString::fromStdString(ChangeUIImg("putongzengqiang", false)));
+	//		ui.pushButton_46->setStyleSheet(QString::fromStdString(ChangeUIImg("gaojizengqiang", false)));
+	//		ui.pushButton_45->setStyleSheet(QString::fromStdString(ChangeUIImg("chaojizengqiang", true)));
+	//		break;
+	//	}
+	//	}
+	//}
 	//if ()
-	{
-		ui.pushButton_48->
-			setStyleSheet(QString::fromStdString(ChangeUIImg("huaxian", m_eMouseMode == MouseMode::DrawLine)));
-		ui.pushButton_34->
-			setStyleSheet(QString::fromStdString(ChangeUIImg("juxing", m_eMouseMode == MouseMode::Rect)));
-		ui.pushButton_49->
-			setStyleSheet(QString::fromStdString(ChangeUIImg("tuoyuan", m_eMouseMode == MouseMode::Ellipse)));
-		ui.pushButton_50->
-			setStyleSheet(QString::fromStdString(ChangeUIImg("dazi", m_eMouseMode == MouseMode::InputText)));
-		ui.pushButton_54->
-			setStyleSheet(QString::fromStdString(ChangeUIImg("wanqudu", m_eMouseMode == MouseMode::Curvature)));
-		ui.pushButton_47->
-			setStyleSheet(QString::fromStdString(ChangeUIImg("jiaodu", m_eMouseMode == MouseMode::Angle)));
-		ui.pushButton_55->
-			setStyleSheet(QString::fromStdString(ChangeUIImg("jietu", m_eMouseMode == MouseMode::Capture)));
-		ui.pushButton_11->
-			setStyleSheet(QString::fromStdString(ChangeUIImg("fanzhuan", m_bImgNeedReverse)));
-		ui.pushButton_57->
-			setStyleSheet(QString::fromStdString(ChangeUIImg("shangchubiaozhu", m_eMouseMode == MouseMode::DeleteTag)));
-	}
+	//{
+	//	ui.pushButton_48->
+	//		setStyleSheet(QString::fromStdString(ChangeUIImg("huaxian", m_eMouseMode == MouseMode::DrawLine)));
+	//	ui.pushButton_34->
+	//		setStyleSheet(QString::fromStdString(ChangeUIImg("juxing", m_eMouseMode == MouseMode::Rect)));
+	//	ui.pushButton_49->
+	//		setStyleSheet(QString::fromStdString(ChangeUIImg("tuoyuan", m_eMouseMode == MouseMode::Ellipse)));
+	//	ui.pushButton_50->
+	//		setStyleSheet(QString::fromStdString(ChangeUIImg("dazi", m_eMouseMode == MouseMode::InputText)));
+	//	ui.pushButton_54->
+	//		setStyleSheet(QString::fromStdString(ChangeUIImg("wanqudu", m_eMouseMode == MouseMode::Curvature)));
+	//	ui.pushButton_47->
+	//		setStyleSheet(QString::fromStdString(ChangeUIImg("jiaodu", m_eMouseMode == MouseMode::Angle)));
+	//	ui.pushButton_55->
+	//		setStyleSheet(QString::fromStdString(ChangeUIImg("jietu", m_eMouseMode == MouseMode::Capture)));
+	//	ui.pushButton_11->
+	//		setStyleSheet(QString::fromStdString(ChangeUIImg("fanzhuan", m_bImgNeedReverse)));
+	//	ui.pushButton_57->
+	//		setStyleSheet(QString::fromStdString(ChangeUIImg("shangchubiaozhu", m_eMouseMode == MouseMode::DeleteTag)));
+	//}
 	ui.label_42->setText(QString::number(m_nXRaySendCout));
 }
 
@@ -1358,7 +1358,7 @@ void MainForm::BindAction()
 	connect(ui.pushButton_54, &QPushButton::clicked, this, &MainForm::On_Curvature_Click);
 	connect(ui.pushButton_47, &QPushButton::clicked, this, &MainForm::On_Angle_Click);
 
-	connect(ui.pushButton_56, &QPushButton::clicked, this, &MainForm::On_SaveImage_Clicked/*On_SaveRaw_Clicked*/);
+	//connect(ui.pushButton_56, &QPushButton::clicked, this, &MainForm::On_SaveImage_Clicked/*On_SaveRaw_Clicked*/);
 	connect(ui.pushButton_55, &QPushButton::clicked, this, &MainForm::On_Capture_Click);
 	connect(ui.pushButton_8, &QPushButton::clicked, this, &MainForm::On_NoCapture_Click);
 	connect(ui.pushButton_8, &QPushButton::clicked, this, &MainForm::On_NoCapture_Click);
