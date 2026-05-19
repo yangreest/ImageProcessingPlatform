@@ -663,7 +663,7 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 
 	if (m_bNeedChangePicInfo) // 鼠标右键控制图片的灰度
 	{
-		auto bv = 6;
+		auto bv = 4;
 		auto dx = (pos.x() - m_nLastMouseX) * bv;
 		auto dy = (pos.y() - m_nLastMouseY) * bv;
 		ui.horizontalSlider_3->setValue(ui.horizontalSlider_3->value() + dx);
@@ -2311,9 +2311,14 @@ QImage MainForm::PaintTag()
 	painter2.setRenderHint(QPainter::TextAntialiasing); // 反走样
 	painter2.drawImage(0, 0, m_memMainQImage);
 	QPen pen;
-	pen.setWidth(2);
+	pen.setWidth(4);
 	pen.setColor(Qt::red);
 	painter2.setPen(pen);
+	// ========== 在这里设置字体大小 ==========
+	QFont font;
+	font.setPointSize(20);  // 设置字号（你想要多大改这个数字）
+	// font.setPixelSize(24); // 也可以用像素大小，二选一即可
+	painter2.setFont(font);
 	for (const auto& s : m_vector_ImgTag)
 	{
 		//pen.setColor(s.m_bSelected ? Qt::green : Qt::red);
@@ -2878,7 +2883,7 @@ void MainForm::ImgPixLocation(QPoint pos)
 void MainForm::DownloadPic()
 {
 	//return;
-	qDebug() << "MainForm::DownloadPic in ";
+	qDebug() << "MainForm::DownloadPic in "<< m_strWorkGuid;
 	auto [t1, t2, t3] = HttpClient::Get(m_pConfig->m_memTimsConfig.m_strDownloadPic,
 		{ {"sampleId", m_strWorkGuid} }, {},
 		m_pConfig->m_memTimsConfig.m_nDownloadTimeOut);
@@ -3763,6 +3768,12 @@ void MainForm::Callback_TcpClientReadData(uint8_t* data, int len, uint64_t nInde
 		m_nWorkMode = std::stoi(results[1]);
 		m_mapLoadedMap.clear();
 		m_vector_NeedDownLoadPic.clear();
+		m_vector_ImgTag.clear();
+
+		std::string str("河南四达  检测任务ID：");
+		str.append(m_strWorkGuid);
+		setWindowTitle(str.c_str());
+
 		showEvent(nullptr);
 	}
 }
