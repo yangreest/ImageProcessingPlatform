@@ -151,6 +151,7 @@
     <ClCompile Include="UI\FormWithShowModal.cpp" />
     <ClCompile Include="UI\LogDisplayDialog.cpp" />
     <ClCompile Include="UI\MouseEventFilter.cpp" />
+    <ClCompile Include="UI\screenwidget.cpp" />
     <ClCompile Include="UI\SingleInputForm.cpp" />
     <ClCompile Include="UI\TragListDialog.cpp" />
     <QtRcc Include="UI\MainForm.qrc" />
@@ -185,6 +186,7 @@
     <ClInclude Include="Model\ImageTag.h" />
     <ClInclude Include="Tools\USBKey.h" />
     <ClInclude Include="Tools\XInputHelper.h" />
+    <QtMoc Include="UI\screenwidget.h" />
     <QtMoc Include="UI\CalibInputForm.h" />
     <ClInclude Include="UI\FormWithShowModal.h" />
     <QtMoc Include="UI\TragListDialog.h" />

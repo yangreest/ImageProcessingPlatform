@@ -22,6 +22,8 @@
 #include "Tools/HttpClient.h"
 #include "Tools/Tools.h"
 
+#include "screenwidget.h"
+
 #include <iphlpapi.h>
 #pragma comment(lib, "iphlpapi.lib")  // 自动链接库
 
@@ -1311,7 +1313,7 @@ void MainForm::BindAction()
 	connect(m_taskWatcher, &QFutureWatcher<void>::finished,
 		this, &MainForm::onLongTaskFinished);
 
-	 // 绑定四组控件
+	// 绑定四组控件
 	initControlPair(ui.horizontalSlider_3, ui.lineEdit_3);
 	initControlPair(ui.horizontalSlider_4, ui.lineEdit_4);
 	initControlPair(ui.horizontalSlider_5, ui.lineEdit_5);
@@ -1378,6 +1380,13 @@ void MainForm::BindAction()
 	connect(ui.pushButtonFixedParam, &QPushButton::clicked, this, &MainForm::On_pushButtonFixedParam_Click);
 
 	connect(ui.dial, &QDial::valueChanged, this, &MainForm::On_Dial_ValueChanged);
+
+	// 创建截图工具实例
+	ScreenWidget* screenWidget = ScreenWidget::Instance();
+
+	// 连接信号和槽
+	connect(screenWidget, &ScreenWidget::signalSaveScreen,
+		this, &MainForm::onScreenshotCaptured);
 }
 
 void MainForm::InitParam()
@@ -1606,7 +1615,7 @@ bool MainForm::CheckPassword()
 void MainForm::Callback_ShowImgOnLabel_2()
 {
 	auto m_vector_LastImgBuffer = m_memSDRaw.GetOriginalRawData();
-	
+
 	if (ui.comboBox->count() < 1)
 	{
 		// 获取图像的 均值和标准差
@@ -1624,7 +1633,7 @@ void MainForm::Callback_ShowImgOnLabel_2()
 		ui.lineEdit_5->setText(QString::number(data.m_nP5));
 		ui.lineEdit_6->setText(QString::number(data.m_nP6));
 	}
-	
+
 	ClearPicOpt();
 
 	QImage image(m_vector_LastImgBuffer.data(), m_memSDRaw.m_wPicWidth, m_memSDRaw.m_wPicHeight,
@@ -1932,24 +1941,24 @@ void MainForm::On_SliderValueChanged()
 	m_memImageProcessParam2.m_wMinBright = ui.horizontalSlider_4->value();
 
 	m_memImageProcessParam1.m_nDenoise = ui.horizontalSlider_5->value();
-    m_memImageProcessParam1.m_nEnhance = ui.horizontalSlider_6->value();
+	m_memImageProcessParam1.m_nEnhance = ui.horizontalSlider_6->value();
 
 	{
 		std::lock_guard<std::mutex> g(m_mutexLastImgMutex);
 		auto m_vector_LastImgBuffer = m_memSDRaw.GetOriginalRawData();
 		auto m_vector_ChangedImgBuffer2 = m_memSDRaw.GetTempRawData();
 		if (m_pImageProcess->ImageProcess1(m_memSDRaw.m_wPicWidth
-										  ,m_memSDRaw.m_wPicHeight
-			                              ,m_vector_LastImgBuffer.data(),
-			                              &m_memImageProcessParam1,
-			                              &m_vector_ChangedImgBuffer2))
+			, m_memSDRaw.m_wPicHeight
+			, m_vector_LastImgBuffer.data(),
+			&m_memImageProcessParam1,
+			&m_vector_ChangedImgBuffer2))
 		{
 			m_memSDRaw.SetTempRawData(&m_vector_ChangedImgBuffer2);
 			if (m_pImageProcess->BrightAndContrastProcess(m_memSDRaw.m_wPicWidth
-				                                         ,m_memSDRaw.m_wPicHeight
-				                                         ,reinterpret_cast<uint16_t*>(m_vector_ChangedImgBuffer2.data())
-				                                         ,&m_memImageProcessParam2
-				                                         ,&m_vecNeedShowBuffer))
+				, m_memSDRaw.m_wPicHeight
+				, reinterpret_cast<uint16_t*>(m_vector_ChangedImgBuffer2.data())
+				, &m_memImageProcessParam2
+				, &m_vecNeedShowBuffer))
 			{
 			}
 		}
@@ -2309,6 +2318,7 @@ QImage MainForm::PaintTag()
 	QImage q(m_memMainQImage.width(), m_memMainQImage.height(), QImage::Format_ARGB32);
 	QPainter painter2(&q);
 	painter2.setRenderHint(QPainter::TextAntialiasing); // 反走样
+	painter2.setRenderHint(QPainter::Antialiasing);
 	painter2.drawImage(0, 0, m_memMainQImage);
 	QPen pen;
 	pen.setWidth(4);
@@ -2329,6 +2339,39 @@ QImage MainForm::PaintTag()
 		case 0: // 线
 		{
 			painter2.drawLine(s.m_nStartX, s.m_nStartY, s.m_nEndX, s.m_nEndY);
+			// 计算线段的方向向量
+			double dx = s.m_nEndX - s.m_nStartX;
+			double dy = s.m_nEndY - s.m_nStartY;
+
+			// 计算线段长度
+			double length = sqrt(dx * dx + dy * dy);
+
+			if (length > 0) {
+				// 归一化方向向量
+				double unitDx = dx / length;
+				double unitDy = dy / length;
+
+				// 计算垂直向量（逆时针旋转90度）
+				double perpDx = -unitDy;
+				double perpDy = unitDx;
+
+				// 定义垂直短线长度
+				double tickLength = 10.0;
+
+				// 在起点绘制垂直短线
+				double startTickX1 = s.m_nStartX + perpDx * tickLength / 2;
+				double startTickY1 = s.m_nStartY + perpDy * tickLength / 2;
+				double startTickX2 = s.m_nStartX - perpDx * tickLength / 2;
+				double startTickY2 = s.m_nStartY - perpDy * tickLength / 2;
+				painter2.drawLine(startTickX1, startTickY1, startTickX2, startTickY2);
+
+				// 在终点绘制垂直短线
+				double endTickX1 = s.m_nEndX + perpDx * tickLength / 2;
+				double endTickY1 = s.m_nEndY + perpDy * tickLength / 2;
+				double endTickX2 = s.m_nEndX - perpDx * tickLength / 2;
+				double endTickY2 = s.m_nEndY - perpDy * tickLength / 2;
+				painter2.drawLine(endTickX1, endTickY1, endTickX2, endTickY2);
+			}
 			painter2.translate((s.m_nEndX + s.m_nStartX) * 0.5, (s.m_nEndY + s.m_nStartY) * 0.5);
 			painter2.rotate(0 - (m_nRotate % 360) /** 90*/); // 平移到绘制起点（旋转中心）
 			// 计算像素长度
@@ -2406,6 +2449,8 @@ QImage MainForm::PaintTag()
 			painter2.translate(s.m_nStartX, s.m_nStartY); // 这是个bug
 			painter2.rotate(0 - (m_nRotate % 360) /** 90*/); // 平移到绘制起点（旋转中心）
 			painter2.drawText(0, 0, s.m_strContent.c_str());
+
+			painter2.drawText(10, 10, s.m_strContent.c_str());
 			painter2.restore(); // 恢复到原始坐标系
 			break;
 		}
@@ -2464,12 +2509,30 @@ QImage MainForm::PaintTag()
 				auto len = calculateDistance(s.m_nStartX, s.m_nStartY, s.m_nEndX, s.m_nEndY);
 				auto hei = calculateDistance(dx, dy, s.m_nEndX2, s.m_nEndY2);
 
-				std::stringstream ss;
-				ss << "长:" << len * m_fRatio << "毫米; 高:" << hei * m_fRatio << "毫米";
+				// 在第一个线段（长）的中点显示长度
+				double centerLenX = (s.m_nStartX + s.m_nEndX) / 2.0;
+				double centerLenY = (s.m_nStartY + s.m_nEndY) / 2.0;
 
-				painter2.translate(s.m_nEndX2, s.m_nEndY2);
-				painter2.rotate(0 - (m_nRotate % 360) /** 90*/); // 平移到绘制起点（旋转中心）
-				painter2.drawText(5, 5, ss.str().c_str());
+				std::stringstream ssLen;
+				ssLen << "长:" << len * m_fRatio << "毫米";
+
+				painter2.save();
+				painter2.translate(centerLenX, centerLenY);
+				painter2.rotate(0 - (m_nRotate % 360));
+				painter2.drawText(5, -20, ssLen.str().c_str());
+				painter2.restore();
+
+				// 在第二个线段（高）的中点显示高度
+				double centerHeiX = (dx + s.m_nEndX2) / 2.0;
+				double centerHeiY = (dy + s.m_nEndY2) / 2.0;
+
+				std::stringstream ssHei;
+				ssHei << "高:" << hei * m_fRatio << "毫米";
+
+				painter2.save();
+				painter2.translate(centerHeiX, centerHeiY);
+				painter2.rotate(0 - (m_nRotate % 360));
+				painter2.drawText(5, 5, ssHei.str().c_str());
 				painter2.restore();
 			}
 			break;
@@ -2874,7 +2937,7 @@ void MainForm::ImgPixLocation(QPoint pos)
 		m_memMainQImage.height(),
 		&newX, &newY);
 
-	ui.label_43->setText("(" + QString::number((int)newX) + "," + QString::number((int)newY) + ")");
+	ui.label_43->setText("(" + QString::number(m_memMainQImage.width()) + "," + QString::number(m_memMainQImage.height()) + ")");
 
 
 }
@@ -2883,7 +2946,7 @@ void MainForm::ImgPixLocation(QPoint pos)
 void MainForm::DownloadPic()
 {
 	//return;
-	qDebug() << "MainForm::DownloadPic in "<< m_strWorkGuid;
+	qDebug() << "MainForm::DownloadPic in " << m_strWorkGuid;
 	auto [t1, t2, t3] = HttpClient::Get(m_pConfig->m_memTimsConfig.m_strDownloadPic,
 		{ {"sampleId", m_strWorkGuid} }, {},
 		m_pConfig->m_memTimsConfig.m_nDownloadTimeOut);
@@ -3304,6 +3367,12 @@ void MainForm::On_Dial_ValueChanged(int value)
 	PaintImg();
 }
 
+void MainForm::onScreenshotCaptured(QPixmap pixmap)
+{
+	ui.label->setPixmap(pixmap);
+	m_memShowedImg = pixmap.toImage();
+}
+
 //void MainForm::on_lineEdit_TextChanged(const QString& text)
 //{
 //	qDebug() << "on_lineEdit_TextChanged " << text;
@@ -3443,13 +3512,16 @@ void MainForm::On_Text_Click()
 {
 	QString stylePath = QString("%1\\styles\\flatgray.css").arg(WHSD_Tools::GetExeDirectory());
 	QFile file(stylePath); // qrc 路径
-	if (file.open(QFile::ReadOnly)) 
+	if (file.open(QFile::ReadOnly))
 	{
 		QString styleSheet = QLatin1String(file.readAll());
 		qApp->setStyleSheet(styleSheet);
 	}
 }
 
+/// <summary>
+/// 弯曲度
+/// </summary>
 void MainForm::On_Curvature_Click()
 {
 	m_eMouseMode = MouseMode::Curvature;
@@ -3464,11 +3536,15 @@ void MainForm::On_Angle_Click()
 	PaintImg();
 }
 
+/// <summary>
+/// 截图
+/// </summary>
 void MainForm::On_Capture_Click()
 {
-	m_eMouseMode = MouseMode::Capture;
-	ClearPicOpt();
-	PaintImg();
+	ScreenWidget::Instance()->showFullScreen();
+	//m_eMouseMode = MouseMode::Capture;
+	//ClearPicOpt();
+	//PaintImg();
 }
 
 void MainForm::ClearPicOpt()

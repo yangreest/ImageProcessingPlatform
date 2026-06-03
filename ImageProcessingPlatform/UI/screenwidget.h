@@ -1,0 +1,113 @@
+﻿#ifndef SCREENWIDGET_H
+#define SCREENWIDGET_H
+
+/**
+ * 全局截屏控件 作者:feiyangqingyun(QQ:517216493) 2016-11-11
+ * 1. 鼠标右键弹出菜单。
+ * 2. 支持全局截屏。
+ * 3. 支持局部截屏。
+ * 4. 支持截图区域拖动。
+ * 5. 支持图片另存为。
+ */
+
+#include <QWidget>
+#include <QMenu>
+#include <QPoint>
+#include <QSize>
+#include <QPushButton>
+
+class Screen
+{
+public:
+    enum STATUS {SELECT, MOV, SET_W_H};
+    Screen() {}
+    Screen(QSize size);
+
+    void setStart(QPoint pos);
+    void setEnd(QPoint pos);
+    QPoint getStart();
+    QPoint getEnd();
+
+    QPoint getLeftUp();
+    QPoint getRightDown();
+
+    STATUS getStatus();
+    void setStatus(STATUS status);
+
+    int width();
+    int height();
+
+    //检测坐标点是否在截图区域内
+    bool isInArea(QPoint pos);
+    //按坐标移动截图区域
+    void move(QPoint p);
+
+private:
+    //记录 截图区域 左上角、右下角
+    QPoint leftUpPos, rightDownPos;
+    //记录 鼠标开始位置、结束位置
+    QPoint startPos, endPos;
+    //记录屏幕大小
+    int maxWidth, maxHeight;
+    //三个状态: 选择区域、移动区域、设置width height
+    STATUS status;
+
+    //比较两位置，判断左上角、右下角
+    void cmpPoint(QPoint &s, QPoint &e);
+};
+
+#ifdef quc
+class Q_DECL_EXPORT ScreenWidget : public QWidget
+#else
+class ScreenWidget : public QWidget
+#endif
+
+{
+    Q_OBJECT
+public:
+    static ScreenWidget *Instance();
+    explicit ScreenWidget(QWidget *parent = 0);
+    ~ScreenWidget();
+
+private:
+    static QScopedPointer<ScreenWidget> self;
+
+    //右键菜单
+    QMenu *menu;
+    //截屏对象
+    Screen *screen;
+    //全屏图像
+    QPixmap *fullScreen;
+    //模糊背景
+    QPixmap *bgScreen;
+    //移动坐标
+    QPoint movPos;
+    //鼠标释放后的按钮
+    QPushButton* releaseButton; // 鼠标释放后的按钮
+
+    //获取选中图像
+    QPixmap getSelectPixmap(int *rectX = NULL, int *rectY = NULL, int *rectW = NULL, int *rectH = NULL, int *pixX = NULL, int *pixY = NULL);
+
+protected:
+    void showEvent(QShowEvent *);
+    void paintEvent(QPaintEvent *);
+    void closeEvent(QCloseEvent *);
+    void contextMenuEvent(QContextMenuEvent *);
+
+    void mousePressEvent(QMouseEvent *);
+    void mouseMoveEvent(QMouseEvent *);
+    void mouseReleaseEvent(QMouseEvent *);
+
+private slots:
+    void saveScreen();
+    void saveFullScreen();
+    void saveScreenOther();
+    void saveFullOther();
+    void onButtonClicked();
+
+signals:
+    void signalSaveScreen(QPixmap pixmap);
+};
+
+#endif // SCREENWIDGET_H
+

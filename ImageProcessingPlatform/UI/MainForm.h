@@ -139,6 +139,8 @@ private slots:
 	void On_NoSetFMode();
 	void On_Dial_ValueChanged(int value);
 
+	void onScreenshotCaptured(QPixmap pixmap);
+
 	//void on_lineEdit_TextChanged(const QString& text);
 
 	void On_AddTag();

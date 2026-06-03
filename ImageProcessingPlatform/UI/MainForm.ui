@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1518</width>
-    <height>1294</height>
+    <height>894</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -55,355 +55,415 @@
      <number>2</number>
     </property>
     <item>
-     <widget class="QGroupBox" name="groupBox">
-      <property name="minimumSize">
-       <size>
-        <width>100</width>
-        <height>0</height>
-       </size>
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
-      <property name="maximumSize">
-       <size>
-        <width>300</width>
-        <height>16777215</height>
-       </size>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
       </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-        <bold>true</bold>
-       </font>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
       </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
+      <property name="sizeAdjustPolicy">
+       <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustIgnored</enum>
       </property>
-      <property name="styleSheet">
-       <string notr="true">QGroupBox#groupBox {
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>-222</y>
+         <width>309</width>
+         <height>1110</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_17">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>9</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QGroupBox" name="groupBox">
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>300</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QGroupBox#groupBox {
     border: none;
 }</string>
-      </property>
-      <property name="title">
-       <string/>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_21">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>12</number>
-         </property>
-         <property name="topMargin">
-          <number>5</number>
-         </property>
-         <property name="rightMargin">
-          <number>24</number>
-         </property>
-         <property name="bottomMargin">
-          <number>5</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="label_47">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+          </property>
+          <property name="title">
+           <string/>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <property name="leftMargin">
+            <number>9</number>
            </property>
-           <property name="font">
-            <font>
-             <family>Microsoft YaHei</family>
-             <pointsize>12</pointsize>
-             <bold>true</bold>
-            </font>
+           <property name="topMargin">
+            <number>0</number>
            </property>
-           <property name="styleSheet">
-            <string notr="true">color: rgb(130,215,186);</string>
+           <property name="rightMargin">
+            <number>9</number>
            </property>
-           <property name="text">
-            <string> 设备控制 DEVICE CONTTROL</string>
+           <property name="bottomMargin">
+            <number>0</number>
            </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupBox_2">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>6666</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QGroupBox {
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_21">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>12</number>
+             </property>
+             <property name="topMargin">
+              <number>5</number>
+             </property>
+             <property name="rightMargin">
+              <number>24</number>
+             </property>
+             <property name="bottomMargin">
+              <number>5</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="label_47">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Microsoft YaHei</family>
+                 <pointsize>12</pointsize>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(130,215,186);</string>
+               </property>
+               <property name="text">
+                <string> 设备控制 DEVICE CONTTROL</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_2">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>6666</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QGroupBox {
 	background-color: rgb(42, 42, 42);
 	border-radius: 6px; /* rounded */
 }</string>
-         </property>
-         <property name="title">
-          <string/>
-         </property>
-         <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0,0" rowminimumheight="0,0,0,0,8,8,8,8">
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QLabel{
+             </property>
+             <property name="title">
+              <string/>
+             </property>
+             <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0,0" rowminimumheight="0,0,0,0,8,8,8,8">
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_3">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-            </property>
-            <property name="text">
-             <string>状态：</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="label_6">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QLabel{
+                </property>
+                <property name="text">
+                 <string>状态：</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="label_6">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-            </property>
-            <property name="text">
-             <string>WIFI信号强度</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_7">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QLabel{
+                </property>
+                <property name="text">
+                 <string>WIFI信号强度</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_7">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-            </property>
-            <property name="text">
-             <string>硬件温度：</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_8">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QLabel{
+                </property>
+                <property name="text">
+                 <string>硬件温度：</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="label_8">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-            </property>
-            <property name="text">
-             <string>电池百分比：</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QLabel" name="label_10">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QLabel{
+                </property>
+                <property name="text">
+                 <string>电池百分比：</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QLabel" name="label_10">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLabel" name="label_4">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QLabel{
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QLabel" name="label_4">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="1">
-           <widget class="QLabel" name="label_33">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QLabel{
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1">
+               <widget class="QLabel" name="label_33">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-            </property>
-            <property name="text">
-             <string>0</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QLabel" name="label_12">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QLabel{
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QLabel" name="label_12">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QLabel" name="label_11">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QLabel{
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QLabel" name="label_11">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="label_32">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QLabel{
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="0">
+               <widget class="QLabel" name="label_32">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-            </property>
-            <property name="text">
-             <string>当次取图计数：</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_22">
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="label_29">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="pixmap">
-               <pixmap resource="MainForm.qrc">:/NEW_ICON/NEW_ICOM/sensors.svg</pixmap>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_48">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="font">
-               <font>
-                <family>Microsoft YaHei</family>
-                <pointsize>12</pointsize>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: #E5E2E1;
+                </property>
+                <property name="text">
+                 <string>当次取图计数：</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <layout class="QHBoxLayout" name="horizontalLayout_22">
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_29">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="pixmap">
+                   <pixmap resource="MainForm.qrc">:/NEW_ICON/NEW_ICOM/sensors.svg</pixmap>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_48">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Microsoft YaHei</family>
+                    <pointsize>12</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: #E5E2E1;
 background-color: rgba(255, 255, 255, 0);</string>
-              </property>
-              <property name="text">
-               <string>采样板</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item row="1" column="1">
-           <widget class="QPushButton" name="pushButton_32">
-            <property name="font">
-             <font>
-              <pointsize>-1</pointsize>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton#pushButton_32 {
+                  </property>
+                  <property name="text">
+                   <string>采样板</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="pushButton_32">
+                <property name="font">
+                 <font>
+                  <pointsize>-1</pointsize>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton#pushButton_32 {
     background-color: #353535; /* bg-surface-container-highest */
     padding: 8px; /* py-2 equivalent (2 * 4px) */
     border-radius: 2px; /* rounded equivalent */
@@ -416,32 +476,32 @@ background-color: rgba(255, 255, 255, 0);</string>
 QPushButton#pushButton_32:hover {
     background-color: #393939; /* hover:bg-surface-bright */
 }</string>
-            </property>
-            <property name="text">
-             <string>手动拍照</string>
-            </property>
-            <property name="icon">
-             <iconset resource="MainForm.qrc">
-              <normaloff>:/NEW_ICON/NEW_ICOM/add_a_photo.svg</normaloff>:/NEW_ICON/NEW_ICOM/add_a_photo.svg</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QPushButton" name="pushButton_2">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>-1</pointsize>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton{
+                </property>
+                <property name="text">
+                 <string>手动拍照</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="MainForm.qrc">
+                  <normaloff>:/NEW_ICON/NEW_ICOM/add_a_photo.svg</normaloff>:/NEW_ICON/NEW_ICOM/add_a_photo.svg</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="pushButton_2">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>-1</pointsize>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton{
     background-color: #82d7ba; /* surface-container-highest */
     color: #00382B; /* on-surface */
     padding: 8px; /* py-2 equivalent (2 * 4px) */
@@ -454,47 +514,47 @@ QPushButton#pushButton_32:hover {
 QPushButton:hover{
 background-color: #9EF3D6; /* surface-bright */
 }</string>
-            </property>
-            <property name="text">
-             <string>启动</string>
-            </property>
-            <property name="icon">
-             <iconset resource="MainForm.qrc">
-              <normaloff>:/NEW_ICON/NEW_ICOM/play_arrow.svg</normaloff>:/NEW_ICON/NEW_ICOM/play_arrow.svg</iconset>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupBox_3">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>6666</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QGroupBox {
+                </property>
+                <property name="text">
+                 <string>启动</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="MainForm.qrc">
+                  <normaloff>:/NEW_ICON/NEW_ICOM/play_arrow.svg</normaloff>:/NEW_ICON/NEW_ICOM/play_arrow.svg</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_3">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>6666</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QGroupBox {
 	background-color: rgb(42, 42, 42);
 	border-radius: 6px; /* rounded */
 }</string>
-         </property>
-         <property name="title">
-          <string/>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_3">
-          <item row="5" column="2">
-           <widget class="QPushButton" name="pushButton_27">
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
+             </property>
+             <property name="title">
+              <string/>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_3">
+              <item row="5" column="2">
+               <widget class="QPushButton" name="pushButton_27">
+                <property name="styleSheet">
+                 <string notr="true">QPushButton {
     background-color: #0E0E0E; /* bg-surface-container-highest */
     padding: 8px; /* py-2 equivalent (2 * 4px) */
     border-radius: 2px; /* rounded equivalent */
@@ -507,61 +567,61 @@ background-color: #9EF3D6; /* surface-bright */
 QPushButton:hover {
     background-color: #393939; /* hover:bg-surface-bright */
 }</string>
-            </property>
-            <property name="text">
-             <string>参数设置</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_38">
-            <property name="styleSheet">
-             <string notr="true">QLabel{
+                </property>
+                <property name="text">
+                 <string>参数设置</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_38">
+                <property name="styleSheet">
+                 <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-            </property>
-            <property name="text">
-             <string>心跳计数：</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QLabel" name="label_31">
-            <property name="styleSheet">
-             <string notr="true">QLabel{
+                </property>
+                <property name="text">
+                 <string>心跳计数：</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="2">
+               <widget class="QLabel" name="label_31">
+                <property name="styleSheet">
+                 <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_5">
-            <property name="styleSheet">
-             <string notr="true">QLabel{
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_5">
+                <property name="styleSheet">
+                 <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-            </property>
-            <property name="text">
-             <string>连接状态：</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QPushButton" name="pushButton_16">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
+                </property>
+                <property name="text">
+                 <string>连接状态：</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QPushButton" name="pushButton_16">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton {
     background-color: #0E0E0E; /* bg-surface-container-highest */
     padding: 8px; /* py-2 equivalent (2 * 4px) */
     border-radius: 2px; /* rounded equivalent */
@@ -574,334 +634,334 @@ QPushButton:hover {
 QPushButton:hover {
 	background-color: #393939; /* hover:bg-surface-bright */
 }</string>
-            </property>
-            <property name="text">
-             <string>固件升级</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLabel" name="label_9">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QLabel{
+                </property>
+                <property name="text">
+                 <string>固件升级</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QLabel" name="label_9">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLabel{
 	background-color: rgb(47, 77, 66);
 	color: #b1c9c3;
 	border-radius: 2px;
 }</string>
-            </property>
-            <property name="text">
-             <string>稳定</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_13">
-            <property name="styleSheet">
-             <string notr="true">QLabel{
+                </property>
+                <property name="text">
+                 <string>稳定</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_13">
+                <property name="styleSheet">
+                 <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-            </property>
-            <property name="text">
-             <string>电池百分比：</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QLabel" name="label_30">
-            <property name="styleSheet">
-             <string notr="true">QLabel{
+                </property>
+                <property name="text">
+                 <string>电池百分比：</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QLabel" name="label_30">
+                <property name="styleSheet">
+                 <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QLabel" name="label_46">
-            <property name="styleSheet">
-             <string notr="true">QLabel{
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="2">
+               <widget class="QLabel" name="label_46">
+                <property name="styleSheet">
+                 <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-            </property>
-            <property name="text">
-             <string>0</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_14">
-            <property name="styleSheet">
-             <string notr="true">QLabel{
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_14">
+                <property name="styleSheet">
+                 <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-            </property>
-            <property name="text">
-             <string>固件版本号：</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_23">
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="label_49">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="pixmap">
-               <pixmap resource="MainForm.qrc">:/NEW_ICON/NEW_ICOM/settings_input_component.svg</pixmap>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_50">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="font">
-               <font>
-                <family>Microsoft YaHei</family>
-                <pointsize>12</pointsize>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: #E5E2E1;
+                </property>
+                <property name="text">
+                 <string>固件版本号：</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <layout class="QHBoxLayout" name="horizontalLayout_23">
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_49">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="pixmap">
+                   <pixmap resource="MainForm.qrc">:/NEW_ICON/NEW_ICOM/settings_input_component.svg</pixmap>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_50">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Microsoft YaHei</family>
+                    <pointsize>12</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: #E5E2E1;
 background-color: rgba(255, 255, 255, 0);</string>
-              </property>
-              <property name="text">
-               <string>控制板</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupBox_6">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>6666</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QGroupBox {
+                  </property>
+                  <property name="text">
+                   <string>控制板</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_6">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>6666</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QGroupBox {
 	background-color: rgb(42, 42, 42);
 	border-radius: 6px; /* rounded */
 }</string>
-         </property>
-         <property name="title">
-          <string/>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_4">
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_24">
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="label_51">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="pixmap">
-               <pixmap resource="MainForm.qrc">:/NEW_ICON/NEW_ICOM/precision_manufacturing.svg</pixmap>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_53">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="font">
-               <font>
-                <family>Microsoft YaHei</family>
-                <pointsize>12</pointsize>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: #E5E2E1;
+             </property>
+             <property name="title">
+              <string/>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_24">
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_51">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="pixmap">
+                   <pixmap resource="MainForm.qrc">:/NEW_ICON/NEW_ICOM/precision_manufacturing.svg</pixmap>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_53">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Microsoft YaHei</family>
+                    <pointsize>12</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: #E5E2E1;
 background-color: rgba(255, 255, 255, 0);</string>
-              </property>
-              <property name="text">
-               <string>射线机控制</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_7">
-            <item>
-             <widget class="QLabel" name="label_26">
-              <property name="font">
-               <font>
-                <pointsize>11</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QLabel{
-	background-color: rgba(255, 255, 255, 0);
-	color: #b1c9c3
-}</string>
-              </property>
-              <property name="text">
-               <string>射线机状态：</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_24">
-              <property name="font">
-               <font>
-                <pointsize>11</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QLabel{
-	background-color: rgba(255, 255, 255, 0);
-	color: #b1c9c3
-}</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_40">
-              <property name="font">
-               <font>
-                <pointsize>11</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QLabel{
-	background-color: rgba(255, 255, 255, 0);
-	color: #b1c9c3
-}</string>
-              </property>
-              <property name="text">
-               <string>0</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QGridLayout" name="gridLayout_5">
-            <item row="0" column="2">
-             <widget class="QLabel" name="label_28">
-              <property name="styleSheet">
-               <string notr="true">QLabel{
-	background-color: rgba(255, 255, 255, 0);
-	color: #b1c9c3
-}</string>
-              </property>
-              <property name="text">
-               <string>延迟时间：</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_27">
-              <property name="styleSheet">
-               <string notr="true">QLabel{
-	background-color: rgba(255, 255, 255, 0);
-	color: #b1c9c3
-}</string>
-              </property>
-              <property name="text">
-               <string>脉冲数：</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout_11">
-              <property name="topMargin">
-               <number>0</number>
-              </property>
+                  </property>
+                  <property name="text">
+                   <string>射线机控制</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit">
-                <property name="styleSheet">
-                 <string notr="true">QLineEdit{
+               <layout class="QHBoxLayout" name="horizontalLayout_7">
+                <item>
+                 <widget class="QLabel" name="label_26">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel{
+	background-color: rgba(255, 255, 255, 0);
+	color: #b1c9c3
+}</string>
+                  </property>
+                  <property name="text">
+                   <string>射线机状态：</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_24">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel{
+	background-color: rgba(255, 255, 255, 0);
+	color: #b1c9c3
+}</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_40">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel{
+	background-color: rgba(255, 255, 255, 0);
+	color: #b1c9c3
+}</string>
+                  </property>
+                  <property name="text">
+                   <string>0</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QGridLayout" name="gridLayout_5">
+                <item row="0" column="2">
+                 <widget class="QLabel" name="label_28">
+                  <property name="styleSheet">
+                   <string notr="true">QLabel{
+	background-color: rgba(255, 255, 255, 0);
+	color: #b1c9c3
+}</string>
+                  </property>
+                  <property name="text">
+                   <string>延迟时间：</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_27">
+                  <property name="styleSheet">
+                   <string notr="true">QLabel{
+	background-color: rgba(255, 255, 255, 0);
+	color: #b1c9c3
+}</string>
+                  </property>
+                  <property name="text">
+                   <string>脉冲数：</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_11">
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <widget class="QLineEdit" name="lineEdit">
+                    <property name="styleSheet">
+                     <string notr="true">QLineEdit{
 	background-color: rgba(255, 255, 255, 0);
 	color: #E5E2E1;
 }</string>
-                </property>
-                <property name="placeholderText">
-                 <string>15~200</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton_3">
-                <property name="font">
-                 <font>
-                  <pointsize>-1</pointsize>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton{
+                    </property>
+                    <property name="placeholderText">
+                     <string>15~200</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="pushButton_3">
+                    <property name="font">
+                     <font>
+                      <pointsize>-1</pointsize>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton{
     background-color: #006b54; /* surface-container-highest */
     color: #94E8CB; /* on-surface */
     padding: 8px; /* py-2 equivalent (2 * 4px) */
@@ -914,39 +974,39 @@ background-color: rgba(255, 255, 255, 0);</string>
 QPushButton:hover{
 background-color: #9EF3D6; /* surface-bright */
 }</string>
-                </property>
-                <property name="text">
-                 <string>确定</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="2" column="2">
-             <layout class="QHBoxLayout" name="horizontalLayout_26">
-              <item>
-               <widget class="QLineEdit" name="lineEdit_2">
-                <property name="styleSheet">
-                 <string notr="true">QLineEdit{
+                    </property>
+                    <property name="text">
+                     <string>确定</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item row="2" column="2">
+                 <layout class="QHBoxLayout" name="horizontalLayout_26">
+                  <item>
+                   <widget class="QLineEdit" name="lineEdit_2">
+                    <property name="styleSheet">
+                     <string notr="true">QLineEdit{
 	background-color: rgba(255, 255, 255, 0);
 	color: #E5E2E1;
 }</string>
-                </property>
-                <property name="placeholderText">
-                 <string>15~200</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton">
-                <property name="font">
-                 <font>
-                  <pointsize>-1</pointsize>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton{
+                    </property>
+                    <property name="placeholderText">
+                     <string>15~200</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="pushButton">
+                    <property name="font">
+                     <font>
+                      <pointsize>-1</pointsize>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton{
     background-color: #006b54; /* surface-container-highest */
     color: #94E8CB; /* on-surface */
     padding: 8px; /* py-2 equivalent (2 * 4px) */
@@ -959,80 +1019,80 @@ background-color: #9EF3D6; /* surface-bright */
 QPushButton:hover{
 background-color: #9EF3D6; /* surface-bright */
 }</string>
-                </property>
-                <property name="text">
-                 <string>确定</string>
-                </property>
-               </widget>
+                    </property>
+                    <property name="text">
+                     <string>确定</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
               </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_8">
-            <item>
-             <widget class="QComboBox" name="comboBox_4">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(14, 14, 14);
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_8">
+                <item>
+                 <widget class="QComboBox" name="comboBox_4">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(14, 14, 14);
 color: rgb(229, 226, 225);</string>
-              </property>
-              <item>
-               <property name="text">
-                <string>电平开启</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>协议开启</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="comboBox_5">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(14, 14, 14);
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>电平开启</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>协议开启</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="comboBox_5">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(14, 14, 14);
 color: rgb(229, 226, 225);</string>
-              </property>
-              <item>
-               <property name="text">
-                <string>高电平开启</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>低电平开启</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="comboBox_2">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(14, 14, 14);
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>高电平开启</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>低电平开启</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="comboBox_2">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(14, 14, 14);
 color: rgb(229, 226, 225);</string>
-              </property>
-              <item>
-               <property name="text">
-                <string>倒计时开启</string>
-               </property>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>倒计时开启</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>直接开启</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+               </layout>
               </item>
               <item>
-               <property name="text">
-                <string>直接开启</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_9">
-            <item>
-             <widget class="QPushButton" name="pushButton_4">
-              <property name="styleSheet">
-               <string notr="true">QPushButton{
+               <layout class="QHBoxLayout" name="horizontalLayout_9">
+                <item>
+                 <widget class="QPushButton" name="pushButton_4">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{
     background-color: #82d7ba; /* surface-container-highest */
     color: #00382B; /* on-surface */
     padding: 8px; /* py-2 equivalent (2 * 4px) */
@@ -1045,16 +1105,16 @@ color: rgb(229, 226, 225);</string>
 QPushButton:hover{
 background-color: #9EF3D6; /* surface-bright */
 }</string>
-              </property>
-              <property name="text">
-               <string>启动</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_5">
-              <property name="styleSheet">
-               <string notr="true">QPushButton{
+                  </property>
+                  <property name="text">
+                   <string>启动</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_5">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{
     background-color: #93000A; /* surface-container-highest */
     color: #FFDAD6; /* on-surface */
     padding: 8px; /* py-2 equivalent (2 * 4px) */
@@ -1067,137 +1127,137 @@ background-color: #9EF3D6; /* surface-bright */
 QPushButton:hover{
 background-color: #A7141E; /* surface-bright */
 }</string>
-              </property>
-              <property name="text">
-               <string>停止</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_15">
-            <item>
-             <widget class="QLabel" name="label_39">
-              <property name="font">
-               <font>
-                <pointsize>11</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QLabel{
+                  </property>
+                  <property name="text">
+                   <string>停止</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_15">
+                <item>
+                 <widget class="QLabel" name="label_39">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-              </property>
-              <property name="text">
-               <string>启动指令成功计数：</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_42">
-              <property name="font">
-               <font>
-                <pointsize>11</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QLabel{
+                  </property>
+                  <property name="text">
+                   <string>启动指令成功计数：</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_42">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-              </property>
-              <property name="text">
-               <string>0</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupBox_5">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>6666</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QGroupBox {
+                  </property>
+                  <property name="text">
+                   <string>0</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_5">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>6666</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QGroupBox {
 	background-color: rgb(42, 42, 42);
 	border-radius: 6px; /* rounded */
 }</string>
-         </property>
-         <property name="title">
-          <string/>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_25">
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="label_56">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="pixmap">
-               <pixmap resource="MainForm.qrc">:/NEW_ICON/NEW_ICOM/precision_manufacturing.svg</pixmap>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_59">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="font">
-               <font>
-                <family>Microsoft YaHei</family>
-                <pointsize>12</pointsize>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: #E5E2E1;
+             </property>
+             <property name="title">
+              <string/>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_3">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_25">
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_56">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="pixmap">
+                   <pixmap resource="MainForm.qrc">:/NEW_ICON/NEW_ICOM/precision_manufacturing.svg</pixmap>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_59">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Microsoft YaHei</family>
+                    <pointsize>12</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: #E5E2E1;
 background-color: rgba(255, 255, 255, 0);</string>
-              </property>
-              <property name="text">
-               <string>电机控制</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_5">
-            <item>
-             <widget class="QPushButton" name="pushButton_15">
-              <property name="styleSheet">
-               <string notr="true">QPushButton {
+                  </property>
+                  <property name="text">
+                   <string>电机控制</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <item>
+                 <widget class="QPushButton" name="pushButton_15">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
     background-color: #0E0E0E; /* bg-surface-container-highest */
     padding: 8px; /* py-2 equivalent (2 * 4px) */
     border-radius: 2px; /* rounded equivalent */
@@ -1210,16 +1270,16 @@ background-color: rgba(255, 255, 255, 0);</string>
 QPushButton:hover {
 	background-color: #393939; /* hover:bg-surface-bright */
 }</string>
-              </property>
-              <property name="text">
-               <string>总电源开</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_12">
-              <property name="styleSheet">
-               <string notr="true">QPushButton {
+                  </property>
+                  <property name="text">
+                   <string>总电源开</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_12">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
     background-color: #0E0E0E; /* bg-surface-container-highest */
     padding: 8px; /* py-2 equivalent (2 * 4px) */
     border-radius: 2px; /* rounded equivalent */
@@ -1232,20 +1292,20 @@ QPushButton:hover {
 QPushButton:hover {
 	background-color: #393939; /* hover:bg-surface-bright */
 }</string>
-              </property>
-              <property name="text">
-               <string>总电源关</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <widget class="QPushButton" name="pushButton_30">
-              <property name="styleSheet">
-               <string notr="true">QPushButton {
+                  </property>
+                  <property name="text">
+                   <string>总电源关</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_3">
+                <item>
+                 <widget class="QPushButton" name="pushButton_30">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
     background-color: #0E0E0E; /* bg-surface-container-highest */
     padding: 8px; /* py-2 equivalent (2 * 4px) */
     border-radius: 2px; /* rounded equivalent */
@@ -1258,16 +1318,16 @@ QPushButton:hover {
 QPushButton:hover {
 	background-color: #393939; /* hover:bg-surface-bright */
 }</string>
-              </property>
-              <property name="text">
-               <string>工厂模式开</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_29">
-              <property name="styleSheet">
-               <string notr="true">QPushButton {
+                  </property>
+                  <property name="text">
+                   <string>工厂模式开</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_29">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
     background-color: #0E0E0E; /* bg-surface-container-highest */
     padding: 8px; /* py-2 equivalent (2 * 4px) */
     border-radius: 2px; /* rounded equivalent */
@@ -1280,288 +1340,288 @@ QPushButton:hover {
 QPushButton:hover {
 	background-color: #393939; /* hover:bg-surface-bright */
 }</string>
-              </property>
-              <property name="text">
-               <string>工厂模式关</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QGridLayout" name="gridLayout_4">
-            <item row="3" column="1">
-             <widget class="QLabel" name="label_20">
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QLabel{
+                  </property>
+                  <property name="text">
+                   <string>工厂模式关</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QGridLayout" name="gridLayout_4">
+                <item row="3" column="1">
+                 <widget class="QLabel" name="label_20">
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="label_41">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>21</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>21</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QLabel{
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="0">
+                 <widget class="QLabel" name="label_41">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>21</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>21</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-              </property>
-              <property name="text">
-               <string>安全电机：</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLabel" name="label_54">
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QLabel{
+                  </property>
+                  <property name="text">
+                   <string>安全电机：</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLabel" name="label_54">
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QLabel" name="label_19">
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QLabel{
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QLabel" name="label_19">
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="1">
-             <widget class="QLabel" name="label_22">
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QLabel{
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="1">
+                 <widget class="QLabel" name="label_22">
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="label_17">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>21</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>21</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QLabel{
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_17">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>21</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>21</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-              </property>
-              <property name="text">
-               <string>行走电机：</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="label_21">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>21</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>21</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QLabel{
+                  </property>
+                  <property name="text">
+                   <string>行走电机：</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="0">
+                 <widget class="QLabel" name="label_21">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>21</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>21</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-              </property>
-              <property name="text">
-               <string>卷扬电机：</string>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="1">
-             <widget class="QLabel" name="label_23">
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QLabel{
+                  </property>
+                  <property name="text">
+                   <string>卷扬电机：</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="1">
+                 <widget class="QLabel" name="label_23">
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="0">
-             <widget class="QLabel" name="label_16">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>21</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>21</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QLabel{
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="0">
+                 <widget class="QLabel" name="label_16">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>21</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>21</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-              </property>
-              <property name="text">
-               <string>采样板电机：</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_52">
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QLabel{
+                  </property>
+                  <property name="text">
+                   <string>采样板电机：</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_52">
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-              </property>
-              <property name="text">
-               <string>总电源：</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_34">
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QLabel{
+                  </property>
+                  <property name="text">
+                   <string>总电源：</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_34">
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-              </property>
-              <property name="text">
-               <string>工程模式：</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QLabel" name="label_37">
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QLabel{
+                  </property>
+                  <property name="text">
+                   <string>工程模式：</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QLabel" name="label_37">
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
-            <item>
-             <widget class="QPushButton" name="pushButton_7">
-              <property name="styleSheet">
-               <string notr="true">QPushButton {
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_2">
+                <item>
+                 <widget class="QPushButton" name="pushButton_7">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
     background-color: #0E0E0E; /* bg-surface-container-highest */
     padding: 8px; /* py-2 equivalent (2 * 4px) */
     border-radius: 2px; /* rounded equivalent */
@@ -1574,16 +1634,16 @@ QPushButton:hover {
 QPushButton:hover {
 	background-color: #393939; /* hover:bg-surface-bright */
 }</string>
-              </property>
-              <property name="text">
-               <string>安全电机开</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_6">
-              <property name="styleSheet">
-               <string notr="true">QPushButton {
+                  </property>
+                  <property name="text">
+                   <string>安全电机开</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_6">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
     background-color: #0E0E0E; /* bg-surface-container-highest */
     padding: 8px; /* py-2 equivalent (2 * 4px) */
     border-radius: 2px; /* rounded equivalent */
@@ -1596,96 +1656,96 @@ QPushButton:hover {
 QPushButton:hover {
 	background-color: #393939; /* hover:bg-surface-bright */
 }</string>
-              </property>
-              <property name="text">
-               <string>安全电机关</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
-            <item>
-             <widget class="QLabel" name="label_18">
-              <property name="styleSheet">
-               <string notr="true">QLabel{
+                  </property>
+                  <property name="text">
+                   <string>安全电机关</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <item>
+                 <widget class="QLabel" name="label_18">
+                  <property name="styleSheet">
+                   <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-              </property>
-              <property name="text">
-               <string>电机速度：</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="comboBox_3">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(14, 14, 14);
+                  </property>
+                  <property name="text">
+                   <string>电机速度：</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="comboBox_3">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(14, 14, 14);
 color: rgb(229, 226, 225);</string>
-              </property>
-              <item>
-               <property name="text">
-                <string>低</string>
-               </property>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>低</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>中</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>高</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+               </layout>
               </item>
               <item>
-               <property name="text">
-                <string>中</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>高</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_55">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>21</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>21</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgba(229, 226, 225,100);
+               <widget class="QLabel" name="label_55">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>21</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>21</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgba(229, 226, 225,100);
 background-color: rgba(255, 255, 255, 0);</string>
-            </property>
-            <property name="text">
-             <string>电机的上下左右由键盘↑↓←→按钮控制</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_6">
-            <item>
-             <widget class="QLabel" name="label_15">
-              <property name="styleSheet">
-               <string notr="true">QLabel{
+                </property>
+                <property name="text">
+                 <string>电机的上下左右由键盘↑↓←→按钮控制</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_6">
+                <item>
+                 <widget class="QLabel" name="label_15">
+                  <property name="styleSheet">
+                   <string notr="true">QLabel{
 	background-color: rgba(255, 255, 255, 0);
 	color: #b1c9c3
 }</string>
-              </property>
-              <property name="text">
-               <string>成像板姿态：</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_18">
-              <property name="styleSheet">
-               <string notr="true">QPushButton {
+                  </property>
+                  <property name="text">
+                   <string>成像板姿态：</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_18">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
     background-color: #0E0E0E; /* bg-surface-container-highest */
     padding: 8px; /* py-2 equivalent (2 * 4px) */
     border-radius: 2px; /* rounded equivalent */
@@ -1698,16 +1758,16 @@ background-color: rgba(255, 255, 255, 0);</string>
 QPushButton:hover {
 	background-color: #393939; /* hover:bg-surface-bright */
 }</string>
-              </property>
-              <property name="text">
-               <string>水平</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_19">
-              <property name="styleSheet">
-               <string notr="true">QPushButton {
+                  </property>
+                  <property name="text">
+                   <string>水平</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_19">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
     background-color: #0E0E0E; /* bg-surface-container-highest */
     padding: 8px; /* py-2 equivalent (2 * 4px) */
     border-radius: 2px; /* rounded equivalent */
@@ -1720,20 +1780,20 @@ QPushButton:hover {
 QPushButton:hover {
 	background-color: #393939; /* hover:bg-surface-bright */
 }</string>
-              </property>
-              <property name="text">
-               <string>垂直</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_10">
-            <item>
-             <widget class="QPushButton" name="pushButton_25">
-              <property name="styleSheet">
-               <string notr="true">QPushButton {
+                  </property>
+                  <property name="text">
+                   <string>垂直</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_10">
+                <item>
+                 <widget class="QPushButton" name="pushButton_25">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
     background-color: #0E0E0E; /* bg-surface-container-highest */
     padding: 8px; /* py-2 equivalent (2 * 4px) */
     border-radius: 2px; /* rounded equivalent */
@@ -1746,16 +1806,16 @@ QPushButton:hover {
 QPushButton:hover {
 	background-color: #393939; /* hover:bg-surface-bright */
 }</string>
-              </property>
-              <property name="text">
-               <string>摄像头开</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_17">
-              <property name="styleSheet">
-               <string notr="true">QPushButton {
+                  </property>
+                  <property name="text">
+                   <string>摄像头开</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_17">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
     background-color: #0E0E0E; /* bg-surface-container-highest */
     padding: 8px; /* py-2 equivalent (2 * 4px) */
     border-radius: 2px; /* rounded equivalent */
@@ -1768,38 +1828,42 @@ QPushButton:hover {
 QPushButton:hover {
 	background-color: #393939; /* hover:bg-surface-bright */
 }</string>
-              </property>
-              <property name="text">
-               <string>摄像头关</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Orientation::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_25">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-      </layout>
+                  </property>
+                  <property name="text">
+                   <string>摄像头关</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Orientation::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_25">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
     <item>
