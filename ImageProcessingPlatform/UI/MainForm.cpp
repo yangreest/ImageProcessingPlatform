@@ -2306,7 +2306,6 @@ void MainForm::On_SavePic_Click()
 		};
 	m_mapDealedPic[m_nPicIndex] = imageToPngVector(m_memShowedImg);
 	ui.label_35->setStyleSheet("color:lightgreen");
-	//ReadPicFromMem(m_nPicIndex);
 	MY_INFO("保存成功");
 }
 
@@ -2338,7 +2337,8 @@ QImage MainForm::PaintTag()
 	QImage q(m_memMainQImage.width(), m_memMainQImage.height(), QImage::Format_ARGB32);
 	QPainter painter2(&q);
 	painter2.setRenderHint(QPainter::TextAntialiasing); // 反走样
-	painter2.setRenderHint(QPainter::Antialiasing);
+	painter2.setRenderHint(QPainter::Antialiasing);       // 开启几何抗锯齿
+	painter2.setRenderHint(QPainter::SmoothPixmapTransform); // 开启图片平滑变换（关键！消除锯齿）
 	painter2.drawImage(0, 0, m_memMainQImage);
 	QPen pen;
 	pen.setWidth(4);
@@ -2670,10 +2670,12 @@ void MainForm::PaintImg()
 		m_nLastImg.setX(xb);
 		auto yb = (labelSize.height() - memMainQImage.height()) / 2 + m_nImgYOffset /*- memMainQImage.height() * (m_dImgScale - 1) / 2*/;
 		m_nLastImg.setY(yb);
+
+		painter.setRenderHint(QPainter::Antialiasing);          // 开启几何抗锯齿
+		painter.setRenderHint(QPainter::SmoothPixmapTransform); // 开启图片平滑变换（关键！消除锯齿）
+
 		painter.drawImage(xb, yb, memMainQImage);
 
-		//painter.drawImage
-		//	(0, 0, scaledB);
 		painter.end();
 	}
 	//ui.label->clear();
@@ -3840,6 +3842,7 @@ void MainForm::Callback_TcpClientReadData(uint8_t* data, int len, uint64_t nInde
 		m_nWorkMode = std::stoi(results[1]);
 		m_mapLoadedMap.clear();
 		m_vector_NeedDownLoadPic.clear();
+		m_mapDealedPic.clear();
 		m_vector_ImgTag.clear();
 
 		std::string str("河南四达  检测任务ID：");
