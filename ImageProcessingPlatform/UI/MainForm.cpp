@@ -492,8 +492,9 @@ void MainForm::On_ImgLabelMousePress(Qt::MouseButton button, const QPoint& pos)
 	}
 
 	m_nLastMouseX = pos.x();
-
+	m_nLastSplitX = ui.horizontalSlider_3->value();
 	m_nLastMouseY = pos.y();
+	m_nLastSplitY = ui.horizontalSlider_4->value();
 
 	//qDebug() << "button" << button << "pos" << pos << "m_eMouseMode" << (int)m_eMouseMode;
 
@@ -665,12 +666,11 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 
 	if (m_bNeedChangePicInfo) // 鼠标右键控制图片的灰度
 	{
-		auto bv = 4;
+		auto bv = 3;
 		auto dx = (pos.x() - m_nLastMouseX) * bv;
 		auto dy = (pos.y() - m_nLastMouseY) * bv;
-		ui.horizontalSlider_3->setValue(ui.horizontalSlider_3->value() + dx);
-		ui.horizontalSlider_4->setValue(ui.horizontalSlider_4->value() - dy);
-		//On_SliderValueChanged2(0);
+		ui.horizontalSlider_3->setValue(m_nLastSplitX + dx);
+		ui.horizontalSlider_4->setValue(m_nLastSplitY - dy);
 	}
 
 	if (!m_bMousePressed)
@@ -786,6 +786,26 @@ void MainForm::On_ImgLabelMouseMove(Qt::MouseButton button, const QPoint& pos)
 		m_memCImageCapture.m_nPosY = std::min(m_memCImageCapture.m_nPosY, (int)p2y);
 		PaintImg();
 	}
+}
+
+void MainForm::ImgPixLocation(QPoint pos)
+{
+	auto labelSize = ui.label->size();
+	double newX = 0, newY = 0;
+	WHSD_Tools::CalculateOriginalCoordinates(
+		pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
+		pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
+		m_nRotate /**90*/,
+		m_dImgScale,
+		m_dImgScale,
+		0,
+		0,
+		m_bLeftRightMirror,
+		m_bUpDownMirror,
+		m_memMainQImage.width(),
+		m_memMainQImage.height(),
+		&newX, &newY);
+	ui.label_43->setText("(" + QString::number(pos.x()) + "," + QString::number(pos.y()) + ")");
 }
 
 void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos)
@@ -2449,8 +2469,6 @@ QImage MainForm::PaintTag()
 			painter2.translate(s.m_nStartX, s.m_nStartY); // 这是个bug
 			painter2.rotate(0 - (m_nRotate % 360) /** 90*/); // 平移到绘制起点（旋转中心）
 			painter2.drawText(0, 0, s.m_strContent.c_str());
-
-			painter2.drawText(10, 10, s.m_strContent.c_str());
 			painter2.restore(); // 恢复到原始坐标系
 			break;
 		}
@@ -2567,6 +2585,7 @@ void MainForm::PaintImg()
 		auto rt = m_nRotate % 360;
 		if (rt != 0)
 		{
+			// 创建旋转矩阵
 			memMainQImage = memMainQImage.transformed(QTransform().rotate(rt/* * 90*/));
 		}
 		//镜像
@@ -2917,30 +2936,7 @@ void MainForm::LoadOnlinePicByThread()
 	}
 }
 
-void MainForm::ImgPixLocation(QPoint pos)
-{
 
-	auto labelSize = ui.label->size();
-
-	double newX = 0, newY = 0;
-	WHSD_Tools::CalculateOriginalCoordinates(
-		pos.x() - ((labelSize.width() - m_memMainQImage.width()) / 2 + m_nImgXOffset - m_memMainQImage.width() * (m_dImgScale - 1) / 2),
-		pos.y() - (m_nImgYOffset - m_memMainQImage.height() * (m_dImgScale - 1) / 2),
-		m_nRotate /**90*/,
-		m_dImgScale,
-		m_dImgScale,
-		0,
-		0,
-		m_bLeftRightMirror,
-		m_bUpDownMirror,
-		m_memMainQImage.width(),
-		m_memMainQImage.height(),
-		&newX, &newY);
-
-	ui.label_43->setText("(" + QString::number(m_memMainQImage.width()) + "," + QString::number(m_memMainQImage.height()) + ")");
-
-
-}
 
 // 软件通过 启动界面调用加载图像方法
 void MainForm::DownloadPic()

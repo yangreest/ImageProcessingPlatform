@@ -321,8 +321,9 @@ private:
 	int m_nImgYOffset;
 
 	int m_nLastMouseX;
-
 	int m_nLastMouseY;
+	int m_nLastSplitX;
+	int m_nLastSplitY;
 
 	QRect m_nLastImg;// QImage的尺寸
 
