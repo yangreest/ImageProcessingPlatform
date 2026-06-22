@@ -14,7 +14,7 @@ CalibInputForm::CalibInputForm(const int pexLenght, QWidget* parent)
 	// 设置窗口模态性：只阻塞父窗口及其子窗口
 	connect(ui.pushButton, &QPushButton::clicked, this, &CalibInputForm::onCloseButtonClicked);
 	connect(ui.pushButton_2, &QPushButton::clicked, this, &CalibInputForm::onYesButtonClicked);
-	setWindowTitle(QString::fromStdString("尺寸标定"));
+	setWindowTitle(tr("尺寸标定"));
 	ui.lineEdit->setText(QString::number(pexLenght));
 	//result = 0;
 	QString jsonPath = QString("%1\\calibration.json").arg(WHSD_Tools::GetExeDirectory());

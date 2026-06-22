@@ -78,8 +78,8 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-222</y>
-         <width>309</width>
+         <y>0</y>
+         <width>357</width>
          <height>1110</height>
         </rect>
        </property>
@@ -115,7 +115,7 @@
           </property>
           <property name="maximumSize">
            <size>
-            <width>300</width>
+            <width>400</width>
             <height>16777215</height>
            </size>
           </property>
@@ -4552,7 +4552,7 @@ QPushButton:hover {
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>

@@ -5,6 +5,7 @@
 
 class CFormWithShowModal : public QMainWindow
 {
+	Q_OBJECT
 public:
 	CFormWithShowModal(QWidget* parent = nullptr);
 	~CFormWithShowModal();

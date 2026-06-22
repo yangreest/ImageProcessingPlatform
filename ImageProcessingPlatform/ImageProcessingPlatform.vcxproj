@@ -188,7 +188,7 @@
     <ClInclude Include="Tools\XInputHelper.h" />
     <QtMoc Include="UI\screenwidget.h" />
     <QtMoc Include="UI\CalibInputForm.h" />
-    <ClInclude Include="UI\FormWithShowModal.h" />
+    <QtMoc Include="UI\FormWithShowModal.h" />
     <QtMoc Include="UI\TragListDialog.h" />
     <QtMoc Include="UI\LogDisplayDialog.h" />
     <QtMoc Include="UI\AlertForm.h" />
@@ -295,6 +295,10 @@
     <Image Include="UI\icon\zuoxuan_2.png" />
     <Image Include="UI\icon\zuoyou_1.png" />
     <Image Include="UI\icon\zuoyou_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtTranslation Include="en_US_en.ts" />
+    <QtTranslation Include="zh_CN_zh_Hans.ts" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

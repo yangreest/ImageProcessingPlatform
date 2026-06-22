@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.36202.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImageProcessingPlatform", "ImageProcessingPlatform\ImageProcessingPlatform.vcxproj", "{B222CC3F-3214-4460-9411-4D34BFFAF7B0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HmProImageAlgo", "HmProImageAlgo\HmProImageAlgo.vcxproj", "{52174C31-FF36-4A0E-BE55-87312792F4DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,14 @@ Global
 		{B222CC3F-3214-4460-9411-4D34BFFAF7B0}.Release|Any CPU.Build.0 = Release|x64
 		{B222CC3F-3214-4460-9411-4D34BFFAF7B0}.Release|x64.ActiveCfg = Release|x64
 		{B222CC3F-3214-4460-9411-4D34BFFAF7B0}.Release|x64.Build.0 = Release|x64
+		{52174C31-FF36-4A0E-BE55-87312792F4DF}.Debug|Any CPU.ActiveCfg = Release|x64
+		{52174C31-FF36-4A0E-BE55-87312792F4DF}.Debug|Any CPU.Build.0 = Release|x64
+		{52174C31-FF36-4A0E-BE55-87312792F4DF}.Debug|x64.ActiveCfg = Release|x64
+		{52174C31-FF36-4A0E-BE55-87312792F4DF}.Debug|x64.Build.0 = Release|x64
+		{52174C31-FF36-4A0E-BE55-87312792F4DF}.Release|Any CPU.ActiveCfg = Release|x64
+		{52174C31-FF36-4A0E-BE55-87312792F4DF}.Release|Any CPU.Build.0 = Release|x64
+		{52174C31-FF36-4A0E-BE55-87312792F4DF}.Release|x64.ActiveCfg = Release|x64
+		{52174C31-FF36-4A0E-BE55-87312792F4DF}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

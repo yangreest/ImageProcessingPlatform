@@ -38,6 +38,14 @@ int main(int argc, char* argv[])
 	//model = 2;
 
 	QApplication app(argc, argv);
+
+	QTranslator translator;
+	// 路径：把qm复制到exe同目录
+	if (translator.load("en_US_en.qm"))
+	{
+		app.installTranslator(&translator);
+	}
+
 	MainForm window(guid, model);
 #ifdef __DEBUG__
 	qDebug() << "Console allocated at runtime!";

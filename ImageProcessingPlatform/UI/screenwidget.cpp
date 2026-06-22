@@ -172,11 +172,11 @@ ScreenWidget::ScreenWidget(QWidget *parent) : QWidget(parent)
     //this->setWindowFlags(Qt::Tool | Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::X11BypassWindowManagerHint);
 
     menu = new QMenu(this);
-    menu->addAction("保存当前截图", this, SLOT(saveScreen()));
-    menu->addAction("保存全屏截图", this, SLOT(saveFullScreen()));
-    menu->addAction("截图另存为", this, SLOT(saveScreenOther()));
-    menu->addAction("全屏另存为", this, SLOT(saveFullOther()));
-    menu->addAction("退出截图", this, SLOT(close()));
+    menu->addAction(tr("保存当前截图"), this, SLOT(saveScreen()));
+    menu->addAction(tr("保存全屏截图"), this, SLOT(saveFullScreen()));
+    menu->addAction(tr("截图另存为"), this, SLOT(saveScreenOther()));
+    menu->addAction(tr("全屏另存为"), this, SLOT(saveFullOther()));
+    menu->addAction(tr("退出截图"), this, SLOT(close()));
 
     //取得屏幕大小
     screen = new Screen(deskGeometry.size());
@@ -184,7 +184,7 @@ ScreenWidget::ScreenWidget(QWidget *parent) : QWidget(parent)
     fullScreen = new QPixmap();
 
     // 创建按钮
-    releaseButton = new QPushButton("截图完成", this);
+    releaseButton = new QPushButton(tr("截图完成"), this);
     releaseButton->setStyleSheet(
         "QPushButton {"
         "   background-color: #4CAF5050;"
@@ -287,7 +287,7 @@ void ScreenWidget::paintEvent(QPaintEvent *)
     int pixH = pix.height();
     pen.setColor(Qt::yellow);
     painter.setPen(pen);
-    painter.drawText(x + 2, y - 8, QString("截图范围：( %1 x %2 ) - ( %3 x %4 )  图片大小：( %5 x %6 )")
+    painter.drawText(x + 2, y - 8, QString(tr("截图范围：( %1 x %2 ) - ( %3 x %4 )  图片大小：( %5 x %6 )"))
                      .arg(x2).arg(y2).arg(x2 + pixW).arg(y2 + pixH).arg(pixW).arg(pixH));
 }
 
@@ -373,7 +373,7 @@ void ScreenWidget::saveFullScreen()
 void ScreenWidget::saveScreenOther()
 {
     QString name = QString("%1.png").arg(STRDATETIME);
-    QString fileName = QFileDialog::getSaveFileName(this, "保存图片", name, "png Files (*.png)");
+    QString fileName = QFileDialog::getSaveFileName(this, tr("保存图片"), name, "png Files (*.png)");
     if (!fileName.endsWith(".png")) {
         fileName += ".png";
     }
@@ -387,7 +387,7 @@ void ScreenWidget::saveScreenOther()
 void ScreenWidget::saveFullOther()
 {
     QString name = QString("%1.png").arg(STRDATETIME);
-    QString fileName = QFileDialog::getSaveFileName(this, "保存图片", name, "png Files (*.png)");
+    QString fileName = QFileDialog::getSaveFileName(this,tr("保存图片"), name, "png Files (*.png)");
     if (!fileName.endsWith(".png")) {
         fileName += ".png";
     }

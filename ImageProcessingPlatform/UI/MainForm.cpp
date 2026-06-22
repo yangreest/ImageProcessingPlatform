@@ -32,9 +32,9 @@
 
 
 
-#define MY_WARNING(t) 	{AlertForm f("警告", t);f.showModal();qWarning() << t; }//QMessageBox::warning(this, "警告", t)
-#define MY_INFO(t) {AlertForm f("提示", t);f.showModal();qInfo()<< t; }//QMessageBox::information(this, "提示", t)
-#define MY_ERROR(t) {AlertForm f("错误", t);f.showModal();qCritical() << t; }//QMessageBox::critical(this, "错误", t)
+#define MY_WARNING(t) 	{AlertForm f("Warning", t);f.showModal();qWarning() << t; }//QMessageBox::warning(this, "警告", t)
+#define MY_INFO(t) {AlertForm f("Tips", t);f.showModal();qInfo()<< t; }//QMessageBox::information(this, "提示", t)
+#define MY_ERROR(t) {AlertForm f("Error", t);f.showModal();qCritical() << t; }//QMessageBox::critical(this, "错误", t)
 
 #define HeartbeatFaultTolerance 5
 
@@ -144,12 +144,14 @@ void MainForm::ConnectDevice()
 {
 	if (m_strWorkGuid.empty() && m_pConfig->m_memTimsConfig.m_nForceGuid > 0)
 	{
-		SingleInputForm f("请输入检测任务ID");
+		QString inputstr = tr("请输入检测任务ID");
+		SingleInputForm f(inputstr.toStdString());
 		f.showModal();
 		int number = SingleInputForm::result;
 		if (number == 0)
 		{
-			MY_WARNING("输入错误!");
+			QString str = tr("输入错误!");
+			MY_WARNING(str.toStdString());
 			return;
 		}
 		m_strWorkGuid = std::to_string(number);
@@ -171,16 +173,16 @@ void MainForm::ConnectDevice()
 		if (m_pSampleBoardBase->BeginWork())
 		{
 			ui.pushButton_2->setEnabled(false);
-			ui.pushButton_2->setText("已启动");
+			ui.pushButton_2->setText(tr("已启动"));
 		}
 		else
 		{
-			QMessageBox::critical(this, "错误", "启动失败！", QMessageBox::Ok);
+			QMessageBox::critical(this, tr("错误"), tr("启动失败！"), QMessageBox::Ok);
 		}
 	}
 	else
 	{
-		QMessageBox::critical(this, "错误", "初始化失败！", QMessageBox::Ok);
+		QMessageBox::critical(this, tr("错误"), tr("初始化失败！"), QMessageBox::Ok);
 	}
 }
 
@@ -210,27 +212,27 @@ void MainForm::On_timer_timeout()
 	m_mutexDeviceInfoLock.unlock();
 
 	{
-		std::string info;
+		QString info;
 		switch (enumDeviceConnectStatus)
 		{
 		case DeviceConnectStatus::UnKnown:
 		{
-			info = "未知/未连接";
+			info = tr("未知/未连接");
 			break;
 		}
 		case DeviceConnectStatus::Closed:
 		{
-			info = "连接断开";
+			info = tr("连接断开");
 			break;
 		}
 		case DeviceConnectStatus::OpendListen:
 		{
-			info = "连接中";
+			info = tr("连接中");
 			break;
 		}
 		case DeviceConnectStatus::Connected:
 		{
-			info = "已连接";
+			info = tr("已连接");
 			break;
 		}
 		}
@@ -240,31 +242,31 @@ void MainForm::On_timer_timeout()
 		{
 		case DeviceRunStatus::Unknow:
 		{
-			info.append("未知");
+			info.append(tr("未知"));
 			break;
 		}
 		case DeviceRunStatus::Awake:
 		{
-			info.append("已唤醒");
+			info.append(tr("已唤醒"));
 			break;
 		}
 		case DeviceRunStatus::Busy:
 		{
-			info.append("忙");
+			info.append(tr("忙"));
 			break;
 		}
 		case DeviceRunStatus::Ready:
 		{
-			info.append("就绪");
+			info.append(tr("就绪"));
 			break;
 		}
 		default:
 		{
-			info.append("未知");
+			info.append(tr("未知"));
 			break;
 		}
 		}
-		ui.label_4->setText(QString::fromStdString(info));
+		ui.label_4->setText(info);
 	}
 	ui.label_10->setText(QString::number(nTemperature));
 	ui.label_11->setText(QString::number(nBattery));
@@ -278,35 +280,35 @@ void MainForm::On_timer_timeout()
 			auto timeDiff = m_atime_LastHeartBeatTime[0].GetTimeSpan_ms(false);
 			if (timeDiff > m_pConfig->m_memControlBoardConfig.m_wDeviceHeartBeat * HeartbeatFaultTolerance)
 			{
-				ui.label_9->setText("已连接_心跳异常");
+				ui.label_9->setText(tr("已连接_心跳异常"));
 			}
 			else
 			{
-				ui.label_9->setText("已连接");
+				ui.label_9->setText(tr("已连接"));
 			}
 		}
 		else
 		{
-			ui.label_9->setText("未连接");
+			ui.label_9->setText(tr("未连接"));
 		}
 	}
 	{
-		std::string strXRayDeviceStatus("未知");
+		QString strXRayDeviceStatus("未知");
 		switch (memHeartBeat.m_cXRayDeviceStatus)
 		{
 		case 0:
 		{
-			strXRayDeviceStatus = "空闲";
+			strXRayDeviceStatus = tr("空闲");
 			break;
 		}
 		case 1:
 		{
-			strXRayDeviceStatus = "延时开启中";
+			strXRayDeviceStatus = tr("延时开启中");
 			break;
 		}
 		case 2:
 		{
-			strXRayDeviceStatus = "工作完成";
+			strXRayDeviceStatus = tr("工作完成");
 			break;
 		}
 		default:
@@ -322,15 +324,15 @@ void MainForm::On_timer_timeout()
 				auto timeDiff = m_atime_LastHeartBeatTime[1].GetTimeSpan_ms(false);
 				if (timeDiff > m_pConfig->m_memControlBoardConfig.m_wDeviceHeartBeat * HeartbeatFaultTolerance)
 				{
-					strXRayDeviceStatus = "已连接_心跳异常";
+					strXRayDeviceStatus = tr("已连接_心跳异常");
 				}
 			}
 			else
 			{
-				strXRayDeviceStatus = "未连接";
+				strXRayDeviceStatus = tr("未连接");
 			}
 		}
-		ui.label_24->setText(QString::fromStdString(strXRayDeviceStatus));
+		ui.label_24->setText(strXRayDeviceStatus);
 	}
 
 	ui.label_33->setText(QString::number(m_nPicCount));
@@ -896,8 +898,8 @@ void MainForm::On_ImgLabelMouseRelease(Qt::MouseButton button, const QPoint& pos
 			dialog.setWindowFlags(dialog.windowFlags() | Qt::WindowStaysOnTopHint);
 
 			// 设置对话框其他属性
-			dialog.setWindowTitle("输入");
-			dialog.setLabelText("请输入内容:");
+			dialog.setWindowTitle(tr("输入"));
+			dialog.setLabelText(tr("请输入内容:"));
 			dialog.setInputMode(QInputDialog::TextInput);
 
 			// 显示对话框
@@ -1419,7 +1421,7 @@ void MainForm::InitParam()
 	m_pUSBKey = new CUSBKey();
 	if (!m_pUSBKey->ReadUSBKey(&m_memUSBKeyData))
 	{
-		MY_WARNING("加密狗验证失败！");
+		MY_WARNING(tr("USB加密狗验证失败！").toStdString());
 		_Exit(0);
 	}
 	m_cWorkModel = m_memUSBKeyData.m_cDeviceRunMode;
@@ -1613,8 +1615,8 @@ bool MainForm::CheckPassword()
 	dialog.setWindowFlags(dialog.windowFlags() | Qt::WindowStaysOnTopHint);
 
 	// 设置对话框其他属性
-	dialog.setWindowTitle("身份验证");
-	dialog.setLabelText("请输入密码:");
+	dialog.setWindowTitle(tr("身份验证"));
+	dialog.setLabelText(tr("请输入密码:"));
 	dialog.setInputMode(QInputDialog::TextInput);
 
 	// 显示对话框
@@ -1628,7 +1630,7 @@ bool MainForm::CheckPassword()
 		}
 	}
 
-	MY_WARNING("密码错误");
+	MY_WARNING(tr("密码错误").toStdString());
 	return false;
 }
 
@@ -1836,7 +1838,7 @@ void MainForm::On_SaveDealedPic()
 		}
 		if (!m_mapDealedPic.empty())
 		{
-			MY_INFO("保存成功");
+			MY_INFO(tr("保存成功").toStdString());
 		}
 		// 处理选择的目录路径
 	}
@@ -1889,12 +1891,12 @@ void MainForm::On_Upgrade_DoubleClick()
 			}
 			else
 			{
-				MY_WARNING("文件读取失败，请放置在英文路径并且程序有权限读取");
+				MY_WARNING(tr("文件读取失败，请放置在英文路径并且程序有权限读取").toStdString());
 			}
 		}
 		else
 		{
-			MY_WARNING("未选择文件");
+			MY_WARNING(tr("未选择文件").toStdString());
 		}
 	}
 }
@@ -2037,21 +2039,21 @@ void MainForm::On_SavePicByGuid_Click()
 {
 	if (m_strWorkGuid.empty())
 	{
-		MY_WARNING("未获取到工作GUID，请在网页端唤起本程序!");
+		MY_WARNING(tr("未获取到工作GUID，请在网页端唤起本程序!").toStdString());
 	}
 	auto dt = m_memSDRaw.GetSaveOriginalData();
 	if (dt.empty())
 	{
-		MY_WARNING("未读取到图片");
+		MY_WARNING(tr("未读取到图片").toStdString());
 	}
 	if (WHSD_Tools::SaveFileByGuid(dt.data(), dt.size(), m_strWorkGuid, 1))
 	{
 		ReadSavedFiles(-1);
-		MY_INFO("保存成功");
+		MY_INFO(tr("保存成功").toStdString());
 	}
 	else
 	{
-		MY_WARNING("保存失败");
+		MY_WARNING(tr("保存失败").toStdString());
 	}
 }
 
@@ -2063,11 +2065,11 @@ void MainForm::On_DeletePic_Click()
 		if (result == 0)
 		{
 			ReadSavedFiles(m_nPicIndex - 1);
-			MY_INFO("删除成功");
+			MY_INFO(tr("删除成功").toStdString());
 			return;
 		}
 	}
-	MY_WARNING("删除失败");
+	MY_WARNING(tr("删除失败").toStdString());
 }
 
 void MainForm::On_PreviousPic_Click()
@@ -2099,7 +2101,7 @@ void MainForm::On_UploadAllPic_Click2()
 	}
 	if (!dealAll)
 	{
-		MY_WARNING("请处理完所有图片");
+		MY_WARNING(tr("请处理完所有图片").toStdString());
 		return;
 	}
 	auto [t1, t2, t3] = HttpClient::Get(m_pConfig->m_memTimsConfig.m_strGetGuidInfo,
@@ -2125,7 +2127,7 @@ void MainForm::On_UploadAllPic_Click2()
 	}
 	if (clampName.isEmpty())
 	{
-		MY_WARNING("操作失败");
+		MY_WARNING(tr("操作失败").toStdString());
 		return;
 	}
 	QJsonObject jsonObj;
@@ -2173,11 +2175,11 @@ void MainForm::On_UploadAllPic_Click2()
 	}
 	if (success)
 	{
-		MY_INFO("操作成功");
+		MY_INFO(tr("操作成功").toStdString());
 	}
 	else
 	{
-		MY_WARNING("操作失败");
+		MY_WARNING(tr("操作失败").toStdString());
 	}
 }
 
@@ -2206,7 +2208,7 @@ void MainForm::On_UploadAllPic_Click()
 	}
 	if (clampName.isEmpty())
 	{
-		MY_WARNING("操作失败");
+		MY_WARNING(tr("操作失败").toStdString());
 		return;
 	}
 	QJsonObject jsonObj;
@@ -2254,11 +2256,11 @@ void MainForm::On_UploadAllPic_Click()
 	}
 	if (success)
 	{
-		MY_INFO("操作成功");
+		MY_INFO(tr("操作成功").toStdString());
 	}
 	else
 	{
-		MY_WARNING("操作失败");
+		MY_WARNING(tr("操作失败").toStdString());
 	}
 }
 
@@ -2306,7 +2308,7 @@ void MainForm::On_SavePic_Click()
 		};
 	m_mapDealedPic[m_nPicIndex] = imageToPngVector(m_memShowedImg);
 	ui.label_35->setStyleSheet("color:lightgreen");
-	MY_INFO("保存成功");
+	MY_INFO(tr("保存成功").toStdString());
 }
 
 void MainForm::On_DeletePic_Click2()
@@ -2686,29 +2688,29 @@ void MainForm::PaintImg()
 
 void MainForm::UpdateMotorRunStatus(const CDeviceHeartBeat& c)
 {
-	std::string strWalkingMotorStatus = "未知";
+	QString strWalkingMotorStatus = tr("未知");
 
 	switch (c.m_vectorWalkingMotorStatus[0].m_cDeviceStatus)
 	{
 	case 0:
 	case 3:
 	{
-		strWalkingMotorStatus = "停止";
+		strWalkingMotorStatus = tr("停止");
 		break;
 	}
 	case 1:
 	{
-		strWalkingMotorStatus = "右运行";
+		strWalkingMotorStatus = tr("右运行");
 		break;
 	}
 	case 2:
 	{
-		strWalkingMotorStatus = "左运行";
+		strWalkingMotorStatus = tr("左运行");
 		break;
 	}
 	case 4:
 	{
-		strWalkingMotorStatus = "故障";
+		strWalkingMotorStatus = tr("故障");
 		break;
 	}
 	default:
@@ -2716,31 +2718,31 @@ void MainForm::UpdateMotorRunStatus(const CDeviceHeartBeat& c)
 		break;
 	}
 	}
-	ui.label_19->setText(QString::fromStdString(strWalkingMotorStatus));
+	ui.label_19->setText(strWalkingMotorStatus);
 
-	strWalkingMotorStatus = "未知";
+	strWalkingMotorStatus = tr("未知");
 
 	switch (c.m_vectorWindmillMotorStatus[0].m_cDeviceStatus)
 	{
 	case 0:
 	case 3:
 	{
-		strWalkingMotorStatus = "停止";
+		strWalkingMotorStatus = tr("停止");
 		break;
 	}
 	case 1:
 	{
-		strWalkingMotorStatus = "上运行";
+		strWalkingMotorStatus = tr("上运行");
 		break;
 	}
 	case 2:
 	{
-		strWalkingMotorStatus = "下运行";
+		strWalkingMotorStatus = tr("下运行");
 		break;
 	}
 	case 4:
 	{
-		strWalkingMotorStatus = "故障";
+		strWalkingMotorStatus = tr("故障");
 		break;
 	}
 	default:
@@ -2749,31 +2751,31 @@ void MainForm::UpdateMotorRunStatus(const CDeviceHeartBeat& c)
 	}
 	}
 
-	ui.label_20->setText(QString::fromStdString(strWalkingMotorStatus));
+	ui.label_20->setText(strWalkingMotorStatus);
 
-	strWalkingMotorStatus = "未知";
+	strWalkingMotorStatus = tr("未知");
 
 	switch (c.m_vectorSafetyMotorStatus[0].m_cDeviceStatus)
 	{
 	case 0:
 	case 3:
 	{
-		strWalkingMotorStatus = "停止";
+		strWalkingMotorStatus = tr("停止");
 		break;
 	}
 	case 1:
 	{
-		strWalkingMotorStatus = "关闭中";
+		strWalkingMotorStatus = tr("关闭中");
 		break;
 	}
 	case 2:
 	{
-		strWalkingMotorStatus = "开启中";
+		strWalkingMotorStatus = tr("开启中");
 		break;
 	}
 	case 4:
 	{
-		strWalkingMotorStatus = "故障";
+		strWalkingMotorStatus = tr("故障");
 		break;
 	}
 	default:
@@ -2782,31 +2784,31 @@ void MainForm::UpdateMotorRunStatus(const CDeviceHeartBeat& c)
 	}
 	}
 
-	ui.label_22->setText(QString::fromStdString(strWalkingMotorStatus));
+	ui.label_22->setText(strWalkingMotorStatus);
 
-	strWalkingMotorStatus = "未知";
+	strWalkingMotorStatus = tr("未知");
 
 	switch (c.m_vectorSBMotorStatus[0].m_cDeviceStatus)
 	{
 	case 0:
 	case 3:
 	{
-		strWalkingMotorStatus = "停止";
+		strWalkingMotorStatus = tr("停止");
 		break;
 	}
 	case 1:
 	{
-		strWalkingMotorStatus = "水平打开中";
+		strWalkingMotorStatus = tr("水平打开中");
 		break;
 	}
 	case 2:
 	{
-		strWalkingMotorStatus = "垂直收拢中";
+		strWalkingMotorStatus = tr("垂直收拢中");
 		break;
 	}
 	case 4:
 	{
-		strWalkingMotorStatus = "故障";
+		strWalkingMotorStatus = tr("故障");
 		break;
 	}
 	default:
@@ -2815,10 +2817,10 @@ void MainForm::UpdateMotorRunStatus(const CDeviceHeartBeat& c)
 	}
 	}
 
-	ui.label_23->setText(QString::fromStdString(strWalkingMotorStatus));
+	ui.label_23->setText(strWalkingMotorStatus);
 	if (c.m_cBattery > 100)
 	{
-		ui.label_30->setText("未知");
+		ui.label_30->setText(tr("未知"));
 	}
 	else
 	{
@@ -2839,7 +2841,7 @@ void MainForm::UpdateMotorRunStatus(const CDeviceHeartBeat& c)
 	{
 		ui.label_31->setText("-");
 	}
-	ui.label_54->setText(c.m_cMainPowerSupply > 0 ? "开" : "关");
+	ui.label_54->setText(c.m_cMainPowerSupply > 0 ? tr("开") : tr("关"));
 	uint8_t cFmode = c.m_bFactoryMode ? 1 : 0;
 	ui.label_37->setText(QString::number(cFmode));
 }
@@ -2856,7 +2858,7 @@ void MainForm::UpdateOTAStatus()
 	}
 	case 1:
 	{
-		lb->setText("开始升级固件");
+		lb->setText(tr("开始升级固件"));
 		break;
 	}
 	case 2:
@@ -2868,12 +2870,12 @@ void MainForm::UpdateOTAStatus()
 	}
 	case 3:
 	{
-		lb->setText("升级完成");
+		lb->setText(tr("升级完成"));
 		break;
 	}
 	case 255:
 	{
-		lb->setText("升级失败");
+		lb->setText(tr("升级失败"));
 		break;
 	}
 	default:
@@ -3007,7 +3009,7 @@ void MainForm::DownloadPic()
 
 void MainForm::On_OnLineLoadFailed_Slots()
 {
-	ui.label_36->setText("加载失败！");
+	ui.label_36->setText(tr("加载失败！"));
 	//MY_WARNING("加载失败！");
 
 	QPixmap pixmap;
@@ -3140,12 +3142,12 @@ int MainForm::saveMatToDcm(const cv::Mat& img, const std::string& savePath)
 
 void MainForm::On_SaveImage_Clicked()
 {
-	QString format = "处理后的图像(PNG) (*.png);;原始图像(RAW) (*.raw);;医学影像(DCM) (*.dcm);;原始图像(TIF) (*.tif)";
+	QString format = tr("处理后的图像(PNG) (*.png);;原始图像(RAW) (*.raw);;医学影像(DCM) (*.dcm);;原始图像(TIF) (*.tif)");
 	QString defaultSuffix;
 
 	// 创建文件对话框
 	QFileDialog dialog(this);
-	dialog.setWindowTitle("保存图像文件");
+	dialog.setWindowTitle(tr("保存图像文件"));
 	dialog.setNameFilter(format);
 	dialog.setDefaultSuffix(defaultSuffix);
 
@@ -3157,27 +3159,27 @@ void MainForm::On_SaveImage_Clicked()
 		QString filePath = dialog.selectedFiles().first();
 
 		if (filePath.isEmpty()) {
-			MY_WARNING("未选择文件路径！");
+			MY_WARNING(tr("未选择文件路径！").toStdString());
 			return;
 		}
 		// 选择的 format 类型
 		QString selectedOption = dialog.selectedNameFilter();
-		if (selectedOption == "原始图像(RAW) (*.raw)") {
+		if (selectedOption == tr("原始图像(RAW) (*.raw)")) {
 			auto tp = m_memSDRaw.GetOriginalRawData();
 			if (tp.empty())
 			{
-				MY_WARNING("无图片！");
+				MY_WARNING(tr("无图片！").toStdString());
 				return;
 			}
 			filePath.append(".raw");
 			std::string apth = filePath.toLocal8Bit().constData();
 			if (WHSD_Tools::SaveDataToFile2_Raw(tp.data(), tp.size(), apth))
 			{
-				MY_INFO("保存成功");
+				MY_INFO(tr("保存成功").toStdString());
 				return;
 			}
 		}
-		else if (selectedOption == "医学影像(DCM) (*.dcm)")
+		else if (selectedOption == tr("医学影像(DCM) (*.dcm)"))
 		{
 			auto buf = m_memSDRaw.GetOriginalRawData();
 			//将图像保存到cv::Mat
@@ -3197,20 +3199,20 @@ void MainForm::On_SaveImage_Clicked()
 			memcpy(img.data, data_16bit.data(), data_16bit.size() * sizeof(uint16_t));
 			if (img.empty())
 			{
-				MY_WARNING("无图片！");
+				MY_WARNING(tr("无图片！").toStdString());
 			}
 			filePath += ".dcm";
 			std::string apth = filePath.toLocal8Bit().constData();
 			if (saveMatToDcm(img, apth) == 0)
 			{
-				MY_INFO("保存成功");
+				MY_INFO(tr("保存成功").toStdString());
 			}
 			else
 			{
-				MY_WARNING("保存失败");
+				MY_WARNING(tr("保存失败").toStdString());
 			}
 		}
-		else if (selectedOption == "处理后的图像(PNG) (*.png)")
+		else if (selectedOption == tr("处理后的图像(PNG) (*.png)"))
 		{
 			// 验证图像数据
 			auto isImageValid = [](const QImage& image) {
@@ -3236,17 +3238,17 @@ void MainForm::On_SaveImage_Clicked()
 				};
 			// 保存处理后的PNG图像
 			if (!isImageValid(m_memDealedImg)) {
-				MY_WARNING("处理后的图像无效！");
+				MY_WARNING(tr("处理后的图像无效！").toStdString());
 				return;
 			}
 			filePath += ".png";
 			if (m_memDealedImg.save(filePath))
 			{
-				MY_INFO("保存成功");
+				MY_INFO(tr("保存成功").toStdString());
 				return;
 			}
 		}
-		else if (selectedOption == "原始图像(TIF) (*.tif)")
+		else if (selectedOption == tr("原始图像(TIF) (*.tif)"))
 		{
 			std::vector<uint8_t> data_8bit = m_vecNeedShowBuffer;// m_memSDRaw.GetTempRawData();
 
@@ -3268,17 +3270,17 @@ void MainForm::On_SaveRaw_Clicked()
 	auto tp = m_memSDRaw.GetOriginalRawData();
 	if (tp.empty())
 	{
-		MY_WARNING("无图片！");
+		MY_WARNING(tr("无图片！").toStdString());
 		return;
 	}
 	QFileDialog dialog(this);
 
 	// 设置对话框标题
-	dialog.setWindowTitle("保存文件");
+	dialog.setWindowTitle(tr("保存文件"));
 
 	// 设置默认保存格式为xxx
 	// 设置文件过滤器，只显示.xxx文件和所有文件
-	dialog.setNameFilter("raw Files (*.raw);");
+	dialog.setNameFilter(tr("raw Files (*.raw);"));
 
 	// 设置默认后缀，如果用户没有输入扩展名，会自动添加.xxx
 	dialog.setDefaultSuffix("raw");
@@ -3287,11 +3289,11 @@ void MainForm::On_SaveRaw_Clicked()
 		std::string apth = dialog.selectedFiles().first().toLocal8Bit().constData();
 		if (WHSD_Tools::SaveDataToFile2_Raw(tp.data(), tp.size(), apth))
 		{
-			MY_INFO("保存成功");
+			MY_INFO(tr("保存成功").toStdString());
 			return;
 		}
 	}
-	MY_WARNING("保存失败！");
+	MY_WARNING(tr("保存失败！").toStdString());
 }
 
 void MainForm::On_SavePNG_Clicked()
@@ -3320,17 +3322,17 @@ void MainForm::On_SavePNG_Clicked()
 		};
 	if (!isImageValid(m_memDealedImg))
 	{
-		MY_WARNING("无图片！");
+		MY_WARNING(tr("无图片！").toStdString());
 		return;
 	}
 	QFileDialog dialog(this);
 
 	// 设置对话框标题
-	dialog.setWindowTitle("保存文件");
+	dialog.setWindowTitle(tr("保存文件"));
 
 	// 设置默认保存格式为xxx
 	// 设置文件过滤器，只显示.xxx文件和所有文件
-	dialog.setNameFilter("png Files (*.png);");
+	dialog.setNameFilter(tr("png Files (*.png);"));
 
 	// 设置默认后缀，如果用户没有输入扩展名，会自动添加.xxx
 	dialog.setDefaultSuffix("png");
@@ -3338,12 +3340,12 @@ void MainForm::On_SavePNG_Clicked()
 	{
 		if (m_memDealedImg.save(dialog.selectedFiles().first()))
 		{
-			MY_INFO("保存成功");
+			MY_INFO(tr("保存成功").toStdString());
 			return;
 		}
 	}
 
-	MY_WARNING("保存失败！");
+	MY_WARNING(tr("保存失败！").toStdString());
 }
 
 void MainForm::On_SetFMode()
@@ -3478,7 +3480,7 @@ void MainForm::On_CalibText_Click()
 {
 	if (m_vector_ImgTag.size() < 1)
 	{
-		MY_WARNING("请先选择标定线段");
+		MY_WARNING(tr("请先选择标定线段").toStdString());
 		return;
 	}
 	int n = 0;
@@ -3497,7 +3499,7 @@ void MainForm::On_CalibText_Click()
 	}
 	if (n == 0)
 	{
-		MY_WARNING("请先选择标定线段");
+		MY_WARNING(tr("请先选择标定线段").toStdString());
 		return;
 	}
 
@@ -3732,7 +3734,7 @@ void MainForm::ReadPicFromMem(int index)
 			}
 			else
 			{
-				MY_WARNING("文件读取失败!");
+				MY_WARNING(tr("文件读取失败!").toStdString());
 			}
 			ui.label_36->setStyleSheet("color:white");
 		}
@@ -3845,9 +3847,9 @@ void MainForm::Callback_TcpClientReadData(uint8_t* data, int len, uint64_t nInde
 		m_mapDealedPic.clear();
 		m_vector_ImgTag.clear();
 
-		std::string str("河南四达  检测任务ID：");
+		QString str(tr("河南四达  检测任务ID："));
 		str.append(m_strWorkGuid);
-		setWindowTitle(str.c_str());
+		setWindowTitle(str);
 
 		showEvent(nullptr);
 	}
@@ -3884,7 +3886,7 @@ void MainForm::On_ManuallyTrigger_Clicked()
 
 void MainForm::On_LoadPic_Clicked()
 {
-	QString filter = "原始Raw和四达Sdraw (*.raw *.sdraw)";
+	QString filter = tr("原始Raw和四达Sdraw (*.raw *.sdraw)");
 	QSettings settings("河南四达", "Star_HMI"); // 公司名和应用名
 	QString lastPath = settings.value("LastFileDialogPath", QDir::currentPath()).toString();
 	QString pa = QDir::homePath();
@@ -3958,7 +3960,7 @@ void MainForm::On_LoadPic_Clicked()
 		}
 		if (!readSuccess)
 		{
-			QMessageBox::critical(this, "错误", "raw读取失败！", QMessageBox::Ok);
+			QMessageBox::critical(this, tr("错误"), tr("raw读取失败！"), QMessageBox::Ok);
 		}
 	}
 	else if (fileExt == "sdraw")
@@ -3979,12 +3981,12 @@ void MainForm::On_LoadPic_Clicked()
 		}
 		if (!readSuccess)
 		{
-			QMessageBox::critical(this, "错误", "sdraw读取失败！", QMessageBox::Ok);
+			QMessageBox::critical(this, tr("错误"), tr("sdraw读取失败！"), QMessageBox::Ok);
 		}
 	}
 	else
 	{
-		MY_WARNING("程序错误！");
+		MY_WARNING(tr("程序错误！").toStdString());
 	}
 }
 
@@ -4043,7 +4045,7 @@ void MainForm::On_DelayTime_clicked()
 	if (text.isEmpty())
 	{
 		// 可以选择给用户提示
-		MY_INFO("请输入大于15的整数");
+		MY_INFO(tr("请输入大于15的整数").toStdString());
 		return;
 	}
 
@@ -4060,7 +4062,7 @@ void MainForm::On_DelayTime_clicked()
 	}
 	else
 	{
-		MY_WARNING("请输入大于15的整数");
+		MY_WARNING(tr("请输入大于15的整数").toStdString());
 		lineEdit->clear();
 	}
 }

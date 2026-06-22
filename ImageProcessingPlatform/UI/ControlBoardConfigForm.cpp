@@ -9,7 +9,7 @@ ControlBoardConfigForm::ControlBoardConfigForm(IDeviceCom* p, QWidget* parent)
 {
 	ui.setupUi(this);
 
-	setWindowTitle("控制板配置");
+	setWindowTitle(tr("控制板配置"));
 
 	QIcon appIcon("./1.png");
 	if (!appIcon.isNull())
@@ -40,5 +40,5 @@ void ControlBoardConfigForm::On_SendCmd_Click()
 	config.m_nSBRun = ui.lineEdit_10->text().toInt();
 	auto tp = CWHSDControlBoardProtocol::SetControlBoardConfig(&config);
 	m_pControlBoardCom->Write(tp.data(), tp.size());
-	QMessageBox::critical(this, "提示", "指令已发送！", QMessageBox::Ok);
+	QMessageBox::critical(this, tr("提示"), tr("指令已发送！"), QMessageBox::Ok);
 }
