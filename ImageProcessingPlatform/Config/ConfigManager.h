@@ -49,6 +49,7 @@ public:
 	std::string m_strDownloadPic;
 	std::string m_strGetGuidInfo;
 	int m_nDownloadTimeOut;
+	int nLanguage; //0 中文 1 英文
 };
 
 class CTcpClientParam

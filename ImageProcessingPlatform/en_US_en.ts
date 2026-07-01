@@ -347,8 +347,8 @@
     <message>
         <location filename="UI/MainForm.cpp" line="180"/>
         <location filename="UI/MainForm.cpp" line="185"/>
-        <location filename="UI/MainForm.cpp" line="3963"/>
-        <location filename="UI/MainForm.cpp" line="3984"/>
+        <location filename="UI/MainForm.cpp" line="4155"/>
+        <location filename="UI/MainForm.cpp" line="4176"/>
         <source>错误</source>
         <translation>Error</translation>
     </message>
@@ -386,11 +386,11 @@
     <message>
         <location filename="UI/MainForm.cpp" line="245"/>
         <location filename="UI/MainForm.cpp" line="265"/>
-        <location filename="UI/MainForm.cpp" line="2691"/>
-        <location filename="UI/MainForm.cpp" line="2723"/>
-        <location filename="UI/MainForm.cpp" line="2756"/>
-        <location filename="UI/MainForm.cpp" line="2789"/>
-        <location filename="UI/MainForm.cpp" line="2823"/>
+        <location filename="UI/MainForm.cpp" line="2729"/>
+        <location filename="UI/MainForm.cpp" line="2761"/>
+        <location filename="UI/MainForm.cpp" line="2794"/>
+        <location filename="UI/MainForm.cpp" line="2827"/>
+        <location filename="UI/MainForm.cpp" line="2861"/>
         <source>未知</source>
         <translation>Unknown</translation>
     </message>
@@ -447,297 +447,298 @@
         <translation>Please enter the following content:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="1424"/>
+        <location filename="UI/MainForm.cpp" line="1448"/>
         <source>USB加密狗验证失败！</source>
         <translation>USB dongle verification failed!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="1618"/>
+        <location filename="UI/MainForm.cpp" line="1641"/>
         <source>身份验证</source>
         <translation>Identity verification</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="1619"/>
+        <location filename="UI/MainForm.cpp" line="1642"/>
         <source>请输入密码:</source>
         <translation>Please input a password:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="1633"/>
+        <location filename="UI/MainForm.cpp" line="1656"/>
         <source>密码错误</source>
         <translation>Incorrect password</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="1821"/>
+        <location filename="UI/MainForm.cpp" line="1850"/>
         <source>选择目录</source>
         <translation>Select Directory</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="1841"/>
-        <location filename="UI/MainForm.cpp" line="2052"/>
-        <location filename="UI/MainForm.cpp" line="2311"/>
-        <location filename="UI/MainForm.cpp" line="3178"/>
-        <location filename="UI/MainForm.cpp" line="3208"/>
+        <location filename="UI/MainForm.cpp" line="1873"/>
+        <location filename="UI/MainForm.cpp" line="2084"/>
+        <location filename="UI/MainForm.cpp" line="2348"/>
+        <location filename="UI/MainForm.cpp" line="3217"/>
         <location filename="UI/MainForm.cpp" line="3247"/>
-        <location filename="UI/MainForm.cpp" line="3292"/>
-        <location filename="UI/MainForm.cpp" line="3343"/>
+        <location filename="UI/MainForm.cpp" line="3286"/>
+        <location filename="UI/MainForm.cpp" line="3331"/>
+        <location filename="UI/MainForm.cpp" line="3382"/>
         <source>保存成功</source>
         <translation>Saved successfully</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="1894"/>
+        <location filename="UI/MainForm.cpp" line="1926"/>
         <source>文件读取失败，请放置在英文路径并且程序有权限读取</source>
         <translation>File read failed, please place it in the English path and the program has permission to read it</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="1899"/>
+        <location filename="UI/MainForm.cpp" line="1931"/>
         <source>未选择文件</source>
         <translation>No file selected</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2042"/>
+        <location filename="UI/MainForm.cpp" line="2074"/>
         <source>未获取到工作GUID，请在网页端唤起本程序!</source>
         <translation>Unable to obtain work UID, please call up this program on the web page!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2047"/>
+        <location filename="UI/MainForm.cpp" line="2079"/>
         <source>未读取到图片</source>
         <translation>Image not read</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2056"/>
-        <location filename="UI/MainForm.cpp" line="3212"/>
+        <location filename="UI/MainForm.cpp" line="2088"/>
+        <location filename="UI/MainForm.cpp" line="3251"/>
         <source>保存失败</source>
         <translation>Save failed</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2068"/>
+        <location filename="UI/MainForm.cpp" line="2100"/>
         <source>删除成功</source>
         <translation>Deleted successfully</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2072"/>
+        <location filename="UI/MainForm.cpp" line="2104"/>
         <source>删除失败</source>
         <translation>Deletion failed</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2104"/>
+        <location filename="UI/MainForm.cpp" line="2139"/>
         <source>请处理完所有图片</source>
         <translation>Please process all the images</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2130"/>
-        <location filename="UI/MainForm.cpp" line="2182"/>
-        <location filename="UI/MainForm.cpp" line="2211"/>
-        <location filename="UI/MainForm.cpp" line="2263"/>
+        <location filename="UI/MainForm.cpp" line="2165"/>
+        <location filename="UI/MainForm.cpp" line="2217"/>
+        <location filename="UI/MainForm.cpp" line="2246"/>
+        <location filename="UI/MainForm.cpp" line="2298"/>
         <source>操作失败</source>
         <translation>Operation failed</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2178"/>
-        <location filename="UI/MainForm.cpp" line="2259"/>
+        <location filename="UI/MainForm.cpp" line="2213"/>
+        <location filename="UI/MainForm.cpp" line="2294"/>
         <source>操作成功</source>
         <translation>Operation successful</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2698"/>
-        <location filename="UI/MainForm.cpp" line="2730"/>
-        <location filename="UI/MainForm.cpp" line="2763"/>
-        <location filename="UI/MainForm.cpp" line="2796"/>
+        <location filename="UI/MainForm.cpp" line="2736"/>
+        <location filename="UI/MainForm.cpp" line="2768"/>
+        <location filename="UI/MainForm.cpp" line="2801"/>
+        <location filename="UI/MainForm.cpp" line="2834"/>
         <source>停止</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2703"/>
+        <location filename="UI/MainForm.cpp" line="2741"/>
         <source>右运行</source>
         <translation>Run right</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2708"/>
+        <location filename="UI/MainForm.cpp" line="2746"/>
         <source>左运行</source>
         <translation>Run Left</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2713"/>
-        <location filename="UI/MainForm.cpp" line="2745"/>
-        <location filename="UI/MainForm.cpp" line="2778"/>
-        <location filename="UI/MainForm.cpp" line="2811"/>
+        <location filename="UI/MainForm.cpp" line="2751"/>
+        <location filename="UI/MainForm.cpp" line="2783"/>
+        <location filename="UI/MainForm.cpp" line="2816"/>
+        <location filename="UI/MainForm.cpp" line="2849"/>
         <source>故障</source>
         <translation>Fault</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2735"/>
+        <location filename="UI/MainForm.cpp" line="2773"/>
         <source>上运行</source>
         <translation>Run up</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2740"/>
+        <location filename="UI/MainForm.cpp" line="2778"/>
         <source>下运行</source>
         <translation>Run down</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2768"/>
+        <location filename="UI/MainForm.cpp" line="2806"/>
         <source>关闭中</source>
         <translation>Closing</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2773"/>
+        <location filename="UI/MainForm.cpp" line="2811"/>
         <source>开启中</source>
         <translation>Openning</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2801"/>
+        <location filename="UI/MainForm.cpp" line="2839"/>
         <source>水平打开中</source>
         <translation>Horizontally opening</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2806"/>
+        <location filename="UI/MainForm.cpp" line="2844"/>
         <source>垂直收拢中</source>
         <translation>Vertical folding</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2844"/>
+        <location filename="UI/MainForm.cpp" line="2882"/>
         <source>开</source>
         <translation>Open</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2844"/>
+        <location filename="UI/MainForm.cpp" line="2882"/>
         <source>关</source>
         <translation>Close</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2861"/>
+        <location filename="UI/MainForm.cpp" line="2899"/>
         <source>开始升级固件</source>
         <translation>Start upgrading the firmware</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2873"/>
+        <location filename="UI/MainForm.cpp" line="2911"/>
         <source>升级完成</source>
         <translation>Upgrade completed</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2878"/>
+        <location filename="UI/MainForm.cpp" line="2916"/>
         <source>升级失败</source>
         <translation>Upgrade failed</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3012"/>
+        <location filename="UI/MainForm.cpp" line="3051"/>
         <source>加载失败！</source>
         <translation>Loading failed!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3145"/>
+        <location filename="UI/MainForm.cpp" line="3184"/>
         <source>处理后的图像(PNG) (*.png);;原始图像(RAW) (*.raw);;医学影像(DCM) (*.dcm);;原始图像(TIF) (*.tif)</source>
         <translation>Processed image(PNG) (*.png);;Original image(RAW) (*.raw);;Medical imaging(DCM) (*.dcm);;Original image(TIF) (*.tif)</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3150"/>
+        <location filename="UI/MainForm.cpp" line="3189"/>
         <source>保存图像文件</source>
         <translation>Save image file</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3162"/>
+        <location filename="UI/MainForm.cpp" line="3201"/>
         <source>未选择文件路径！</source>
         <translation>File path not selected!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3167"/>
+        <location filename="UI/MainForm.cpp" line="3206"/>
         <source>原始图像(RAW) (*.raw)</source>
         <translation>Original image(RAW) (*.raw)</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3171"/>
-        <location filename="UI/MainForm.cpp" line="3202"/>
-        <location filename="UI/MainForm.cpp" line="3273"/>
-        <location filename="UI/MainForm.cpp" line="3325"/>
+        <location filename="UI/MainForm.cpp" line="3210"/>
+        <location filename="UI/MainForm.cpp" line="3241"/>
+        <location filename="UI/MainForm.cpp" line="3312"/>
+        <location filename="UI/MainForm.cpp" line="3364"/>
         <source>无图片！</source>
         <translation>No pictures!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3182"/>
+        <location filename="UI/MainForm.cpp" line="3221"/>
         <source>医学影像(DCM) (*.dcm)</source>
         <translation>医学影像(DCM) (*.dcm)</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3215"/>
+        <location filename="UI/MainForm.cpp" line="3254"/>
         <source>处理后的图像(PNG) (*.png)</source>
         <translation>Processed image(PNG) (*.png)</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3241"/>
+        <location filename="UI/MainForm.cpp" line="3280"/>
         <source>处理后的图像无效！</source>
         <translation>The processed image is invalid!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3251"/>
+        <location filename="UI/MainForm.cpp" line="3290"/>
         <source>原始图像(TIF) (*.tif)</source>
         <translation>Original image(TIF) (*.tif)</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3279"/>
-        <location filename="UI/MainForm.cpp" line="3331"/>
+        <location filename="UI/MainForm.cpp" line="3318"/>
+        <location filename="UI/MainForm.cpp" line="3370"/>
         <source>保存文件</source>
         <translation>Save file</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3283"/>
+        <location filename="UI/MainForm.cpp" line="3322"/>
         <source>raw Files (*.raw);</source>
         <translation>Original image(RAW) (*.raw)</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3296"/>
-        <location filename="UI/MainForm.cpp" line="3348"/>
+        <location filename="UI/MainForm.cpp" line="3335"/>
+        <location filename="UI/MainForm.cpp" line="3387"/>
         <source>保存失败！</source>
         <translation>Save failed!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3335"/>
+        <location filename="UI/MainForm.cpp" line="3374"/>
         <source>png Files (*.png);</source>
         <translation>png Files (*.png);</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3483"/>
-        <location filename="UI/MainForm.cpp" line="3502"/>
+        <location filename="UI/MainForm.cpp" line="3522"/>
+        <location filename="UI/MainForm.cpp" line="3541"/>
         <source>请先选择标定线段</source>
         <translation>Please select the calibration line segment first</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3737"/>
+        <location filename="UI/MainForm.cpp" line="3871"/>
         <source>文件读取失败!</source>
         <translation>File reading failed!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3850"/>
+        <location filename="UI/MainForm.cpp" line="4042"/>
         <source>河南四达  检测任务ID：</source>
         <translation>HeNanStar  Testing Task ID:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3889"/>
+        <location filename="UI/MainForm.cpp" line="4081"/>
         <source>原始Raw和四达Sdraw (*.raw *.sdraw)</source>
         <translation>Raw and Sdraw (*.raw *.sdraw)</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3900"/>
+        <location filename="UI/MainForm.cpp" line="1911"/>
+        <location filename="UI/MainForm.cpp" line="4092"/>
         <source>选择文件</source>
         <translation>Select Files</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3963"/>
+        <location filename="UI/MainForm.cpp" line="4155"/>
         <source>raw读取失败！</source>
         <translation>Raw reading failed!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3984"/>
+        <location filename="UI/MainForm.cpp" line="4176"/>
         <source>sdraw读取失败！</source>
         <translation>sdraw reading failed!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3989"/>
+        <location filename="UI/MainForm.cpp" line="4181"/>
         <source>程序错误！</source>
         <translation>Error!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="4048"/>
-        <location filename="UI/MainForm.cpp" line="4065"/>
+        <location filename="UI/MainForm.cpp" line="4240"/>
+        <location filename="UI/MainForm.cpp" line="4257"/>
         <source>请输入大于15的整数</source>
         <translation>Please enter an integer greater than 15</translation>
     </message>
@@ -1195,48 +1196,38 @@
         <translation>Report specialist</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="4081"/>
-        <source>&lt;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="UI/MainForm.ui" line="4100"/>
+        <location filename="UI/MainForm.ui" line="4076"/>
         <source>加载中……</source>
         <translation>Loading……</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="4135"/>
-        <source>&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="UI/MainForm.ui" line="4177"/>
+        <location filename="UI/MainForm.ui" line="4215"/>
         <source>保存</source>
         <translation>Save</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="4221"/>
+        <location filename="UI/MainForm.ui" line="4259"/>
         <source>还原</source>
         <translation>restore</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="4265"/>
+        <location filename="UI/MainForm.ui" line="4303"/>
         <source>保存本地</source>
         <translation>Save locally</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="4297"/>
+        <location filename="UI/MainForm.ui" line="4335"/>
         <source>上传图片</source>
         <translation>Upload image</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="4323"/>
-        <location filename="UI/MainForm.ui" line="4382"/>
+        <location filename="UI/MainForm.ui" line="4361"/>
+        <location filename="UI/MainForm.ui" line="4420"/>
         <source>操作员</source>
         <translation>operator</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="4453"/>
+        <location filename="UI/MainForm.ui" line="4491"/>
         <source>0/0</source>
         <translation></translation>
     </message>

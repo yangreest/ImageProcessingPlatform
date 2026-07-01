@@ -46,6 +46,17 @@ public:
 	void fromJson(const QJsonObject& obj);
 };
 
+// 图像管理类
+class ImageManager
+{ 
+public:
+	int nImgIndex;
+	std::string strReadedPicPath;
+	std::vector<uint8_t> vecLoadedPic;
+	std::vector<uint8_t> vecDealedPic;
+	std::vector<CImageTag> mPImgTag;// 当前画面的标记集合
+};
+
 class MainForm : public QMainWindow
 {
 	Q_OBJECT
@@ -191,6 +202,7 @@ signals:
 	void On_OnLineLoadFailed();
 
 	void logReceived(const QString& level, const QString& message, const QString& timestamp, const QString& file, const QString& function, const QString& line);
+	void PicDownloadFinished();
 
 protected:
 	// 重写显示事件
@@ -248,6 +260,8 @@ private:
 	bool CheckPassword();
 
 	void Callback_ShowImgOnLabel_2();
+
+	void On_PicDownloadFinished();
 
 	void ShowImgOnLabel();
 
@@ -377,9 +391,10 @@ private:
 	/// <summary>
 	/// 已经加载好，等待用于处理的raw原图
 	/// </summary>
-	std::map<int, std::vector<uint8_t>> m_mapLoadedMap;
+	//std::map<int, std::vector<uint8_t>> m_mapLoadedMap;
 
-	std::vector<std::string> m_vector_NeedDownLoadPic;
+	// 待下载的图片路径
+	//std::vector<std::string> m_vector_NeedDownLoadPic;
 
 	int m_nLoadedMapType;
 
@@ -389,7 +404,7 @@ private:
 	/// <summary>
 	/// 已处理好的图片
 	/// </summary>
-	std::map<int, std::vector<uint8_t>> m_mapDealedPic;
+	//std::map<int, std::vector<uint8_t>> m_mapDealedPic;
 
 	QImage m_memMainQImage;
 
@@ -448,4 +463,15 @@ private:
 
 	// 线程监视器：处理耗时任务
 	QFutureWatcher<void>* m_taskWatcher;
+public:
+	std::vector<ImageManager> m_vecImageManager;
+	// 从容器中根据序号读取图片路径
+	std::string* getPicPathByIndex(int index);
+    // 返回 ImageManager 对象的指针，以便外部修改能同步到列表中
+    ImageManager* getImageManagerByIndex(int index);
+    std::vector<uint8_t>* getLoadedPicPointerByIndex(int index);
+    std::vector<uint8_t>* getDealedPicPointerByIndex(int index);
+    std::vector<CImageTag>* getImgTagPointerByIndex(int index);
+	// 当前的序号与前一张图片需要对换，或后一张图片需要对换
+    void changeImgIndex(int index, int type);
 };

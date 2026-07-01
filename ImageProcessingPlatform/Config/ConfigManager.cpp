@@ -205,6 +205,11 @@ void CConfigManager::Read(const std::string& filePath)
 					{
 						m_memTimsConfig.m_nForceGuid = nIntTemp;
 					}
+					auto nLanguage = sb->FirstChildElement("Language");
+                    if (nLanguage != nullptr && nLanguage->QueryIntText(&nIntTemp) == tinyxml2::XML_SUCCESS)
+                    {
+                        m_memTimsConfig.nLanguage = nIntTemp;
+                    }
 				}
 			}
 			{

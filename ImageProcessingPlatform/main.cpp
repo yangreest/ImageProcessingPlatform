@@ -39,12 +39,12 @@ int main(int argc, char* argv[])
 
 	QApplication app(argc, argv);
 
-	QTranslator translator;
-	// 路径：把qm复制到exe同目录
-	if (translator.load("en_US_en.qm"))
-	{
-		app.installTranslator(&translator);
-	}
+	//QTranslator translator;
+	//// 路径：把qm复制到exe同目录
+	//if (translator.load("en_US_en.qm"))
+	//{
+	//	app.installTranslator(&translator);
+	//}
 
 	MainForm window(guid, model);
 #ifdef __DEBUG__

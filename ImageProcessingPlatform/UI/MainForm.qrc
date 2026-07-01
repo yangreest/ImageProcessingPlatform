@@ -1,6 +1,7 @@
 <RCC>
   <qresource prefix="/MainForm"/>
-  <qresource prefix="NEW_ICON">
+  <qresource prefix="/NEW_ICON">
+    <file>NEW_ICOM/1.png</file>
     <file>NEW_ICOM/lineCalib.svg</file>
     <file>NEW_ICOM/angle.svg</file>
     <file>NEW_ICOM/add_a_photo1.svg</file>

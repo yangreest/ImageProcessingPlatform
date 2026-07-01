@@ -217,22 +217,22 @@ void MainForm::On_timer_timeout()
 		{
 		case DeviceConnectStatus::UnKnown:
 		{
-			info = tr("未知/未连接");
+			info = m_pConfig->m_memTimsConfig.nLanguage == 0 ?  "未知/未连接" : "Unknown/not connected";
 			break;
 		}
 		case DeviceConnectStatus::Closed:
 		{
-			info = tr("连接断开");
+			info = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "连接断开" : "Disconnected";
 			break;
 		}
 		case DeviceConnectStatus::OpendListen:
 		{
-			info = tr("连接中");
+			info = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "连接中" : "Connecting";
 			break;
 		}
 		case DeviceConnectStatus::Connected:
 		{
-			info = tr("已连接");
+			info = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "已连接" : "Connected";
 			break;
 		}
 		}
@@ -242,27 +242,27 @@ void MainForm::On_timer_timeout()
 		{
 		case DeviceRunStatus::Unknow:
 		{
-			info.append(tr("未知"));
+			info.append(m_pConfig->m_memTimsConfig.nLanguage == 0 ? "未知" : "Unknown");
 			break;
 		}
 		case DeviceRunStatus::Awake:
 		{
-			info.append(tr("已唤醒"));
+			info.append(m_pConfig->m_memTimsConfig.nLanguage == 0 ? "已唤醒" : "Awake");
 			break;
 		}
 		case DeviceRunStatus::Busy:
 		{
-			info.append(tr("忙"));
+			info.append(m_pConfig->m_memTimsConfig.nLanguage == 0 ? "忙" : "Busy");
 			break;
 		}
 		case DeviceRunStatus::Ready:
 		{
-			info.append(tr("就绪"));
+			info.append(m_pConfig->m_memTimsConfig.nLanguage == 0 ? "就绪" : "Ready");
 			break;
 		}
 		default:
 		{
-			info.append(tr("未知"));
+			info.append(m_pConfig->m_memTimsConfig.nLanguage == 0 ? "未知" : "Unknown");
 			break;
 		}
 		}
@@ -274,23 +274,25 @@ void MainForm::On_timer_timeout()
 	UpdateMotorRunStatus(memHeartBeat);
 	UpdateOTAStatus();
 	{
+		QString strLabelText = "";
 		//处理主控制板的心跳逻辑
 		if (m_abControlBroadConnected[0])
 		{
 			auto timeDiff = m_atime_LastHeartBeatTime[0].GetTimeSpan_ms(false);
 			if (timeDiff > m_pConfig->m_memControlBoardConfig.m_wDeviceHeartBeat * HeartbeatFaultTolerance)
 			{
-				ui.label_9->setText(tr("已连接_心跳异常"));
+				strLabelText = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "已连接_心跳异常" : "Connected_Heartbeat Fault";
 			}
 			else
 			{
-				ui.label_9->setText(tr("已连接"));
+				strLabelText = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "已连接" : "Connected";
 			}
 		}
 		else
 		{
-			ui.label_9->setText(tr("未连接"));
+			strLabelText = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "未连接" : "Not connected";
 		}
+		ui.label_9->setText(strLabelText);
 	}
 	{
 		QString strXRayDeviceStatus("未知");
@@ -298,17 +300,17 @@ void MainForm::On_timer_timeout()
 		{
 		case 0:
 		{
-			strXRayDeviceStatus = tr("空闲");
+			strXRayDeviceStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "空闲" : "Free";
 			break;
 		}
 		case 1:
 		{
-			strXRayDeviceStatus = tr("延时开启中");
+			strXRayDeviceStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "延时开启中" : "Delaying";
 			break;
 		}
 		case 2:
 		{
-			strXRayDeviceStatus = tr("工作完成");
+			strXRayDeviceStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "工作完成": "Work Completed";
 			break;
 		}
 		default:
@@ -324,12 +326,12 @@ void MainForm::On_timer_timeout()
 				auto timeDiff = m_atime_LastHeartBeatTime[1].GetTimeSpan_ms(false);
 				if (timeDiff > m_pConfig->m_memControlBoardConfig.m_wDeviceHeartBeat * HeartbeatFaultTolerance)
 				{
-					strXRayDeviceStatus = tr("已连接_心跳异常");
+					strXRayDeviceStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "已连接_心跳异常" : "Connected_Heartbeat Fault";
 				}
 			}
 			else
 			{
-				strXRayDeviceStatus = tr("未连接");
+				strXRayDeviceStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "未连接" :  "Not connected";
 			}
 		}
 		ui.label_24->setText(strXRayDeviceStatus);
@@ -339,7 +341,7 @@ void MainForm::On_timer_timeout()
 	ui.label_46->setText(QString::number(m_anHeartBeatCount[0]));
 	ui.label_40->setText(QString::number(m_anHeartBeatCount[1]));
 
-	//{
+	//
 	//	switch (m_memImageProcessParam1.m_nDenoise)
 	//	{
 	//	case 0:
@@ -1128,21 +1130,23 @@ void MainForm::InitUI(int model)
 		break;
 	}
 	}
-	ui.groupBox->setTitle(QString::fromStdString(title));
+	//ui.groupBox->setTitle(QString::fromStdString(title));
 
 	this->move(0, 0);
 	if (m_strWorkGuid.empty())
 	{
-		setWindowTitle("河南四达");
+		QString strTitle = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "河南四达" : "Henan Star";
+		setWindowTitle(strTitle);
 	}
 	else
 	{
+		QString strTitle = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "河南四达  检测任务ID：" : "Henan Star Detection Task ID:";
 		std::string str("河南四达  检测任务ID：");
-		str.append(m_strWorkGuid);
+		strTitle.append(m_strWorkGuid);
 		setWindowTitle(str.c_str());
 	}
 
-	QIcon appIcon("./1.png");
+	QIcon appIcon(":/NEW_ICON/NEW_ICOM/1.png");
 	if (!appIcon.isNull())
 	{
 		setWindowIcon(appIcon);
@@ -1169,6 +1173,16 @@ void MainForm::InitUI(int model)
 		// 设置窗口大小
 		setFixedSize(screenWidth, screenHeight - 80);
 	}
+
+	// 获取当前按钮图标
+	QIcon currentIcon = ui.pushButton_43->icon();
+
+	// 创建QPixmap并旋转
+	QPixmap originalPixmap = currentIcon.pixmap(ui.pushButton_43->size());
+	QPixmap rotatedPixmap = originalPixmap.transformed(QTransform().scale(1, -1)); // 垂直翻转
+
+	// 设置新图标
+	ui.pushButton_43->setIcon(QIcon(rotatedPixmap));
 
 	ui.groupBox_10->setVisible(false);
 	ui.groupBox_8->setVisible(false);
@@ -1289,6 +1303,7 @@ void MainForm::BindAction()
 	connect(this, &MainForm::On_Pic_Receive, this, &MainForm::Callback_ShowImgOnLabel_2);
 	connect(this, &MainForm::On_OnLineLoadSuccess, this, &MainForm::On_Pic_Receive_Slots);
 	connect(this, &MainForm::On_OnLineLoadFailed, this, &MainForm::On_OnLineLoadFailed_Slots);
+	connect(this, &MainForm::PicDownloadFinished, this, &MainForm::On_PicDownloadFinished);
 	connect(ui.pushButton_36, &QPushButton::clicked, this, &MainForm::On_LoadPic_Clicked);
 
 	connect(ui.pushButton_3, &QPushButton::clicked, this, &MainForm::On_NumberOfPulses_clicked);
@@ -1413,6 +1428,19 @@ void MainForm::BindAction()
 
 void MainForm::InitParam()
 {
+	m_pConfig = new CConfigManager();
+	m_pConfig->Read(WHSD_Tools::GetAbsolutePath("Config.xml"));
+
+	if (m_pConfig->m_memTimsConfig.nLanguage == 1)
+	{
+		QTranslator translator;
+		qApp->removeTranslator(&translator);
+		translator.load("en_US_en.qm");
+		qApp->installTranslator(&translator);
+		// 刷新界面文字
+		ui.retranslateUi(this);
+	}
+
 	//第一件事儿就是USB加密狗鉴权
 #ifdef __DEBUG__
 	m_cWorkModel = 0;
@@ -1478,8 +1506,7 @@ void MainForm::InitParam()
 	m_pCalibInputForm = new CalibInputForm(0);
 	m_fRatio = m_pCalibInputForm->fRatio;
 
-	m_pConfig = new CConfigManager();
-	m_pConfig->Read(WHSD_Tools::GetAbsolutePath("Config.xml"));
+
 
 	m_pCTcpClientCom = new CTcpClientCom();
 	m_pCTcpClientCom->SetParam(m_pConfig->m_mCTcpClientParam.m_strIp.c_str(),
@@ -1666,6 +1693,12 @@ void MainForm::Callback_ShowImgOnLabel_2()
 	doLongTimeWork();
 }
 
+void MainForm::On_PicDownloadFinished()
+{
+	// 将图片数据绑定到listwidget中
+
+}
+
 void MainForm::ShowImgOnLabel()
 {
 	QImage image(m_vecNeedShowBuffer.data(), m_memSDRaw.m_wPicWidth, m_memSDRaw.m_wPicHeight,
@@ -1830,13 +1863,16 @@ void MainForm::On_SaveDealedPic()
 		path.append(QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss").toStdString());
 		// 获取当前日期时间
 
-
-		for (const auto& p : m_mapDealedPic)
+		bool bHaveDealedPic = false;
+		for (const auto& nImgManger : m_vecImageManager)
 		{
-			std::string fileName = path + "_" + std::to_string(p.first) + ".png";
-			WHSD_Tools::SaveDataToFile((uint8_t*)p.second.data(), p.second.size(), fileName.c_str());
+			if (nImgManger.vecDealedPic.empty())
+                continue;
+			std::string fileName = path + "_" + std::to_string(nImgManger.nImgIndex) + ".png";
+			WHSD_Tools::SaveDataToFile((uint8_t*)nImgManger.vecDealedPic.data(), nImgManger.vecDealedPic.size(), fileName.c_str());
+			bHaveDealedPic = true;
 		}
-		if (!m_mapDealedPic.empty())
+		if (bHaveDealedPic)
 		{
 			MY_INFO(tr("保存成功").toStdString());
 		}
@@ -1876,7 +1912,7 @@ void MainForm::On_Upgrade_DoubleClick()
 		// 处理密码...
 		QString qFilePath = QFileDialog::getOpenFileName(
 			this, // 父窗口指针
-			"选择文件", // 对话框标题
+			tr("选择文件"), // 对话框标题
 			".", // 默认路径（用户主目录）
 			"bin文件 (*.bin);" // 文件过滤器
 		);
@@ -2085,19 +2121,22 @@ void MainForm::On_NextPic_Click()
 void MainForm::On_UploadAllPic_Click2()
 {
 	bool dealAll = true;
-	for (const auto& mp : m_mapLoadedMap)
+	for (const auto& ImgMager : m_vecImageManager)
 	{
-		auto p = m_mapDealedPic.find(mp.first);
-		if (p == m_mapDealedPic.end())
-		{
-			dealAll = false;
-			break;
-		}
-		if (p->second.empty())
-		{
-			dealAll = false;
-			break;
-		}
+	 if(ImgMager.vecDealedPic.size()==0)
+		 dealAll = false;
+		break;
+		//auto p = m_mapDealedPic.find(mp.first);
+		//if (p == m_mapDealedPic.end())
+		//{
+		//	dealAll = false;
+		//	break;
+		//}
+		//if (p->second.empty())
+		//{
+		//	dealAll = false;
+		//	break;
+		//}
 	}
 	if (!dealAll)
 	{
@@ -2133,9 +2172,9 @@ void MainForm::On_UploadAllPic_Click2()
 	QJsonObject jsonObj;
 	QJsonArray picArray;
 	int index = 0;
-	for (const auto& v666 : m_mapDealedPic)
+	for (const auto& nImgMager : m_vecImageManager)
 	{
-		auto v = v666.second;
+		auto v = nImgMager.vecDealedPic;
 		index++;
 		QJsonObject node;
 		auto imgBts = WHSD_Tools::Base64Encode(v);
@@ -2267,11 +2306,13 @@ void MainForm::On_UploadAllPic_Click()
 void MainForm::On_ResetPic_Click()
 {
 	//直接清空即可
-	auto dt = m_mapDealedPic.find(m_nPicIndex);
-	if (dt != m_mapDealedPic.end())
-	{
-		dt->second.clear();
-	}
+	//auto dt = m_mapDealedPic.find(m_nPicIndex);
+	//if (dt != m_mapDealedPic.end())
+	//{
+	//	dt->second.clear();
+	//}
+
+	*getDealedPicPointerByIndex(m_nPicIndex) = std::vector<uint8_t>(0);
 	m_vector_ImgTag.clear();
 	m_vector_ImgTag_bak.clear();
 
@@ -2306,14 +2347,15 @@ void MainForm::On_SavePic_Click()
 
 			return std::vector<uint8_t>(byteArray.begin(), byteArray.end());
 		};
-	m_mapDealedPic[m_nPicIndex] = imageToPngVector(m_memShowedImg);
+	*getDealedPicPointerByIndex(m_nPicIndex) = imageToPngVector(m_memShowedImg);
 	ui.label_35->setStyleSheet("color:lightgreen");
 	MY_INFO(tr("保存成功").toStdString());
 }
 
 void MainForm::On_DeletePic_Click2()
 {
-	m_mapDealedPic.erase(m_nPicIndex);
+	//m_mapDealedPic.erase(m_nPicIndex);
+	*getDealedPicPointerByIndex(m_nPicIndex)= std::vector<uint8_t>(0);
 	ReadPicFromMem(m_nPicIndex);
 }
 
@@ -2688,29 +2730,29 @@ void MainForm::PaintImg()
 
 void MainForm::UpdateMotorRunStatus(const CDeviceHeartBeat& c)
 {
-	QString strWalkingMotorStatus = tr("未知");
+	QString strWalkingMotorStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "未知" : "Unknown";
 
 	switch (c.m_vectorWalkingMotorStatus[0].m_cDeviceStatus)
 	{
 	case 0:
 	case 3:
 	{
-		strWalkingMotorStatus = tr("停止");
+		strWalkingMotorStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "停止" : "Stopped";
 		break;
 	}
 	case 1:
 	{
-		strWalkingMotorStatus = tr("右运行");
+		strWalkingMotorStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "右运行" : "Right Running";
 		break;
 	}
 	case 2:
 	{
-		strWalkingMotorStatus = tr("左运行");
+		strWalkingMotorStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "左运行" : "Left Running";
 		break;
 	}
 	case 4:
 	{
-		strWalkingMotorStatus = tr("故障");
+		strWalkingMotorStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "故障" : "Fault";
 		break;
 	}
 	default:
@@ -2720,29 +2762,29 @@ void MainForm::UpdateMotorRunStatus(const CDeviceHeartBeat& c)
 	}
 	ui.label_19->setText(strWalkingMotorStatus);
 
-	strWalkingMotorStatus = tr("未知");
+	strWalkingMotorStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "未知" : "Unknown";
 
 	switch (c.m_vectorWindmillMotorStatus[0].m_cDeviceStatus)
 	{
 	case 0:
 	case 3:
 	{
-		strWalkingMotorStatus = tr("停止");
+		strWalkingMotorStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "停止" : "Stopped";
 		break;
 	}
 	case 1:
 	{
-		strWalkingMotorStatus = tr("上运行");
+		strWalkingMotorStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "上运行" : "Up Running";
 		break;
 	}
 	case 2:
 	{
-		strWalkingMotorStatus = tr("下运行");
+		strWalkingMotorStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "下运行" : "Down Running";
 		break;
 	}
 	case 4:
 	{
-		strWalkingMotorStatus = tr("故障");
+		strWalkingMotorStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "故障" : "Fault";
 		break;
 	}
 	default:
@@ -2753,29 +2795,29 @@ void MainForm::UpdateMotorRunStatus(const CDeviceHeartBeat& c)
 
 	ui.label_20->setText(strWalkingMotorStatus);
 
-	strWalkingMotorStatus = tr("未知");
+	strWalkingMotorStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "未知" : "Unknown";
 
 	switch (c.m_vectorSafetyMotorStatus[0].m_cDeviceStatus)
 	{
 	case 0:
 	case 3:
 	{
-		strWalkingMotorStatus = tr("停止");
+		strWalkingMotorStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "停止" : "Stopped";
 		break;
 	}
 	case 1:
 	{
-		strWalkingMotorStatus = tr("关闭中");
+		strWalkingMotorStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "关闭中" : "Closing";
 		break;
 	}
 	case 2:
 	{
-		strWalkingMotorStatus = tr("开启中");
+		strWalkingMotorStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "开启中" : "Opening";
 		break;
 	}
 	case 4:
 	{
-		strWalkingMotorStatus = tr("故障");
+		strWalkingMotorStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "故障" : "Fault";
 		break;
 	}
 	default:
@@ -2786,29 +2828,29 @@ void MainForm::UpdateMotorRunStatus(const CDeviceHeartBeat& c)
 
 	ui.label_22->setText(strWalkingMotorStatus);
 
-	strWalkingMotorStatus = tr("未知");
+	strWalkingMotorStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "未知" : "Unknown";
 
 	switch (c.m_vectorSBMotorStatus[0].m_cDeviceStatus)
 	{
 	case 0:
 	case 3:
 	{
-		strWalkingMotorStatus = tr("停止");
+		strWalkingMotorStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "停止" : "Stopped";
 		break;
 	}
 	case 1:
 	{
-		strWalkingMotorStatus = tr("水平打开中");
+		strWalkingMotorStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "水平打开中" : "Horizontal Opening";
 		break;
 	}
 	case 2:
 	{
-		strWalkingMotorStatus = tr("垂直收拢中");
+		strWalkingMotorStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "垂直收拢中" : "Vertical Collapsing";
 		break;
 	}
 	case 4:
 	{
-		strWalkingMotorStatus = tr("故障");
+		strWalkingMotorStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "故障" : "Fault";
 		break;
 	}
 	default:
@@ -2841,7 +2883,10 @@ void MainForm::UpdateMotorRunStatus(const CDeviceHeartBeat& c)
 	{
 		ui.label_31->setText("-");
 	}
-	ui.label_54->setText(c.m_cMainPowerSupply > 0 ? tr("开") : tr("关"));
+	QString strO = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "开" : "On";
+	QString strC = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "关" : "Off";
+
+	ui.label_54->setText(c.m_cMainPowerSupply > 0 ? strO : strC);
 	uint8_t cFmode = c.m_bFactoryMode ? 1 : 0;
 	ui.label_37->setText(QString::number(cFmode));
 }
@@ -2931,12 +2976,13 @@ void MainForm::ReadSavedFiles(int index)
 
 void MainForm::LoadOnlinePicByThread()
 {
-	auto si = m_vector_NeedDownLoadPic.size();
+	auto si = m_vecImageManager.size();
 	for (int i = 0; i < si; ++i)
 	{
-		const auto& downloadUrl = m_vector_NeedDownLoadPic[i];
+		std::string* downloadUrl = getPicPathByIndex(i);
 		qDebug() << "下载图片 pic" << i << " " << downloadUrl;
-		m_mapLoadedMap[i] = HttpClient::DownloadFileToVector(downloadUrl);
+		*getLoadedPicPointerByIndex(i) = HttpClient::DownloadFileToVector(*downloadUrl);
+		emit PicDownloadFinished();
 	}
 }
 
@@ -2952,49 +2998,49 @@ void MainForm::DownloadPic()
 		m_pConfig->m_memTimsConfig.m_nDownloadTimeOut);
 	bool loadSuccess = false;
 	qDebug() << "MainForm::DownloadPic out ";
-	if (t1)
-	{
+	do {
+		if (!t1) break;
 		auto jsonStr = QString::fromStdString(t2);
 		QJsonParseError parseError;
 		auto doc = QJsonDocument::fromJson(jsonStr.toUtf8(), &parseError);
-		// 检查解析是否成功
-		if (parseError.error == QJsonParseError::NoError)
+		if (parseError.error != QJsonParseError::NoError) break;
+		// 2. 提取 JSON 对象（假设根节点是对象）
+		auto rootObj = doc.object();
+		qDebug() << "MainForm::DownloadPic code " << rootObj;
+		auto code = rootObj["code"].toInt();
+		if (code != 200) break;
+
+		auto result = rootObj["data"].toObject();
+		auto guid = result["Guid"].toString();
+		if (guid.toStdString() != m_strWorkGuid) break;
+
+		m_nLoadedMapType = result["ImgType"].toInt();
+		auto imgsArray = result["Imgs"].toArray();
+		auto imgCount = result["ImgCount"].toInt();
+		if (imgCount <= 0) break;
+
+		auto path = WHSD_Tools::GetGuidPath(m_strWorkGuid, "temp");
+		WHSD_Tools::DeleteDirectoryContents(path);
+
+		// 优先尝试加载第一张图片
+		for (int i = 0; i < imgCount; ++i)
 		{
-			// 2. 提取 JSON 对象（假设根节点是对象）
-			auto rootObj = doc.object();
-			qDebug() << "MainForm::DownloadPic code " << rootObj;
-			auto code = rootObj["code"].toInt();
-			if (code == 200)
-			{
-				auto result = rootObj["data"].toObject();
-				auto guid = result["Guid"].toString();
-				if (guid.toStdString() == m_strWorkGuid)
-				{
-					m_nLoadedMapType = result["ImgType"].toInt();
-					auto imgsArray = result["Imgs"].toArray();
-					auto imgCount = result["ImgCount"].toInt();
-					if (imgCount > 0)
-					{
-						auto path = WHSD_Tools::GetGuidPath(m_strWorkGuid, "temp");
-						WHSD_Tools::DeleteDirectoryContents(path);
-						auto downloadUrl = imgsArray.first().toString().toStdString();
-						m_mapLoadedMap[0] = HttpClient::DownloadFileToVector(downloadUrl);
-						for (int i = 1; i < imgCount; ++i)
-						{
-							m_mapLoadedMap[i] = std::vector<uint8_t>(0);
-						}
-						for (const QJsonValue& imgVal : imgsArray)
-						{
-							m_vector_NeedDownLoadPic.emplace_back(imgVal.toString().toStdString());
-						}
-						std::thread td2(&MainForm::LoadOnlinePicByThread, this);
-						td2.detach();
-						loadSuccess = true;
-					}
-				}
-			}
+			ImageManager imgManager;
+			imgManager.strReadedPicPath = imgsArray[i].toString().toStdString();
+			imgManager.nImgIndex = i;
+			imgManager.vecLoadedPic = std::vector<uint8_t>(0);
+			m_vecImageManager.push_back(imgManager);
 		}
-	}
+
+		std::string* downloadUrl = getPicPathByIndex(0);
+		*getLoadedPicPointerByIndex(0) = HttpClient::DownloadFileToVector(*downloadUrl);
+
+		std::thread td2(&MainForm::LoadOnlinePicByThread, this);
+		td2.detach();
+		loadSuccess = true;
+
+	} while (false);
+
 
 	if (loadSuccess)
 	{
@@ -3649,109 +3695,261 @@ void MainForm::doLongTimeWork()
 
 	m_taskWatcher->setFuture(future);
 }
+// 从容器中根据序号读取图片路径
+std::string* MainForm::getPicPathByIndex(int index)
+{
+	if (index >= 0 && index < m_vecImageManager.size()) {
+		return &(m_vecImageManager[index].strReadedPicPath);
+	}
+	return nullptr;
+}
+// 在 MainForm.cpp 中实现这些函数
+ImageManager* MainForm::getImageManagerByIndex(int index)
+{
+	if (index >= 0 && index < m_vecImageManager.size()) {
+		return &m_vecImageManager[index];
+	}
+	return nullptr;
+}
+
+std::vector<uint8_t>* MainForm::getLoadedPicPointerByIndex(int index)
+{
+	if (index >= 0 && index < m_vecImageManager.size()) {
+		return &(m_vecImageManager[index].vecLoadedPic);
+	}
+	return nullptr;
+}
+
+std::vector<uint8_t>* MainForm::getDealedPicPointerByIndex(int index)
+{
+	if (index >= 0 && index < m_vecImageManager.size()) {
+		return &(m_vecImageManager[index].vecDealedPic);
+	}
+	return nullptr;
+}
+
+std::vector<CImageTag>* MainForm::getImgTagPointerByIndex(int index)
+{
+	if (index >= 0 && index < m_vecImageManager.size()) {
+		return &(m_vecImageManager[index].mPImgTag);
+	}
+	return nullptr;
+}
+// 当前的序号与前一张图片需要对换，或后一张图片需要对换
+void MainForm::changeImgIndex(int index, int type)
+{
+	int Targetindex = type == 0 ? index + 1 : index - 1;
+
+	for (int i = 0; i < m_vecImageManager.size(); i++)
+	{
+		if (type == 0)
+		{
+			if (m_vecImageManager[i].nImgIndex == index)
+			{
+				m_vecImageManager[i].nImgIndex = Targetindex;
+			}
+			if (m_vecImageManager[i].nImgIndex == Targetindex)
+			{
+				m_vecImageManager[i].nImgIndex = index;
+			}
+		}
+		else
+		{
+			if (m_vecImageManager[i].nImgIndex == Targetindex)
+			{
+				m_vecImageManager[i].nImgIndex = index;
+			}
+			if (m_vecImageManager[i].nImgIndex == index)
+			{
+				m_vecImageManager[i].nImgIndex = Targetindex;
+			}
+		}
+
+	}
+}
 
 void MainForm::ReadPicFromMem(int index)
 {
 	bool needReadOrgPic = true;
-	if (!m_mapDealedPic.empty())
-	{
-		auto tp = m_mapDealedPic.find(index);
-		if (tp != m_mapDealedPic.end())
-		{
-			if (!tp->second.empty())
-			{
-				auto pngVectorToImage = [](const std::vector<uint8_t>& pngData) -> QImage
-					{
-						// 1. 将 vector 转换为 QByteArray（Qt 的字节容器）
-						QImage outImage;
-						QByteArray dataArray(
-							reinterpret_cast<const char*>(pngData.data()), // 转换为 const char*
-							pngData.size() // 数据长度
-						);
+	//if (!m_mapDealedPic.empty())
+	//{
+	//	auto tp = m_mapDealedPic.find(index);
+	//	if (tp != m_mapDealedPic.end())
+	//	{
+	//		if (!tp->second.empty())
+	//		{
+	//			auto pngVectorToImage = [](const std::vector<uint8_t>& pngData) -> QImage
+	//				{
+	//					// 1. 将 vector 转换为 QByteArray（Qt 的字节容器）
+	//					QImage outImage;
+	//					QByteArray dataArray(
+	//						reinterpret_cast<const char*>(pngData.data()), // 转换为 const char*
+	//						pngData.size() // 数据长度
+	//					);
+	//					// 2. 从字节数组加载 PNG 图像
+	//					bool loaded = outImage.loadFromData(
+	//						reinterpret_cast<const uchar*>(dataArray.constData()), // 转换为 uchar*（QImage 要求）
+	//						dataArray.size() // 数据长度
+	//					);
+	//					if (!loaded)
+	//					{
+	//						//qDebug() << "加载 PNG 失败！数据可能不完整或格式错误。";
+	//						return QImage();
+	//					}
+	//					//qDebug() << "PNG 数据成功转换为 QImage，尺寸：" << outImage.size();
+	//					return outImage;
+	//				};
+	//			m_memMainQImage = pngVectorToImage(tp->second);
+	//			PaintImg();
+	//			ui.label_36->setStyleSheet("color:lightgreen");
+	//			m_nPicIndex = index;
+	//			needReadOrgPic = false;
+	//		}
+	//	}
+	//}
 
-						// 2. 从字节数组加载 PNG 图像
-						bool loaded = outImage.loadFromData(
-							reinterpret_cast<const uchar*>(dataArray.constData()), // 转换为 uchar*（QImage 要求）
-							dataArray.size() // 数据长度
-						);
-
-						if (!loaded)
-						{
-							//qDebug() << "加载 PNG 失败！数据可能不完整或格式错误。";
-							return QImage();
-						}
-
-						//qDebug() << "PNG 数据成功转换为 QImage，尺寸：" << outImage.size();
-						return outImage;
-					};
-				m_memMainQImage = pngVectorToImage(tp->second);
-				PaintImg();
-				ui.label_36->setStyleSheet("color:lightgreen");
-				m_nPicIndex = index;
-				needReadOrgPic = false;
-			}
-		}
-	}
-	if (!m_mapLoadedMap.empty())
-	{
-		//读取原始图片
-		auto tp = m_mapLoadedMap.find(index);
-		if (tp == m_mapLoadedMap.end())
-		{
-			//输入错误，直接显示第一张
-			tp = m_mapLoadedMap.begin();
-			index = 0;
-		}
-		auto dat = tp->second;
-		if (needReadOrgPic)
-		{
-			bool readSuccess = false;
-			if (m_nLoadedMapType == 3)
+	do {
+		if (m_vecImageManager.size() < index) break;
+		std::vector<uint8_t>* dealImg = getDealedPicPointerByIndex(index);
+		if (!dealImg || dealImg->size() == 0) break;
+		auto pngVectorToImage = [](const std::vector<uint8_t>& pngData) -> QImage
 			{
-				m_memSDRaw.LoadSDRaw(&dat);
-				readSuccess = true;
-			}
-			if (m_nLoadedMapType == 0)
-			{
-				//raw文件的读取方式
-				auto si = dat.size();
-				for (const auto& value : m_pConfig->m_memCImageProcessConfig.m_vec_RawFileSize)
+				// 1. 将 vector 转换为 QByteArray（Qt 的字节容器）
+				QImage outImage;
+				QByteArray dataArray(
+					reinterpret_cast<const char*>(pngData.data()), // 转换为 const char*
+					pngData.size() // 数据长度
+				);
+
+				// 2. 从字节数组加载 PNG 图像
+				bool loaded = outImage.loadFromData(
+					reinterpret_cast<const uchar*>(dataArray.constData()), // 转换为 uchar*（QImage 要求）
+					dataArray.size() // 数据长度
+				);
+
+				if (!loaded)
 				{
-					if (value.m_nFileSize == si)
-					{
-						m_memSDRaw.m_wPicHeight = value.m_nRawFileHeight;
-						m_memSDRaw.m_wPicWidth = value.m_nRawFileWidth;
-						m_memSDRaw.SetOriginalRawData(&dat);
-						m_memSDRaw.SetTempRawData(&dat);
-						readSuccess = true;
-						break;
-					}
+					//qDebug() << "加载 PNG 失败！数据可能不完整或格式错误。";
+					return QImage();
+				}
+
+				//qDebug() << "PNG 数据成功转换为 QImage，尺寸：" << outImage.size();
+				return outImage;
+			};
+		m_memMainQImage = pngVectorToImage(*dealImg);
+		PaintImg();
+		ui.label_36->setStyleSheet("color:lightgreen");
+		m_nPicIndex = index;
+		needReadOrgPic = false;
+	} while (false);
+
+	do {
+		if (!needReadOrgPic) break;
+		if (m_vecImageManager.size() < index) break;
+		std::vector<uint8_t>* loadImg = getLoadedPicPointerByIndex(index);
+		if (!loadImg || loadImg->size() == 0) break;
+
+		bool readSuccess = false;
+		if (m_nLoadedMapType == 3)
+		{
+			m_memSDRaw.LoadSDRaw(loadImg);
+			readSuccess = true;
+		}
+		if (m_nLoadedMapType == 0)
+		{
+			//raw文件的读取方式
+			auto si = loadImg->size();
+			for (const auto& value : m_pConfig->m_memCImageProcessConfig.m_vec_RawFileSize)
+			{
+				if (value.m_nFileSize == si)
+				{
+					m_memSDRaw.m_wPicHeight = value.m_nRawFileHeight;
+					m_memSDRaw.m_wPicWidth = value.m_nRawFileWidth;
+					m_memSDRaw.SetOriginalRawData(loadImg);
+					m_memSDRaw.SetTempRawData(loadImg);
+					readSuccess = true;
+					break;
 				}
 			}
-			if (readSuccess)
-			{
-				Callback_ShowImgOnLabel_2();
-			}
-			else
-			{
-				MY_WARNING(tr("文件读取失败!").toStdString());
-			}
-			ui.label_36->setStyleSheet("color:white");
 		}
+		if (readSuccess)
+			Callback_ShowImgOnLabel_2();
+		else
+			MY_WARNING(tr("文件读取失败!").toStdString());
+		ui.label_36->setStyleSheet("color:white");
+
 
 		m_nPicIndex = index;
-		auto si = m_mapLoadedMap.size();
-		if (si <= 0)
-		{
-			ui.label_36->setText("0/0");
-		}
+		int ImgManagerSize = m_vecImageManager.size();
+		if (ImgManagerSize <= 0) ui.label_36->setText("0/0");
 		else
 		{
 			std::stringstream ss;
-			ss << m_nPicIndex + 1 << "/" << si;
+			ss << m_nPicIndex + 1 << "/" << ImgManagerSize;
 			ui.label_36->setText(QString::fromStdString(ss.str()));
 		}
-	}
+	} while (false);
+
+	//if (!m_mapLoadedMap.empty())
+	//{
+	//	//读取原始图片
+	//	auto tp = m_mapLoadedMap.find(index);
+	//	if (tp == m_mapLoadedMap.end())
+	//	{
+	//		//输入错误，直接显示第一张
+	//		tp = m_mapLoadedMap.begin();
+	//		index = 0;
+	//	}
+	//	auto dat = tp->second;
+	//	if (needReadOrgPic)
+	//	{
+	//		bool readSuccess = false;
+	//		if (m_nLoadedMapType == 3)
+	//		{
+	//			m_memSDRaw.LoadSDRaw(&dat);
+	//			readSuccess = true;
+	//		}
+	//		if (m_nLoadedMapType == 0)
+	//		{
+	//			//raw文件的读取方式
+	//			auto si = dat.size();
+	//			for (const auto& value : m_pConfig->m_memCImageProcessConfig.m_vec_RawFileSize)
+	//			{
+	//				if (value.m_nFileSize == si)
+	//				{
+	//					m_memSDRaw.m_wPicHeight = value.m_nRawFileHeight;
+	//					m_memSDRaw.m_wPicWidth = value.m_nRawFileWidth;
+	//					m_memSDRaw.SetOriginalRawData(&dat);
+	//					m_memSDRaw.SetTempRawData(&dat);
+	//					readSuccess = true;
+	//					break;
+	//				}
+	//			}
+	//		}
+	//		if (readSuccess)
+	//		{
+	//			Callback_ShowImgOnLabel_2();
+	//		}
+	//		else
+	//		{
+	//			MY_WARNING(tr("文件读取失败!").toStdString());
+	//		}
+	//		ui.label_36->setStyleSheet("color:white");
+	//	}
+
+	//	m_nPicIndex = index;
+	//	auto si = m_mapLoadedMap.size();
+	//	if (si <= 0)
+	//	{
+	//		ui.label_36->setText("0/0");
+	//	}
+	//	else
+	//	{
+	//		std::stringstream ss;
+	//		ss << m_nPicIndex + 1 << "/" << si;
+	//		ui.label_36->setText(QString::fromStdString(ss.str()));
+	//	}
+	//}
 }
 
 void MainForm::Callback_SampleBoardNewImg(uint8_t* data, int width, int height, int pixLen)
@@ -3842,10 +4040,11 @@ void MainForm::Callback_TcpClientReadData(uint8_t* data, int len, uint64_t nInde
 	{
 		m_strWorkGuid = results[0];
 		m_nWorkMode = std::stoi(results[1]);
-		m_mapLoadedMap.clear();
-		m_vector_NeedDownLoadPic.clear();
-		m_mapDealedPic.clear();
-		m_vector_ImgTag.clear();
+		//m_mapLoadedMap.clear();
+		//m_vector_NeedDownLoadPic.clear();
+		//m_mapDealedPic.clear();
+		//m_vector_ImgTag.clear();
+		m_vecImageManager.clear();
 
 		QString str(tr("河南四达  检测任务ID："));
 		str.append(m_strWorkGuid);
