@@ -39,12 +39,18 @@ int main(int argc, char* argv[])
 
 	QApplication app(argc, argv);
 
-	//QTranslator translator;
-	//// 路径：把qm复制到exe同目录
-	//if (translator.load("en_US_en.qm"))
-	//{
-	//	app.installTranslator(&translator);
-	//}
+	CConfigManager*	m_pConfig = new CConfigManager();
+	m_pConfig->Read(WHSD_Tools::GetAbsolutePath("Config.xml"));
+	QTranslator translator;
+	if (m_pConfig->m_memTimsConfig.nLanguage == 1)
+	{
+		// 路径：把qm复制到exe同目录
+		if (translator.load("en_US_en.qm"))
+		{
+			app.installTranslator(&translator);
+		}
+	}
+	
 
 	MainForm window(guid, model);
 #ifdef __DEBUG__

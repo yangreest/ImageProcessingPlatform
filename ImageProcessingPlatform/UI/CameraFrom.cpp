@@ -9,7 +9,8 @@ CameraFrom::CameraFrom(const CConfigManager* nConfig, QWidget* parent)
 {
 	ui.setupUi(this);
 
-	this->setWindowFlags(this->windowFlags() | Qt::WindowStaysOnTopHint);
+	this->setWindowFlags(this->windowFlags() | Qt::WindowStaysOnTopHint| Qt::FramelessWindowHint);
+
 
 	setWindowTitle(tr("摄像头预览"));
 
@@ -41,6 +42,12 @@ CameraFrom::~CameraFrom()
 	WHSD_Tools::SafeRelease(m_pC1);
 	WHSD_Tools::SafeRelease(m_pC2);
 	WHSD_Tools::SafeRelease(m_pC3);
+}
+
+void CameraFrom::closeEvent(QCloseEvent* event)
+{
+	// 不退出窗口，仅隐藏
+    this->hide();
 }
 
 void CameraFrom::Connect()

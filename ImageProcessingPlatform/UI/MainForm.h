@@ -20,6 +20,7 @@
 #include "Tools/USBKey.h"
 #include "LogDisplayDialog.h"
 #include "TragListDialog.h"
+#include "ConfigDialog.h"
 #include <DeviceCom/TcpClient.h>
 #include <opencv2/opencv.hpp>
 #include <dcmtk/dcmdata/dctk.h>
@@ -186,8 +187,11 @@ private slots:
 	void On_deleteTag_Click();
 	void On_pushButtonAutoAdjust_Click();
 	void On_pushButtonFixedParam_Click();
+	void On_pushButtonRename_Click();
+	void On_pushButtonDelete_Click();
 
 	void On_SaveDealedPic();
+	void On_ConfigForm_Click();
 	void On_LogForm_Click();
 	void On_TragListForm_Click();
 	// 供消息处理函数调用的槽函数，接收日志信息
@@ -281,6 +285,8 @@ private:
 	QPoint CalcImgOffset(QPoint mPoint);
 
 	void AddComboBoxItem(QString itemName);
+
+	QImage rotateImageKeepSize(const QImage& src, qreal angle, const QColor& bgColor = Qt::transparent);
 
 	Ui::MainFormClass ui;
 
@@ -399,6 +405,7 @@ private:
 	int m_nLoadedMapType;
 
 	LogDisplayDialog* m_pLogDisplayDialog;
+	ConfigDialog* m_pConfigDialog;
 	TragListDialog* m_pTragListDialog;
 
 	/// <summary>

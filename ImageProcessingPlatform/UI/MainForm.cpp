@@ -89,6 +89,7 @@ MainForm::~MainForm()
 	WHSD_Tools::SafeRelease(m_pTimer);
 	//SafeReleaseWithEndWork(m_pDeviceCom);
 	WHSD_Tools::SafeReleaseWithEndWork(m_pCTcpClientCom);
+	WHSD_Tools::SafeRelease(m_pCameraFrom);
 }
 
 void MainForm::appendLog(const QString& level, const QString& message, const QString& timestamp, const QString& file, const QString& function, const QString& line)
@@ -173,7 +174,8 @@ void MainForm::ConnectDevice()
 		if (m_pSampleBoardBase->BeginWork())
 		{
 			ui.pushButton_2->setEnabled(false);
-			ui.pushButton_2->setText(tr("已启动"));
+			QString strpb2 = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "已启动" : "STARTED";
+			ui.pushButton_2->setText(strpb2);
 		}
 		else
 		{
@@ -192,7 +194,7 @@ void MainForm::On_timer_timeout()
 	if (m_nShowImgTips >= 0 && m_nShowImgTips < 10)
 	{
 		QPixmap pixmap;
-		if (pixmap.load("1.jpg"))
+		if (pixmap.load(m_pConfig->m_memTimsConfig.nLanguage == 0 ? "1.jpg" : "1_en.jpg"))
 		{
 			ui.label->setPixmap(pixmap.scaled(ui.label->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 		}
@@ -217,7 +219,7 @@ void MainForm::On_timer_timeout()
 		{
 		case DeviceConnectStatus::UnKnown:
 		{
-			info = m_pConfig->m_memTimsConfig.nLanguage == 0 ?  "未知/未连接" : "Unknown/not connected";
+			info = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "未知/未连接" : "Unknown/not connected";
 			break;
 		}
 		case DeviceConnectStatus::Closed:
@@ -310,7 +312,7 @@ void MainForm::On_timer_timeout()
 		}
 		case 2:
 		{
-			strXRayDeviceStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "工作完成": "Work Completed";
+			strXRayDeviceStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "工作完成" : "Work Completed";
 			break;
 		}
 		default:
@@ -331,7 +333,7 @@ void MainForm::On_timer_timeout()
 			}
 			else
 			{
-				strXRayDeviceStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "未连接" :  "Not connected";
+				strXRayDeviceStatus = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "未连接" : "Not connected";
 			}
 		}
 		ui.label_24->setText(strXRayDeviceStatus);
@@ -1073,7 +1075,7 @@ void MainForm::showEvent(QShowEvent* event)
 			auto path = "jjz.png";
 
 #else
-			auto path = WHSD_Tools::GetExeDirectory() + "\\" + "jjz.png";
+			auto path = WHSD_Tools::GetExeDirectory() + "\\" + (m_pConfig->m_memTimsConfig.nLanguage == 0 ? "jjz.png" : "jjz_en.png");
 #endif
 
 			if (pixmap.load(QString::fromStdString(path)))
@@ -1141,9 +1143,9 @@ void MainForm::InitUI(int model)
 	else
 	{
 		QString strTitle = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "河南四达  检测任务ID：" : "Henan Star Detection Task ID:";
-		std::string str("河南四达  检测任务ID：");
+		//std::string str("河南四达  检测任务ID：");
 		strTitle.append(m_strWorkGuid);
-		setWindowTitle(str.c_str());
+		setWindowTitle(strTitle);
 	}
 
 	QIcon appIcon(":/NEW_ICON/NEW_ICOM/1.png");
@@ -1411,10 +1413,13 @@ void MainForm::BindAction()
 	connect(ui.pushButton_57, &QPushButton::clicked, this, &MainForm::On_deleteTag_Click);
 	connect(ui.pushButton_59, &QPushButton::clicked, this, &MainForm::On_SaveDealedPic);
 	connect(ui.pushButton_60, &QPushButton::clicked, this, &MainForm::On_LogForm_Click);
+	connect(ui.pushButton_61, &QPushButton::clicked, this, &MainForm::On_ConfigForm_Click);
 	connect(ui.pushButton_62, &QPushButton::clicked, this, &MainForm::On_TragListForm_Click);
 
 	connect(ui.pushButtonAutoAdjust, &QPushButton::clicked, this, &MainForm::On_pushButtonAutoAdjust_Click);
 	connect(ui.pushButtonFixedParam, &QPushButton::clicked, this, &MainForm::On_pushButtonFixedParam_Click);
+	connect(ui.pushButton_23, &QPushButton::clicked, this, &MainForm::On_pushButtonRename_Click);
+	connect(ui.pushButton_24, &QPushButton::clicked, this, &MainForm::On_pushButtonDelete_Click);
 
 	connect(ui.dial, &QDial::valueChanged, this, &MainForm::On_Dial_ValueChanged);
 
@@ -1433,12 +1438,12 @@ void MainForm::InitParam()
 
 	if (m_pConfig->m_memTimsConfig.nLanguage == 1)
 	{
-		QTranslator translator;
-		qApp->removeTranslator(&translator);
-		translator.load("en_US_en.qm");
-		qApp->installTranslator(&translator);
-		// 刷新界面文字
-		ui.retranslateUi(this);
+		//QTranslator translator;
+		//qApp->removeTranslator(&translator);
+		//translator.load("en_US_en.qm");
+		//qApp->installTranslator(&translator);
+		//// 刷新界面文字
+		//ui.retranslateUi(this);
 	}
 
 	//第一件事儿就是USB加密狗鉴权
@@ -1482,6 +1487,8 @@ void MainForm::InitParam()
 	m_bUpDownMirror = false;
 	//m_bControlPressed = false;
 	m_pLogDisplayDialog = nullptr;
+	m_pCalibInputForm = nullptr;
+	m_pConfigDialog = nullptr;
 	m_pTragListDialog = nullptr;
 	m_nRotate = 0;
 	m_nImgXOffset = 0;
@@ -1498,6 +1505,9 @@ void MainForm::InitParam()
 	m_pSampleBoardBase = nullptr;
 	WHSD_Tools::SafeRelease(m_pLogDisplayDialog);
 	m_pLogDisplayDialog = new LogDisplayDialog();
+
+	WHSD_Tools::SafeRelease(m_pConfigDialog);
+	m_pConfigDialog = new ConfigDialog();
 
 	WHSD_Tools::SafeRelease(m_pTragListDialog);
 	m_pTragListDialog = new TragListDialog();
@@ -1810,14 +1820,14 @@ void MainForm::On_pushButtonAutoAdjust_Click()
 void MainForm::On_pushButtonFixedParam_Click()
 {
 	QMessageBox msgBox;
-	msgBox.setWindowTitle("如何固定参数");
-	msgBox.setText("是否需要将参数固定到当前的选项中？");
+	msgBox.setWindowTitle(tr("如何固定参数"));
+	msgBox.setText(tr("是否需要将参数固定到当前的选项中？"));
 	msgBox.setIcon(QMessageBox::Question);
 
 	// 添加自定义按钮
-	QAbstractButton* btn1 = msgBox.addButton("覆盖", QMessageBox::AcceptRole);
-	QAbstractButton* btn2 = msgBox.addButton("新增", QMessageBox::RejectRole);
-	QAbstractButton* btn3 = msgBox.addButton("取消", QMessageBox::RejectRole);
+	QAbstractButton* btn1 = msgBox.addButton(tr("覆盖"), QMessageBox::AcceptRole);
+	QAbstractButton* btn2 = msgBox.addButton(tr("新增"), QMessageBox::RejectRole);
+	QAbstractButton* btn3 = msgBox.addButton(tr("取消"), QMessageBox::RejectRole);
 
 	msgBox.exec();
 
@@ -1828,9 +1838,9 @@ void MainForm::On_pushButtonFixedParam_Click()
 	else if (msgBox.clickedButton() == btn2) {
 		qDebug() << "点击了新增";
 		QInputDialog dialog(this);
-		dialog.setWindowTitle("请输入参数名称");
+		dialog.setWindowTitle(tr("请输入参数名称"));
 		dialog.setInputMode(QInputDialog::TextInput);
-		dialog.setLabelText("请输入参数名称：");
+		dialog.setLabelText(("请输入参数名称："));
 		if (dialog.exec() == QDialog::Accepted)
 		{
 			QString inputText = dialog.textValue();
@@ -1844,6 +1854,64 @@ void MainForm::On_pushButtonFixedParam_Click()
 	}
 	else if (msgBox.clickedButton() == btn3) {
 		qDebug() << "点击了取消";
+	}
+}
+
+void MainForm::On_pushButtonRename_Click()
+{
+	QInputDialog dialog(this);
+	dialog.setWindowTitle(tr("请输入参数名称"));
+	dialog.setInputMode(QInputDialog::TextInput);
+	// 默认名称
+	dialog.setTextValue(ui.comboBox->currentText());
+	dialog.setLabelText(tr("请输入名称："));
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		QString inputText = dialog.textValue();
+		if (!inputText.isEmpty())
+		{
+			// 处理输入内容
+			qDebug() << "输入的参数名称：" << inputText;
+		}
+		// 替换comboBox当前项的名称
+		ui.comboBox->setItemText(ui.comboBox->currentIndex(), inputText);
+		//修改value<Algorithm>
+		Algorithm a = ui.comboBox->itemData(ui.comboBox->currentIndex()).value<Algorithm>();
+		a.m_strName = inputText;
+		ui.comboBox->setItemData(ui.comboBox->currentIndex(), QVariant::fromValue(a));
+
+		QList<Algorithm> algList;
+		for (int i = 0; i < ui.comboBox->count(); i++)
+		{
+			Algorithm a = ui.comboBox->itemData(i).value<Algorithm>();
+			algList << a;
+		}
+		QString jsonPath = QString("%1\\algorithm.json").arg(WHSD_Tools::GetExeDirectory());
+		saveToFile(algList, jsonPath);
+	}
+}
+
+void MainForm::On_pushButtonDelete_Click()
+{
+	QMessageBox msgBox;
+	msgBox.setWindowTitle(tr("删除参数"));
+	msgBox.setText(tr("是否删除当前项？"));
+	msgBox.setIcon(QMessageBox::Question);
+	QAbstractButton* btn1 = msgBox.addButton(tr("确定"), QMessageBox::AcceptRole);
+	msgBox.addButton(tr("取消"), QMessageBox::RejectRole);
+	int ret = msgBox.exec();
+	if (msgBox.clickedButton() == btn1)
+	{
+		// 删除当前项
+		ui.comboBox->removeItem(ui.comboBox->currentIndex());
+		QList<Algorithm> algList;
+		for (int i = 0; i < ui.comboBox->count(); i++)
+		{
+			Algorithm a = ui.comboBox->itemData(i).value<Algorithm>();
+			algList << a;
+		}
+		QString jsonPath = QString("%1\\algorithm.json").arg(WHSD_Tools::GetExeDirectory());
+		saveToFile(algList, jsonPath);
 	}
 }
 
@@ -1867,7 +1935,7 @@ void MainForm::On_SaveDealedPic()
 		for (const auto& nImgManger : m_vecImageManager)
 		{
 			if (nImgManger.vecDealedPic.empty())
-                continue;
+				continue;
 			std::string fileName = path + "_" + std::to_string(nImgManger.nImgIndex) + ".png";
 			WHSD_Tools::SaveDataToFile((uint8_t*)nImgManger.vecDealedPic.data(), nImgManger.vecDealedPic.size(), fileName.c_str());
 			bHaveDealedPic = true;
@@ -1878,6 +1946,13 @@ void MainForm::On_SaveDealedPic()
 		}
 		// 处理选择的目录路径
 	}
+}
+
+void MainForm::On_ConfigForm_Click()
+{
+	m_pConfigDialog->UpdataConfig(m_pConfig);
+	if (m_pConfigDialog)
+		m_pConfigDialog->show();
 }
 
 void MainForm::On_LogForm_Click()
@@ -1939,8 +2014,10 @@ void MainForm::On_Upgrade_DoubleClick()
 
 void MainForm::On_TurnOnCamera_Click()
 {
-	WHSD_Tools::SafeRelease(m_pCameraFrom);
-	m_pCameraFrom = new CameraFrom(m_pConfig);
+	if (m_pCameraFrom == nullptr)
+	{
+		m_pCameraFrom = new CameraFrom(m_pConfig);
+	}
 	m_pCameraFrom->show();
 }
 
@@ -1948,10 +2025,9 @@ void MainForm::On_TurnOffCamera_Click()
 {
 	if (m_pCameraFrom != nullptr)
 	{
-		m_pCameraFrom->close();
+		m_pCameraFrom->hide();
 	}
-	WHSD_Tools::SafeRelease(m_pCameraFrom);
-	//m_pCameraFrom = nullptr;
+
 }
 
 void MainForm::On_ShowConfigFormClick()
@@ -2123,8 +2199,8 @@ void MainForm::On_UploadAllPic_Click2()
 	bool dealAll = true;
 	for (const auto& ImgMager : m_vecImageManager)
 	{
-	 if(ImgMager.vecDealedPic.size()==0)
-		 dealAll = false;
+		if (ImgMager.vecDealedPic.size() == 0)
+			dealAll = false;
 		break;
 		//auto p = m_mapDealedPic.find(mp.first);
 		//if (p == m_mapDealedPic.end())
@@ -2355,7 +2431,7 @@ void MainForm::On_SavePic_Click()
 void MainForm::On_DeletePic_Click2()
 {
 	//m_mapDealedPic.erase(m_nPicIndex);
-	*getDealedPicPointerByIndex(m_nPicIndex)= std::vector<uint8_t>(0);
+	*getDealedPicPointerByIndex(m_nPicIndex) = std::vector<uint8_t>(0);
 	ReadPicFromMem(m_nPicIndex);
 }
 
@@ -2442,7 +2518,8 @@ QImage MainForm::PaintTag()
 			int n = sqrt(pow(s.m_nEndX - s.m_nStartX, 2) + pow(s.m_nEndY - s.m_nStartY, 2));
 			float f = n * m_fRatio;
 
-			painter2.drawText(20, -20, QString("%1 毫米").arg(f)); // 绘制文字的用法 
+			QString strTxt = m_pConfig->m_memTimsConfig.nLanguage == 0 ? QString("%1 毫米").arg(f) : QString("%1 mm").arg(f);
+			painter2.drawText(20, -20, strTxt); // 绘制文字的用法 
 			painter2.restore();
 			break;
 		}
@@ -2499,7 +2576,8 @@ QImage MainForm::PaintTag()
 				auto jd = calculateAngleABC(s.m_nStartX, s.m_nStartY, s.m_nEndX, s.m_nEndY, s.m_nEndX2, s.m_nEndY2);
 
 				std::stringstream ss;
-				ss << "角度:" << jd << "°";
+				QString as = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "角度:" : "Angle:";
+				ss << as.toStdString() << jd << "°";
 
 				painter2.translate(s.m_nStartX, s.m_nStartY);
 				painter2.rotate(0 - (m_nRotate % 360) /** 90*/); // 平移到绘制起点（旋转中心）
@@ -2575,26 +2653,26 @@ QImage MainForm::PaintTag()
 				double centerLenX = (s.m_nStartX + s.m_nEndX) / 2.0;
 				double centerLenY = (s.m_nStartY + s.m_nEndY) / 2.0;
 
-				std::stringstream ssLen;
-				ssLen << "长:" << len * m_fRatio << "毫米";
-
+				//std::stringstream ssLen;
+				//ssLen << "长:" << len * m_fRatio << "毫米";
+				QString ssL = m_pConfig->m_memTimsConfig.nLanguage == 0 ? QString("长:%1毫米").arg(len * m_fRatio) : QString("Length:%1mm").arg(len * m_fRatio);
 				painter2.save();
 				painter2.translate(centerLenX, centerLenY);
 				painter2.rotate(0 - (m_nRotate % 360));
-				painter2.drawText(5, -20, ssLen.str().c_str());
+				painter2.drawText(5, -20, ssL);
 				painter2.restore();
 
 				// 在第二个线段（高）的中点显示高度
 				double centerHeiX = (dx + s.m_nEndX2) / 2.0;
 				double centerHeiY = (dy + s.m_nEndY2) / 2.0;
 
-				std::stringstream ssHei;
-				ssHei << "高:" << hei * m_fRatio << "毫米";
-
+				//std::stringstream ssHei;
+				//ssHei << "高:" << hei * m_fRatio << "毫米";
+				QString ssHei = m_pConfig->m_memTimsConfig.nLanguage == 0 ? QString("高:%1毫米").arg(hei * m_fRatio) : QString("Height:%1mm").arg(hei * m_fRatio);
 				painter2.save();
 				painter2.translate(centerHeiX, centerHeiY);
 				painter2.rotate(0 - (m_nRotate % 360));
-				painter2.drawText(5, 5, ssHei.str().c_str());
+				painter2.drawText(5, 5, ssHei);
 				painter2.restore();
 			}
 			break;
@@ -2608,6 +2686,43 @@ QImage MainForm::PaintTag()
 	}
 	painter2.end();
 	return q;
+}
+/*
+* @brief 图像绕中心旋转，画布宽高保持不变，超出部分裁剪
+* @param src 原图
+* @param angle 旋转角度，正数顺时针，负数逆时针
+* @param bgColor 空白填充色，默认透明
+* @return 同尺寸旋转后图像
+*/
+QImage MainForm::rotateImageKeepSize(const QImage& src, qreal angle, const QColor& bgColor)
+{
+	if (src.isNull())
+		return QImage();
+
+	int w = src.width();
+	int h = src.height();
+	QPointF center(w / 2.0, h / 2.0);
+
+	// 创建和原图一样大小的画布
+	QImage dst(w, h, src.format());
+	dst.fill(bgColor);
+
+	QPainter painter(&dst);
+	painter.setRenderHint(QPainter::Antialiasing);
+	painter.setRenderHint(QPainter::SmoothPixmapTransform);
+
+	QTransform transform;
+	// 变换步骤：移中心到原点 → 旋转 → 移回中心
+	transform.translate(center.x(), center.y());
+	transform.rotate(angle);
+	transform.translate(-center.x(), -center.y());
+
+	painter.setTransform(transform);
+	// 绘制原图，超出dst区域会自动裁剪
+	painter.drawImage(QPoint(0, 0), src);
+	painter.end();
+
+	return dst;
 }
 
 void MainForm::PaintImg()
@@ -2630,7 +2745,9 @@ void MainForm::PaintImg()
 		if (rt != 0)
 		{
 			// 创建旋转矩阵
-			memMainQImage = memMainQImage.transformed(QTransform().rotate(rt/* * 90*/));
+			//memMainQImage = memMainQImage.transformed(QTransform().rotate(rt/* * 90*/));
+
+			memMainQImage = rotateImageKeepSize(memMainQImage, rt);
 		}
 		//镜像
 		if (m_bLeftRightMirror)
@@ -2862,7 +2979,8 @@ void MainForm::UpdateMotorRunStatus(const CDeviceHeartBeat& c)
 	ui.label_23->setText(strWalkingMotorStatus);
 	if (c.m_cBattery > 100)
 	{
-		ui.label_30->setText(tr("未知"));
+		QString strBattery = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "未知" : "Unknown";
+		ui.label_30->setText(strBattery);
 	}
 	else
 	{
@@ -3060,7 +3178,7 @@ void MainForm::On_OnLineLoadFailed_Slots()
 
 	QPixmap pixmap;
 
-	if (pixmap.load(QString::fromStdString(WHSD_Tools::GetExeDirectory() + "\\" + "jjsb.png")))
+	if (pixmap.load(QString::fromStdString(WHSD_Tools::GetExeDirectory() + "\\" + (m_pConfig->m_memTimsConfig.nLanguage == 0 ? "jjsb.png" : "jjsb_en.png"))))
 	{
 		ui.label->setPixmap(pixmap.scaled(ui.label->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 	}
@@ -3556,6 +3674,7 @@ void MainForm::On_CalibText_Click()
 
 void MainForm::On_Text_Click()
 {
+	return;
 	QString stylePath = QString("%1\\styles\\flatgray.css").arg(WHSD_Tools::GetExeDirectory());
 	QFile file(stylePath); // qrc 路径
 	if (file.open(QFile::ReadOnly))
@@ -4150,6 +4269,10 @@ void MainForm::On_LoadPic_Clicked()
 #endif
 						m_memSDRaw.SetOriginalRawData(&buf);
 						m_memSDRaw.SetTempRawData(&buf);
+						QString strTitle = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "河南四达" : "Henan Star";
+						strTitle.append("  ");
+						strTitle.append(qFilePath);
+						setWindowTitle(strTitle);
 						this->On_Pic_Receive();
 						readSuccess = true;
 						break;

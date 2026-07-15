@@ -88,7 +88,7 @@ CDeviceHeartBeat::CDeviceHeartBeat()
 	m_vectorWindmillMotorStatus.resize(MOTOR_COUNT);
 	m_vectorSafetyMotorStatus.resize(MOTOR_COUNT);
 	m_vectorSBMotorStatus.resize(MOTOR_COUNT);
-	m_cBattery = 0;
+	m_cBattery = 120;
 	m_cHardwareYear = 0;
 	m_cHardwareMonth = 0;
 	m_cHardwareDay = 0;

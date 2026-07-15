@@ -189,7 +189,7 @@
                 <string notr="true">color: rgb(130,215,186);</string>
                </property>
                <property name="text">
-                <string> 设备控制 DEVICE CONTTROL</string>
+                <string> 设备控制 DEVICE CONTROL</string>
                </property>
               </widget>
              </item>
@@ -324,6 +324,9 @@
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -952,7 +955,7 @@ background-color: rgba(255, 255, 255, 0);</string>
 }</string>
                     </property>
                     <property name="placeholderText">
-                     <string>15~200</string>
+                     <string>1~100</string>
                     </property>
                    </widget>
                   </item>
@@ -1719,7 +1722,7 @@ color: rgb(229, 226, 225);</string>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>21</height>
+                  <height>30</height>
                  </size>
                 </property>
                 <property name="styleSheet">
@@ -1728,6 +1731,9 @@ background-color: rgba(255, 255, 255, 0);</string>
                 </property>
                 <property name="text">
                  <string>电机的上下左右由键盘↑↓←→按钮控制</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -1997,7 +2003,7 @@ QPushButton:hover {
             <string notr="true">color: rgb(130,215,186);</string>
            </property>
            <property name="text">
-            <string> 控制面板 CONTTROL PANEL</string>
+            <string> 控制面板 CONTROL PANEL</string>
            </property>
           </widget>
          </item>
@@ -2088,6 +2094,9 @@ background-color: rgba(255, 255, 255, 0);</string>
                 <bold>false</bold>
                </font>
               </property>
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;向左旋转图像&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="styleSheet">
                <string notr="true">
 QPushButton {
@@ -2141,6 +2150,9 @@ QPushButton:hover {
                 <pointsize>9</pointsize>
                 <bold>false</bold>
                </font>
+              </property>
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;读取图像文件&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="layoutDirection">
                <enum>Qt::LayoutDirection::LeftToRight</enum>
@@ -2199,6 +2211,9 @@ QPushButton:hover {
                 <bold>false</bold>
                </font>
               </property>
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;反转图像黑白颜色&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="styleSheet">
                <string notr="true">
 QPushButton {
@@ -2235,6 +2250,9 @@ QPushButton:hover {
             </item>
             <item row="0" column="3">
              <widget class="QPushButton" name="pushButton_57">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;删除标记&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="styleSheet">
                <string notr="true">
 QPushButton {
@@ -2277,6 +2295,9 @@ QPushButton:hover {
                 <bold>false</bold>
                </font>
               </property>
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;导出数据到文件&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="styleSheet">
                <string notr="true">
 QPushButton {
@@ -2318,6 +2339,9 @@ QPushButton:hover {
                 <pointsize>9</pointsize>
                 <bold>false</bold>
                </font>
+              </property>
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;向右旋转图像&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="styleSheet">
                <string notr="true">
@@ -2373,6 +2397,9 @@ QPushButton:hover {
                 <bold>false</bold>
                </font>
               </property>
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;左右翻转&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="styleSheet">
                <string notr="true">
 QPushButton {
@@ -2426,6 +2453,9 @@ QPushButton:hover {
                 <pointsize>9</pointsize>
                 <bold>false</bold>
                </font>
+              </property>
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;上下翻转&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="styleSheet">
                <string notr="true">
@@ -2841,6 +2871,9 @@ background-color: rgba(255, 255, 255, 0);</string>
             </property>
             <item row="0" column="0">
              <widget class="QPushButton" name="pushButton_48">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;绘制直线&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="styleSheet">
                <string notr="true">
 QPushButton {
@@ -2877,6 +2910,9 @@ QPushButton:hover {
             </item>
             <item row="1" column="0">
              <widget class="QPushButton" name="pushButton_51">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;撤销&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="styleSheet">
                <string notr="true">
 QPushButton {
@@ -2913,6 +2949,9 @@ QPushButton:hover {
             </item>
             <item row="1" column="2">
              <widget class="QPushButton" name="pushButton_52">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;距离标定&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="styleSheet">
                <string notr="true">
 QPushButton {
@@ -2949,6 +2988,9 @@ QPushButton:hover {
             </item>
             <item row="1" column="1">
              <widget class="QPushButton" name="pushButton_26">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;恢复&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="styleSheet">
                <string notr="true">
 QPushButton {
@@ -2985,6 +3027,9 @@ QPushButton:hover {
             </item>
             <item row="1" column="3">
              <widget class="QPushButton" name="pushButton_50">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;输入文字&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="styleSheet">
                <string notr="true">
 QPushButton {
@@ -3021,6 +3066,9 @@ QPushButton:hover {
             </item>
             <item row="2" column="2">
              <widget class="QPushButton" name="pushButton_8">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;取消截图&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="styleSheet">
                <string notr="true">
 QPushButton {
@@ -3057,6 +3105,9 @@ QPushButton:hover {
             </item>
             <item row="0" column="2">
              <widget class="QPushButton" name="pushButton_49">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;绘制圆&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="styleSheet">
                <string notr="true">
 QPushButton {
@@ -3093,6 +3144,9 @@ QPushButton:hover {
             </item>
             <item row="2" column="1">
              <widget class="QPushButton" name="pushButton_55">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;截图&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="styleSheet">
                <string notr="true">
 QPushButton {
@@ -3129,6 +3183,9 @@ QPushButton:hover {
             </item>
             <item row="0" column="1">
              <widget class="QPushButton" name="pushButton_34">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;绘制矩形&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="styleSheet">
                <string notr="true">
 QPushButton {
@@ -3165,6 +3222,9 @@ QPushButton:hover {
             </item>
             <item row="2" column="0">
              <widget class="QPushButton" name="pushButton_54">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;弯曲度&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="styleSheet">
                <string notr="true">
 QPushButton {
@@ -3201,6 +3261,9 @@ QPushButton:hover {
             </item>
             <item row="2" column="3">
              <widget class="QPushButton" name="pushButton_53">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="styleSheet">
                <string notr="true">
 QPushButton {
@@ -3237,6 +3300,9 @@ QPushButton:hover {
             </item>
             <item row="0" column="3">
              <widget class="QPushButton" name="pushButton_47">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;绘制角度&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="styleSheet">
                <string notr="true">
 QPushButton {
@@ -3893,6 +3959,9 @@ color: rgb(229, 226, 225);</string>
                <property name="leftMargin">
                 <number>0</number>
                </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
                <item>
                 <widget class="QPushButton" name="pushButtonAutoAdjust">
                  <property name="sizePolicy">
@@ -3948,6 +4017,57 @@ background-color: #9EF3D6; /* surface-bright */
                   <string>固定参数</string>
                  </property>
                 </widget>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_36">
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_23">
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton{
+    background-color: #82d7ba; /* surface-container-highest */
+    color: #00382B; /* on-surface */
+    padding: 8px; /* py-2 equivalent (2 * 4px) */
+    border-radius: 2px; /* rounded equivalent */
+    font-weight: bold;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+QPushButton:hover{
+background-color: #9EF3D6; /* surface-bright */
+}</string>
+                   </property>
+                   <property name="text">
+                    <string>重命名</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_24">
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton{
+    background-color: #82d7ba; /* surface-container-highest */
+    color: #00382B; /* on-surface */
+    padding: 8px; /* py-2 equivalent (2 * 4px) */
+    border-radius: 2px; /* rounded equivalent */
+    font-weight: bold;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+QPushButton:hover{
+background-color: #9EF3D6; /* surface-bright */
+}</string>
+                   </property>
+                   <property name="text">
+                    <string>删除</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </item>
@@ -4594,7 +4714,7 @@ QPushButton:hover {
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>

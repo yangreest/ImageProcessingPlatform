@@ -92,6 +92,39 @@
     </message>
 </context>
 <context>
+    <name>ConfigClass</name>
+    <message>
+        <location filename="UI/ConfigDialog.ui" line="14"/>
+        <source>ConfigItem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="UI/ConfigDialog.ui" line="42"/>
+        <source>中文</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="UI/ConfigDialog.ui" line="49"/>
+        <source>English</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="UI/ConfigDialog.ui" line="78"/>
+        <source>保存</source>
+        <translation>Save</translation>
+    </message>
+    <message>
+        <location filename="UI/ConfigDialog.ui" line="85"/>
+        <source>应用</source>
+        <translation type="unfinished">Apply</translation>
+    </message>
+    <message>
+        <location filename="UI/ConfigDialog.ui" line="92"/>
+        <source>取消</source>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+</context>
+<context>
     <name>ControlBoardConfigForm</name>
     <message>
         <location filename="UI/ControlBoardConfigForm.cpp" line="12"/>
@@ -340,405 +373,416 @@
         <translation>Input error!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="176"/>
         <source>已启动</source>
-        <translation>Started</translation>
+        <translation type="vanished">STARTED</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="180"/>
-        <location filename="UI/MainForm.cpp" line="185"/>
-        <location filename="UI/MainForm.cpp" line="4155"/>
-        <location filename="UI/MainForm.cpp" line="4176"/>
+        <location filename="UI/MainForm.cpp" line="181"/>
+        <location filename="UI/MainForm.cpp" line="186"/>
+        <location filename="UI/MainForm.cpp" line="4238"/>
+        <location filename="UI/MainForm.cpp" line="4259"/>
         <source>错误</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="180"/>
+        <location filename="UI/MainForm.cpp" line="181"/>
         <source>启动失败！</source>
         <translation>Startup failed!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="185"/>
+        <location filename="UI/MainForm.cpp" line="186"/>
         <source>初始化失败！</source>
         <translation>Initialization failed!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="220"/>
         <source>未知/未连接</source>
-        <translation>Unknown/not connected</translation>
+        <translation type="vanished">Unknown/not connected</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="225"/>
         <source>连接断开</source>
-        <translation>Disconnected</translation>
+        <translation type="vanished">Disconnected</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="230"/>
         <source>连接中</source>
-        <translation>Connecting</translation>
+        <translation type="vanished">Connecting</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="235"/>
-        <location filename="UI/MainForm.cpp" line="287"/>
         <source>已连接</source>
-        <translation>Connected</translation>
+        <translation type="vanished">Connected</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="245"/>
-        <location filename="UI/MainForm.cpp" line="265"/>
-        <location filename="UI/MainForm.cpp" line="2729"/>
-        <location filename="UI/MainForm.cpp" line="2761"/>
-        <location filename="UI/MainForm.cpp" line="2794"/>
-        <location filename="UI/MainForm.cpp" line="2827"/>
-        <location filename="UI/MainForm.cpp" line="2861"/>
         <source>未知</source>
-        <translation>Unknown</translation>
+        <translation type="vanished">Unknown</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="250"/>
         <source>已唤醒</source>
-        <translation>Awakened</translation>
+        <translation type="vanished">Awakened</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="255"/>
         <source>忙</source>
-        <translation>Busy</translation>
+        <translation type="vanished">Busy</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="260"/>
         <source>就绪</source>
-        <translation>Ready</translation>
+        <translation type="vanished">Ready</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="283"/>
-        <location filename="UI/MainForm.cpp" line="327"/>
         <source>已连接_心跳异常</source>
-        <translation>Connected _ Abnormal heartbeat</translation>
+        <translation type="vanished">Connected _ Abnormal heartbeat</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="292"/>
-        <location filename="UI/MainForm.cpp" line="332"/>
         <source>未连接</source>
-        <translation>Not connected</translation>
+        <translation type="vanished">Not connected</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="301"/>
         <source>空闲</source>
-        <translation>Free</translation>
+        <translation type="vanished">Free</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="306"/>
         <source>延时开启中</source>
-        <translation>Delayed activation in progress</translation>
+        <translation type="vanished">Delayed activation in progress</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="311"/>
         <source>工作完成</source>
-        <translation>Work completed</translation>
+        <translation type="vanished">Work completed</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="901"/>
+        <location filename="UI/MainForm.cpp" line="904"/>
         <source>输入</source>
         <translation>Input</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="902"/>
+        <location filename="UI/MainForm.cpp" line="905"/>
         <source>请输入内容:</source>
         <translation>Please enter the following content:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="1448"/>
+        <location filename="UI/MainForm.cpp" line="1456"/>
         <source>USB加密狗验证失败！</source>
         <translation>USB dongle verification failed!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="1641"/>
+        <location filename="UI/MainForm.cpp" line="1654"/>
         <source>身份验证</source>
         <translation>Identity verification</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="1642"/>
+        <location filename="UI/MainForm.cpp" line="1655"/>
         <source>请输入密码:</source>
         <translation>Please input a password:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="1656"/>
+        <location filename="UI/MainForm.cpp" line="1669"/>
         <source>密码错误</source>
         <translation>Incorrect password</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="1850"/>
+        <location filename="UI/MainForm.cpp" line="1822"/>
+        <source>如何固定参数</source>
+        <translation>How to fixed the parameter</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.cpp" line="1823"/>
+        <source>是否需要将参数固定到当前的选项中？</source>
+        <translation type="unfinished">Need to fix the parameters to the current options?</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.cpp" line="1827"/>
+        <source>覆盖</source>
+        <translation type="unfinished">Cover</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.cpp" line="1828"/>
+        <source>新增</source>
+        <translation type="unfinished">New</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.cpp" line="1829"/>
+        <location filename="UI/MainForm.cpp" line="1898"/>
+        <source>取消</source>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.cpp" line="1840"/>
+        <location filename="UI/MainForm.cpp" line="1862"/>
+        <source>请输入参数名称</source>
+        <translation type="unfinished">Please enter the parameter name</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.cpp" line="1864"/>
+        <source>请输入名称：</source>
+        <translation type="unfinished">Please enter the name:</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.cpp" line="1894"/>
+        <source>删除参数</source>
+        <translation type="unfinished">Delete parameter</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.cpp" line="1895"/>
+        <source>是否删除当前项？</source>
+        <translation type="unfinished">Do you want to delete the current item?</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.cpp" line="1897"/>
+        <source>确定</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.cpp" line="1919"/>
         <source>选择目录</source>
         <translation>Select Directory</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="1873"/>
-        <location filename="UI/MainForm.cpp" line="2084"/>
-        <location filename="UI/MainForm.cpp" line="2348"/>
-        <location filename="UI/MainForm.cpp" line="3217"/>
-        <location filename="UI/MainForm.cpp" line="3247"/>
-        <location filename="UI/MainForm.cpp" line="3286"/>
-        <location filename="UI/MainForm.cpp" line="3331"/>
-        <location filename="UI/MainForm.cpp" line="3382"/>
+        <location filename="UI/MainForm.cpp" line="1942"/>
+        <location filename="UI/MainForm.cpp" line="2160"/>
+        <location filename="UI/MainForm.cpp" line="2424"/>
+        <location filename="UI/MainForm.cpp" line="3299"/>
+        <location filename="UI/MainForm.cpp" line="3329"/>
+        <location filename="UI/MainForm.cpp" line="3368"/>
+        <location filename="UI/MainForm.cpp" line="3413"/>
+        <location filename="UI/MainForm.cpp" line="3464"/>
         <source>保存成功</source>
         <translation>Saved successfully</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="1926"/>
+        <location filename="UI/MainForm.cpp" line="2002"/>
         <source>文件读取失败，请放置在英文路径并且程序有权限读取</source>
         <translation>File read failed, please place it in the English path and the program has permission to read it</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="1931"/>
+        <location filename="UI/MainForm.cpp" line="2007"/>
         <source>未选择文件</source>
         <translation>No file selected</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2074"/>
+        <location filename="UI/MainForm.cpp" line="2150"/>
         <source>未获取到工作GUID，请在网页端唤起本程序!</source>
         <translation>Unable to obtain work UID, please call up this program on the web page!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2079"/>
+        <location filename="UI/MainForm.cpp" line="2155"/>
         <source>未读取到图片</source>
         <translation>Image not read</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2088"/>
-        <location filename="UI/MainForm.cpp" line="3251"/>
+        <location filename="UI/MainForm.cpp" line="2164"/>
+        <location filename="UI/MainForm.cpp" line="3333"/>
         <source>保存失败</source>
         <translation>Save failed</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2100"/>
+        <location filename="UI/MainForm.cpp" line="2176"/>
         <source>删除成功</source>
         <translation>Deleted successfully</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2104"/>
+        <location filename="UI/MainForm.cpp" line="2180"/>
         <source>删除失败</source>
         <translation>Deletion failed</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2139"/>
+        <location filename="UI/MainForm.cpp" line="2215"/>
         <source>请处理完所有图片</source>
         <translation>Please process all the images</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2165"/>
-        <location filename="UI/MainForm.cpp" line="2217"/>
-        <location filename="UI/MainForm.cpp" line="2246"/>
-        <location filename="UI/MainForm.cpp" line="2298"/>
+        <location filename="UI/MainForm.cpp" line="2241"/>
+        <location filename="UI/MainForm.cpp" line="2293"/>
+        <location filename="UI/MainForm.cpp" line="2322"/>
+        <location filename="UI/MainForm.cpp" line="2374"/>
         <source>操作失败</source>
         <translation>Operation failed</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2213"/>
-        <location filename="UI/MainForm.cpp" line="2294"/>
+        <location filename="UI/MainForm.cpp" line="2289"/>
+        <location filename="UI/MainForm.cpp" line="2370"/>
         <source>操作成功</source>
         <translation>Operation successful</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2736"/>
-        <location filename="UI/MainForm.cpp" line="2768"/>
-        <location filename="UI/MainForm.cpp" line="2801"/>
-        <location filename="UI/MainForm.cpp" line="2834"/>
         <source>停止</source>
-        <translation>Stop</translation>
+        <translation type="vanished">Stop</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2741"/>
         <source>右运行</source>
-        <translation>Run right</translation>
+        <translation type="vanished">Run right</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2746"/>
         <source>左运行</source>
-        <translation>Run Left</translation>
+        <translation type="vanished">Run Left</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2751"/>
-        <location filename="UI/MainForm.cpp" line="2783"/>
-        <location filename="UI/MainForm.cpp" line="2816"/>
-        <location filename="UI/MainForm.cpp" line="2849"/>
         <source>故障</source>
-        <translation>Fault</translation>
+        <translation type="vanished">Fault</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2773"/>
         <source>上运行</source>
-        <translation>Run up</translation>
+        <translation type="vanished">Run up</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2778"/>
         <source>下运行</source>
-        <translation>Run down</translation>
+        <translation type="vanished">Run down</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2806"/>
         <source>关闭中</source>
-        <translation>Closing</translation>
+        <translation type="vanished">Closing</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2811"/>
         <source>开启中</source>
-        <translation>Openning</translation>
+        <translation type="vanished">Openning</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2839"/>
         <source>水平打开中</source>
-        <translation>Horizontally opening</translation>
+        <translation type="vanished">Horizontally opening</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2844"/>
         <source>垂直收拢中</source>
-        <translation>Vertical folding</translation>
+        <translation type="vanished">Vertical folding</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2882"/>
         <source>开</source>
-        <translation>Open</translation>
+        <translation type="vanished">Open</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2882"/>
         <source>关</source>
-        <translation>Close</translation>
+        <translation type="vanished">Close</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2899"/>
+        <location filename="UI/MainForm.cpp" line="2981"/>
         <source>开始升级固件</source>
         <translation>Start upgrading the firmware</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2911"/>
+        <location filename="UI/MainForm.cpp" line="2993"/>
         <source>升级完成</source>
         <translation>Upgrade completed</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="2916"/>
+        <location filename="UI/MainForm.cpp" line="2998"/>
         <source>升级失败</source>
         <translation>Upgrade failed</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3051"/>
+        <location filename="UI/MainForm.cpp" line="3133"/>
         <source>加载失败！</source>
         <translation>Loading failed!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3184"/>
+        <location filename="UI/MainForm.cpp" line="3266"/>
         <source>处理后的图像(PNG) (*.png);;原始图像(RAW) (*.raw);;医学影像(DCM) (*.dcm);;原始图像(TIF) (*.tif)</source>
         <translation>Processed image(PNG) (*.png);;Original image(RAW) (*.raw);;Medical imaging(DCM) (*.dcm);;Original image(TIF) (*.tif)</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3189"/>
+        <location filename="UI/MainForm.cpp" line="3271"/>
         <source>保存图像文件</source>
         <translation>Save image file</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3201"/>
+        <location filename="UI/MainForm.cpp" line="3283"/>
         <source>未选择文件路径！</source>
         <translation>File path not selected!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3206"/>
+        <location filename="UI/MainForm.cpp" line="3288"/>
         <source>原始图像(RAW) (*.raw)</source>
         <translation>Original image(RAW) (*.raw)</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3210"/>
-        <location filename="UI/MainForm.cpp" line="3241"/>
-        <location filename="UI/MainForm.cpp" line="3312"/>
-        <location filename="UI/MainForm.cpp" line="3364"/>
+        <location filename="UI/MainForm.cpp" line="3292"/>
+        <location filename="UI/MainForm.cpp" line="3323"/>
+        <location filename="UI/MainForm.cpp" line="3394"/>
+        <location filename="UI/MainForm.cpp" line="3446"/>
         <source>无图片！</source>
         <translation>No pictures!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3221"/>
+        <location filename="UI/MainForm.cpp" line="3303"/>
         <source>医学影像(DCM) (*.dcm)</source>
         <translation>医学影像(DCM) (*.dcm)</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3254"/>
+        <location filename="UI/MainForm.cpp" line="3336"/>
         <source>处理后的图像(PNG) (*.png)</source>
         <translation>Processed image(PNG) (*.png)</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3280"/>
+        <location filename="UI/MainForm.cpp" line="3362"/>
         <source>处理后的图像无效！</source>
         <translation>The processed image is invalid!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3290"/>
+        <location filename="UI/MainForm.cpp" line="3372"/>
         <source>原始图像(TIF) (*.tif)</source>
         <translation>Original image(TIF) (*.tif)</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3318"/>
-        <location filename="UI/MainForm.cpp" line="3370"/>
+        <location filename="UI/MainForm.cpp" line="3400"/>
+        <location filename="UI/MainForm.cpp" line="3452"/>
         <source>保存文件</source>
         <translation>Save file</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3322"/>
+        <location filename="UI/MainForm.cpp" line="3404"/>
         <source>raw Files (*.raw);</source>
         <translation>Original image(RAW) (*.raw)</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3335"/>
-        <location filename="UI/MainForm.cpp" line="3387"/>
+        <location filename="UI/MainForm.cpp" line="3417"/>
+        <location filename="UI/MainForm.cpp" line="3469"/>
         <source>保存失败！</source>
         <translation>Save failed!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3374"/>
+        <location filename="UI/MainForm.cpp" line="3456"/>
         <source>png Files (*.png);</source>
         <translation>png Files (*.png);</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3522"/>
-        <location filename="UI/MainForm.cpp" line="3541"/>
+        <location filename="UI/MainForm.cpp" line="3604"/>
+        <location filename="UI/MainForm.cpp" line="3623"/>
         <source>请先选择标定线段</source>
         <translation>Please select the calibration line segment first</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="3871"/>
+        <location filename="UI/MainForm.cpp" line="3954"/>
         <source>文件读取失败!</source>
         <translation>File reading failed!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="4042"/>
+        <location filename="UI/MainForm.cpp" line="4125"/>
         <source>河南四达  检测任务ID：</source>
         <translation>HeNanStar  Testing Task ID:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="4081"/>
+        <location filename="UI/MainForm.cpp" line="4164"/>
         <source>原始Raw和四达Sdraw (*.raw *.sdraw)</source>
         <translation>Raw and Sdraw (*.raw *.sdraw)</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="1911"/>
-        <location filename="UI/MainForm.cpp" line="4092"/>
+        <location filename="UI/MainForm.cpp" line="1987"/>
+        <location filename="UI/MainForm.cpp" line="4175"/>
         <source>选择文件</source>
         <translation>Select Files</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="4155"/>
+        <location filename="UI/MainForm.cpp" line="4238"/>
         <source>raw读取失败！</source>
         <translation>Raw reading failed!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="4176"/>
+        <location filename="UI/MainForm.cpp" line="4259"/>
         <source>sdraw读取失败！</source>
         <translation>sdraw reading failed!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="4181"/>
+        <location filename="UI/MainForm.cpp" line="4264"/>
         <source>程序错误！</source>
         <translation>Error!</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.cpp" line="4240"/>
-        <location filename="UI/MainForm.cpp" line="4257"/>
+        <location filename="UI/MainForm.cpp" line="4323"/>
+        <location filename="UI/MainForm.cpp" line="4340"/>
         <source>请输入大于15的整数</source>
         <translation>Please enter an integer greater than 15</translation>
     </message>
@@ -751,483 +795,596 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="188"/>
         <source> 设备控制 DEVICE CONTTROL</source>
-        <translation> DEVICE CONTTROL</translation>
+        <translation type="vanished"> DEVICE CONTROL</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="226"/>
+        <location filename="UI/MainForm.ui" line="192"/>
+        <source> 设备控制 DEVICE CONTROL</source>
+        <translation> DEVICE CONTROL</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="230"/>
         <source>状态：</source>
         <translation>Status:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="244"/>
+        <location filename="UI/MainForm.ui" line="248"/>
         <source>WIFI信号强度</source>
         <translation>WIFI signal strength</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="262"/>
+        <location filename="UI/MainForm.ui" line="266"/>
         <source>硬件温度：</source>
         <translation>Hardware temperature:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="280"/>
-        <location filename="UI/MainForm.ui" line="675"/>
+        <location filename="UI/MainForm.ui" line="284"/>
+        <location filename="UI/MainForm.ui" line="682"/>
         <source>电池百分比：</source>
         <translation>Battery percentage:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="340"/>
-        <location filename="UI/MainForm.ui" line="704"/>
-        <location filename="UI/MainForm.ui" line="903"/>
-        <location filename="UI/MainForm.ui" line="1172"/>
+        <location filename="UI/MainForm.ui" line="347"/>
+        <location filename="UI/MainForm.ui" line="711"/>
+        <location filename="UI/MainForm.ui" line="910"/>
+        <location filename="UI/MainForm.ui" line="1179"/>
         <source>0</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="403"/>
+        <location filename="UI/MainForm.ui" line="410"/>
         <source>当次取图计数：</source>
         <translation>Counting of current image acquisition:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="451"/>
+        <location filename="UI/MainForm.ui" line="458"/>
         <source>采样板</source>
         <translation>sampling board</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="481"/>
+        <location filename="UI/MainForm.ui" line="488"/>
         <source>手动拍照</source>
         <translation>Manual photography</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="519"/>
-        <location filename="UI/MainForm.ui" line="1110"/>
+        <location filename="UI/MainForm.ui" line="526"/>
+        <location filename="UI/MainForm.ui" line="1117"/>
         <source>启动</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="572"/>
+        <location filename="UI/MainForm.ui" line="579"/>
         <source>参数设置</source>
         <translation>Parameter Settings</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="585"/>
+        <location filename="UI/MainForm.ui" line="592"/>
         <source>心跳计数：</source>
         <translation>Heartbeat count:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="614"/>
+        <location filename="UI/MainForm.ui" line="621"/>
         <source>连接状态：</source>
         <translation>Connection status:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="639"/>
+        <location filename="UI/MainForm.ui" line="646"/>
         <source>固件升级</source>
         <translation>Firmware update</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="659"/>
+        <location filename="UI/MainForm.ui" line="666"/>
         <source>稳定</source>
         <translation>stable</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="720"/>
+        <location filename="UI/MainForm.ui" line="727"/>
         <source>固件版本号：</source>
         <translation>Firmware version number:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="768"/>
+        <location filename="UI/MainForm.ui" line="775"/>
         <source>控制板</source>
-        <translation>control panel</translation>
+        <translation type="unfinished">control board</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="845"/>
+        <location filename="UI/MainForm.ui" line="852"/>
         <source>射线机控制</source>
         <translation>X-ray machine control</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="867"/>
+        <location filename="UI/MainForm.ui" line="874"/>
         <source>射线机状态：</source>
         <translation>Radiation machine status:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="920"/>
+        <location filename="UI/MainForm.ui" line="927"/>
         <source>延迟时间：</source>
         <translation>Delay time:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="933"/>
+        <location filename="UI/MainForm.ui" line="940"/>
         <source>脉冲数：</source>
         <translation>Pulse count:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="951"/>
-        <location filename="UI/MainForm.ui" line="996"/>
+        <location filename="UI/MainForm.ui" line="1003"/>
         <source>15~200</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="979"/>
-        <location filename="UI/MainForm.ui" line="1024"/>
+        <location filename="UI/MainForm.ui" line="986"/>
+        <location filename="UI/MainForm.ui" line="1031"/>
         <source>确定</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1042"/>
+        <location filename="UI/MainForm.ui" line="958"/>
+        <source>1~100</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="1049"/>
         <source>电平开启</source>
         <translation>Level activation</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1047"/>
+        <location filename="UI/MainForm.ui" line="1054"/>
         <source>协议开启</source>
         <translation>Protocol activation</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1060"/>
+        <location filename="UI/MainForm.ui" line="1067"/>
         <source>高电平开启</source>
         <translation>High level activation</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1065"/>
+        <location filename="UI/MainForm.ui" line="1072"/>
         <source>低电平开启</source>
         <translation>Low level activation</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1078"/>
+        <location filename="UI/MainForm.ui" line="1085"/>
         <source>倒计时开启</source>
         <translation>Countdown activated</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1083"/>
+        <location filename="UI/MainForm.ui" line="1090"/>
         <source>直接开启</source>
         <translation>Open directly</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1132"/>
+        <location filename="UI/MainForm.ui" line="1139"/>
         <source>停止</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1154"/>
+        <location filename="UI/MainForm.ui" line="1161"/>
         <source>启动指令成功计数：</source>
         <translation>Start command successful count:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1249"/>
+        <location filename="UI/MainForm.ui" line="1256"/>
         <source>电机控制</source>
         <translation>motor control</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1275"/>
+        <location filename="UI/MainForm.ui" line="1282"/>
         <source>总电源开</source>
         <translation>Main power on</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1297"/>
+        <location filename="UI/MainForm.ui" line="1304"/>
         <source>总电源关</source>
         <translation>Main power off</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1323"/>
+        <location filename="UI/MainForm.ui" line="1330"/>
         <source>工厂模式开</source>
         <translation>Factory mode on</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1345"/>
+        <location filename="UI/MainForm.ui" line="1352"/>
         <source>工厂模式关</source>
         <translation>Factory mode off</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1397"/>
+        <location filename="UI/MainForm.ui" line="1404"/>
         <source>安全电机：</source>
         <translation>Safety motor:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1481"/>
+        <location filename="UI/MainForm.ui" line="1488"/>
         <source>行走电机：</source>
         <translation>Walking motor:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1511"/>
+        <location filename="UI/MainForm.ui" line="1518"/>
         <source>卷扬电机：</source>
         <translation>Windmill motor:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1559"/>
+        <location filename="UI/MainForm.ui" line="1566"/>
         <source>采样板电机：</source>
         <translation>Sampling board motor:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1577"/>
+        <location filename="UI/MainForm.ui" line="1584"/>
         <source>总电源：</source>
         <translation>Main power supply:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1595"/>
+        <location filename="UI/MainForm.ui" line="1602"/>
         <source>工程模式：</source>
         <translation>Engineering mode:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1639"/>
+        <location filename="UI/MainForm.ui" line="1646"/>
         <source>安全电机开</source>
         <translation>Safety motor on</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1661"/>
+        <location filename="UI/MainForm.ui" line="1668"/>
         <source>安全电机关</source>
         <translation>Safety motor off</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1678"/>
+        <location filename="UI/MainForm.ui" line="1685"/>
         <source>电机速度：</source>
         <translation>Motor speed:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1690"/>
+        <location filename="UI/MainForm.ui" line="1697"/>
         <source>低</source>
         <translation>low</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1695"/>
+        <location filename="UI/MainForm.ui" line="1702"/>
         <source>中</source>
         <translation>middle</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1700"/>
+        <location filename="UI/MainForm.ui" line="1707"/>
         <source>高</source>
         <translation>high</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1726"/>
+        <location filename="UI/MainForm.ui" line="1733"/>
         <source>电机的上下左右由键盘↑↓←→按钮控制</source>
         <translation>The up, down, left, and right of the motor are controlled by the keyboard ↑↓← → buttons</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1741"/>
+        <location filename="UI/MainForm.ui" line="1751"/>
         <source>成像板姿态：</source>
         <translation>Imaging board posture:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1763"/>
+        <location filename="UI/MainForm.ui" line="1773"/>
         <source>水平</source>
         <translation>horizontal</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1785"/>
+        <location filename="UI/MainForm.ui" line="1795"/>
         <source>垂直</source>
         <translation>vertical</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1811"/>
+        <location filename="UI/MainForm.ui" line="1821"/>
         <source>摄像头开</source>
         <translation>Camera on</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1833"/>
+        <location filename="UI/MainForm.ui" line="1843"/>
         <source>摄像头关</source>
         <translation>Camera off</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1904"/>
+        <location filename="UI/MainForm.ui" line="1914"/>
         <source>(xxx,xxx)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1920"/>
+        <location filename="UI/MainForm.ui" line="1930"/>
         <source>图像快捷操作：鼠标拖放移动，鼠标滚轮放大缩小，鼠标左键双击旋转90°，鼠标右键双击还原</source>
         <translation>Quick image operations: drag and drop with mouse, zoom in and out with mouse wheel, double-click with left mouse button to rotate 90 °, double-click with right mouse button to restore</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="1996"/>
-        <source> 控制面板 CONTTROL PANEL</source>
-        <translation> CONTTROL PANEL</translation>
+        <location filename="UI/MainForm.ui" line="2006"/>
+        <source> 控制面板 CONTROL PANEL</source>
+        <translation> CONTROL PANEL</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="2071"/>
+        <source> 控制面板 CONTTROL PANEL</source>
+        <translation type="vanished"> CONTROL PANEL</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="2081"/>
         <source>操作</source>
         <translation>operation</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="2107"/>
-        <source>左旋</source>
-        <translation>Left rotation</translation>
+        <location filename="UI/MainForm.ui" line="2098"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;向左旋转图像&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;Rotate the image to the left&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="2164"/>
+        <location filename="UI/MainForm.ui" line="2120"/>
+        <source>左旋</source>
+        <translation type="unfinished">L</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="2155"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;读取图像文件&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;Read image file&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="2180"/>
         <source>读取</source>
         <translation>read</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="2218"/>
+        <location filename="UI/MainForm.ui" line="2215"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;反转图像黑白颜色&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;Invert the black and white colors of the image&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="2237"/>
         <source>反转</source>
-        <translation>reverse</translation>
+        <translation type="unfinished">Re</translation>
     </message>
     <message>
         <location filename="UI/MainForm.ui" line="2254"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;删除标记&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;Delete tag&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="2276"/>
+        <location filename="UI/MainForm.ui" line="4066"/>
         <source>删除</source>
-        <translation>Delete</translation>
+        <translation type="unfinished">DEL</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="2296"/>
+        <location filename="UI/MainForm.ui" line="2299"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;导出数据到文件&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;Export data to a file&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="2321"/>
         <source>导出</source>
-        <translation>export</translation>
+        <translation type="unfinished">EXP</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="2338"/>
+        <location filename="UI/MainForm.ui" line="2344"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;向右旋转图像&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;Rotate the image to the right&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="2366"/>
         <source>右旋</source>
-        <translation>Right rotation</translation>
+        <translation type="unfinished">R</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="2392"/>
+        <location filename="UI/MainForm.ui" line="2401"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;左右翻转&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;flip horizontally&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="2423"/>
         <source>左右</source>
-        <translation>left and right</translation>
+        <translation type="unfinished">L&amp; R</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="2446"/>
+        <location filename="UI/MainForm.ui" line="2458"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;上下翻转&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;Flip vertically&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="2480"/>
         <source>上下</source>
-        <translation>up and down</translation>
+        <translation type="unfinished">U&amp; D</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="2535"/>
+        <location filename="UI/MainForm.ui" line="2569"/>
         <source>360旋转盘</source>
         <translation>360 degree rotating disc</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="2586"/>
+        <location filename="UI/MainForm.ui" line="2620"/>
         <source>标记集合</source>
         <translation>Tag set</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="2640"/>
+        <location filename="UI/MainForm.ui" line="2674"/>
         <source>系统设置</source>
         <translation>System Settings</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="2694"/>
+        <location filename="UI/MainForm.ui" line="2728"/>
         <source>操作日志</source>
         <translation>Operation log</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="2742"/>
+        <location filename="UI/MainForm.ui" line="2776"/>
         <source>图像还原</source>
         <translation>Image restoration</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="2827"/>
+        <location filename="UI/MainForm.ui" line="2861"/>
         <source>标记</source>
         <translation>mark</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="3375"/>
+        <location filename="UI/MainForm.ui" line="2875"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;绘制直线&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;draw a straight line&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="2914"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;撤销&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;Undo&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="2953"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;距离标定&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;Distance Calibration&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="2992"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;恢复&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;Redo&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="3031"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;输入文字&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;Input text&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="3070"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;取消截图&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;Cancel screenshot&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="3109"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;绘制圆&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;Draw a circle&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="3148"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;截图&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;screenshot&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="3187"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;绘制矩形&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;draw a rectangle&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="3226"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;弯曲度&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;curvature&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="3304"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;绘制角度&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b1c9c3;&quot;&gt;Drawing angle&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="3445"/>
         <source>图像处理</source>
         <translation>image processing</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="3403"/>
+        <location filename="UI/MainForm.ui" line="3473"/>
         <source>降噪模式</source>
         <translation>Noise Cancellation Mode</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="3447"/>
+        <location filename="UI/MainForm.ui" line="3517"/>
         <source>5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="3488"/>
-        <location filename="UI/MainForm.ui" line="3668"/>
+        <location filename="UI/MainForm.ui" line="3558"/>
+        <location filename="UI/MainForm.ui" line="3738"/>
         <source>普通</source>
         <translation>Ordinary</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="3519"/>
-        <location filename="UI/MainForm.ui" line="3693"/>
+        <location filename="UI/MainForm.ui" line="3589"/>
+        <location filename="UI/MainForm.ui" line="3763"/>
         <source>高级</source>
         <translation>Advanced</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="3550"/>
-        <location filename="UI/MainForm.ui" line="3718"/>
+        <location filename="UI/MainForm.ui" line="3620"/>
+        <location filename="UI/MainForm.ui" line="3788"/>
         <source>超级</source>
         <translation>Super</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="3586"/>
+        <location filename="UI/MainForm.ui" line="3656"/>
         <source>图像增强</source>
-        <translation>image enhancement</translation>
+        <translation type="unfinished">Image enhancement</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="3633"/>
+        <location filename="UI/MainForm.ui" line="3703"/>
         <source>10</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="3781"/>
+        <location filename="UI/MainForm.ui" line="3851"/>
         <source>窗宽:</source>
-        <translation>Window width:</translation>
+        <translation type="unfinished">width:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="3819"/>
+        <location filename="UI/MainForm.ui" line="3889"/>
         <source>14483</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="3836"/>
+        <location filename="UI/MainForm.ui" line="3906"/>
         <source>窗位:</source>
-        <translation>Window level:</translation>
+        <translation>level:</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="3868"/>
+        <location filename="UI/MainForm.ui" line="3938"/>
         <source>5172</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="3916"/>
+        <location filename="UI/MainForm.ui" line="3989"/>
         <source>自动调整</source>
         <translation>auto-adjust</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="3944"/>
+        <location filename="UI/MainForm.ui" line="4017"/>
         <source>固定参数</source>
         <translation>fixed parameter</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="4036"/>
+        <location filename="UI/MainForm.ui" line="4044"/>
+        <source>重命名</source>
+        <translation type="unfinished">ReName</translation>
+    </message>
+    <message>
+        <location filename="UI/MainForm.ui" line="4160"/>
         <source>报告专责</source>
         <translation>Report specialist</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="4076"/>
+        <location filename="UI/MainForm.ui" line="4200"/>
         <source>加载中……</source>
         <translation>Loading……</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="4215"/>
+        <location filename="UI/MainForm.ui" line="4339"/>
         <source>保存</source>
         <translation>Save</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="4259"/>
+        <location filename="UI/MainForm.ui" line="4383"/>
         <source>还原</source>
         <translation>restore</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="4303"/>
+        <location filename="UI/MainForm.ui" line="4427"/>
         <source>保存本地</source>
         <translation>Save locally</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="4335"/>
+        <location filename="UI/MainForm.ui" line="4459"/>
         <source>上传图片</source>
         <translation>Upload image</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="4361"/>
-        <location filename="UI/MainForm.ui" line="4420"/>
+        <location filename="UI/MainForm.ui" line="4485"/>
+        <location filename="UI/MainForm.ui" line="4544"/>
         <source>操作员</source>
         <translation>operator</translation>
     </message>
     <message>
-        <location filename="UI/MainForm.ui" line="4491"/>
+        <location filename="UI/MainForm.ui" line="4615"/>
         <source>0/0</source>
         <translation></translation>
     </message>
@@ -1300,6 +1457,12 @@
         <location filename="UI/TragListDialog.ui" line="14"/>
         <source>Form</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="UI/TragListDialog.ui" line="38"/>
+        <location filename="UI/TragListDialog.ui" line="45"/>
+        <source>RadioButton</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

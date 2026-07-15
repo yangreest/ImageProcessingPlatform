@@ -3,7 +3,7 @@
 #include <functional>
 #include <string>
 
-#include "Model/SampleBoardConfig.h"
+#include "../Config/ConfigManager.h"
 
 enum DeviceConnectStatus
 {

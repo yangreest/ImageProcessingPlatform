@@ -13,6 +13,8 @@ public:
 	CameraFrom(const CConfigManager* nConfig, QWidget* parent = nullptr);
 	~CameraFrom();
 
+protected:
+    void closeEvent(QCloseEvent* event) override;
 private:
 	Ui::CameraFromClass ui;
 	void Connect();
