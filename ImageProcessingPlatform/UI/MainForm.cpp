@@ -18,6 +18,10 @@
 #include "AlertForm.h"
 #include "CloseEventFilter.h"
 #include "SingleInputForm.h"
+#include "LicenseDialog.h"
+// TODO: 修改为你的授权库头文件路径
+#include "license_validator.h"
+#include "hardware_id.h"
 
 #include "Tools/HttpClient.h"
 #include "Tools/Tools.h"
@@ -30,7 +34,7 @@
 #include <lm.h>  // 包含网络管理函数的头文件
 #pragma comment(lib, "netapi32.lib")  // 自动链接库
 
-
+using namespace license;
 
 #define MY_WARNING(t) 	{AlertForm f("Warning", t);f.showModal();qWarning() << t; }//QMessageBox::warning(this, "警告", t)
 #define MY_INFO(t) {AlertForm f("Tips", t);f.showModal();qInfo()<< t; }//QMessageBox::information(this, "提示", t)
@@ -1452,14 +1456,83 @@ void MainForm::InitParam()
 #else
 
 	m_pUSBKey = new CUSBKey();
+	bool bLicenseAuthed = false;
 	if (!m_pUSBKey->ReadUSBKey(&m_memUSBKeyData))
 	{
-		MY_WARNING(tr("USB加密狗验证失败！").toStdString());
-		_Exit(0);
+		// USB加密狗验证失败，转为授权码验证（创建验证器，传空字符串使用默认存储目录）
+		LicenseValidator validator("");
+		LicenseStatus status = validator.checkStatus();
+		
+		if (status == LicenseStatus::Valid)
+		{
+			// 授权正常，跳出验证逻辑，继续正常启动
+			bLicenseAuthed = true;
+		}
+		else if (status == LicenseStatus::TimeTampered)
+		{
+			// 异常：检测到系统时间被篡改，弹窗并退出
+			AlertForm f("Warning",
+				"System time tampering detected. The software is locked.\n"
+				"Please restore the correct system time and restart.");
+			f.showModal();
+			_Exit(0);
+		}
+		else // Expired 或未授权
+		{
+			// 弹窗输入授权码，并显示当前硬件ID与ID哈希值
+			while (true)
+			{
+				std::string hwId = getHardwareIdString();
+				std::ostringstream oss;
+				oss << "0x" << std::hex << getHardwareIdHash();
+
+				LicenseDialog dlg(hwId, oss.str(), status == LicenseStatus::Expired);
+				dlg.showModal();
+
+				if (!LicenseDialog::confirmed)
+				{
+					// 用户取消
+					_Exit(0);
+				}
+
+				status = validator.activate(LicenseDialog::inputCode);
+				if (status == LicenseStatus::Valid)
+				{
+					// 激活成功，跳出验证逻辑，继续正常启动
+					bLicenseAuthed = true;
+					break;
+				}
+
+				// 激活失败，弹窗提示原因并允许重试
+				std::string msg;
+				switch (status)
+				{
+				case LicenseStatus::InvalidFormat:
+					msg = "The license code format is incorrect. Please check your input."; break;
+				case LicenseStatus::InvalidMac:
+					msg = "The license code is invalid (authentication failed)."; break;
+				case LicenseStatus::HardwareMismatch:
+					msg = "This license code is not bound to this machine.\nEach machine requires its own license code."; break;
+				case LicenseStatus::Expired:
+					msg = "This license code has expired."; break;
+				case LicenseStatus::TimeTampered:
+					msg = "Abnormal system time detected. Please restore the correct time and try again."; break;
+				default:
+					msg = "Activation failed."; break;
+				}
+				AlertForm fail("Activation Failed", msg);
+				fail.showModal();
+			}
+		}
+		//MY_WARNING(tr("USB加密狗验证失败！").toStdString());
 	}
 	m_cWorkModel = m_memUSBKeyData.m_cDeviceRunMode;
-	std::thread td(&CUSBKey::LoopCheckCheckUSBKeyExist, m_pUSBKey);
-	td.detach();
+	// 授权码模式下无加密狗，不能启动 LoopCheck 线程，否则该线程检测不到狗会强制退出程序
+	if (!bLicenseAuthed)
+	{
+		std::thread td(&CUSBKey::LoopCheckCheckUSBKeyExist, m_pUSBKey);
+		td.detach();
+	}
 
 #endif
 

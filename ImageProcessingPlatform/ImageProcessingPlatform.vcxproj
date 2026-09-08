@@ -83,7 +83,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\3rd\opencv_4_12_0\include;D:\3rd\XCloud\include;D:\3rd\PZMedical\include;D:\3rd\DRTECH\include;D:\3rd\HammingElectronic\include;D:\3rd\Vikey\include;D:\3rd\dcmtk\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\3rd\opencv_4_12_0\include;D:\3rd\XCloud\include;D:\3rd\PZMedical\include;D:\3rd\DRTECH\include;D:\3rd\HammingElectronic\include;D:\3rd\Vikey\include;D:\3rd\dcmtk\include;D:\3rd\License\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <Optimization>MinSpace</Optimization>
@@ -91,8 +91,8 @@
       <PreprocessorDefinitions>QT_MESSAGELOGCONTEXT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>D:\3rd\dcmtk\lib;D:\3rd\XCloud\lib;D:\3rd\PZMedical\lib;D:\3rd\DRTECH\lib;D:\3rd\HammingElectronic\lib;D:\3rd\Vikey\lib;D:\3rd\opencv_4_12_0\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>XCloudSDK.lib;ComApi.lib;DRTECH_LAN.lib;ImgProcCplusplus.lib;ViKey_X64_oMD.lib;ViKey_X64_oMT.lib;opencv_world4120.lib;dcmdata.lib;dcmimgle.lib;ofstd.lib;oflog.lib;oficonv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\3rd\dcmtk\lib;D:\3rd\XCloud\lib;D:\3rd\PZMedical\lib;D:\3rd\DRTECH\lib;D:\3rd\HammingElectronic\lib;D:\3rd\Vikey\lib;D:\3rd\opencv_4_12_0\lib;D:\3rd\License\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>XCloudSDK.lib;ComApi.lib;DRTECH_LAN.lib;ImgProcCplusplus.lib;ViKey_X64_oMD.lib;ViKey_X64_oMT.lib;opencv_world4120.lib;dcmdata.lib;dcmimgle.lib;ofstd.lib;oflog.lib;oficonv.lib;license_validator.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <ResourceCompile>
@@ -150,6 +150,7 @@
     <ClCompile Include="UI\ControlBoardConfigForm.cpp" />
     <ClCompile Include="UI\FormWithShowModal.cpp" />
     <ClCompile Include="UI\LogDisplayDialog.cpp" />
+    <ClCompile Include="UI\LicenseDialog.cpp" />
     <ClCompile Include="UI\MouseEventFilter.cpp" />
     <ClCompile Include="UI\screenwidget.cpp" />
     <ClCompile Include="UI\SingleInputForm.cpp" />
@@ -175,6 +176,7 @@
     <ClCompile Include="UI\MainForm.cpp" />
     <ClCompile Include="main.cpp" />
     <QtUic Include="UI\SingleInputForm.ui" />
+    <QtUic Include="UI\LicenseDialog.ui" />
     <QtUic Include="UI\TragListDialog.ui" />
   </ItemGroup>
   <ItemGroup>
@@ -195,6 +197,7 @@
     <QtMoc Include="UI\LogDisplayDialog.h" />
     <QtMoc Include="UI\AlertForm.h" />
     <QtMoc Include="UI\SingleInputForm.h" />
+    <QtMoc Include="UI\LicenseDialog.h" />
     <QtMoc Include="UI\ControlBoardConfigForm.h" />
     <QtMoc Include="UI\CloseEventFilter.h" />
     <QtMoc Include="UI\CameraFrom.h" />
