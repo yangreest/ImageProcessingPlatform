@@ -1466,6 +1466,7 @@ void MainForm::InitParam()
 		if (status == LicenseStatus::Valid)
 		{
 			// 授权正常，跳出验证逻辑，继续正常启动
+			m_cWorkModel = validator.getExtraInt();
 			bLicenseAuthed = true;
 		}
 		else if (status == LicenseStatus::TimeTampered)
@@ -1500,6 +1501,7 @@ void MainForm::InitParam()
 				{
 					// 激活成功，跳出验证逻辑，继续正常启动
 					bLicenseAuthed = true;
+                    m_cWorkModel = validator.getExtraInt();
 					break;
 				}
 
@@ -1526,7 +1528,11 @@ void MainForm::InitParam()
 		}
 		//MY_WARNING(tr("USB加密狗验证失败！").toStdString());
 	}
-	m_cWorkModel = m_memUSBKeyData.m_cDeviceRunMode;
+	else
+	{
+		m_cWorkModel = m_memUSBKeyData.m_cDeviceRunMode;
+	}
+	
 	// 授权码模式下无加密狗，不能启动 LoopCheck 线程，否则该线程检测不到狗会强制退出程序
 	if (!bLicenseAuthed)
 	{
