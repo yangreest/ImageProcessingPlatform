@@ -16,3 +16,5 @@
 *.py
 /HmProImageAlgo
 /ImageProcessingPlatform/ImagePro.B222CC3F
+*.png
+*.raw
