@@ -131,6 +131,7 @@
     <ClCompile Include="Config\ConfigManager.cpp" />
     <ClCompile Include="ImageProcessing\ImageProcessBase.cpp" />
     <ClCompile Include="ImageProcessing\ImageProcessByHamming.cpp" />
+    <ClCompile Include="ImageProcessing\ImageProcessByOpenCV.cpp" />
     <ClCompile Include="Log\ScanS_FC.cpp" />
     <ClCompile Include="Log\ScanS_WriteLog.cpp" />
     <ClCompile Include="Log\WriteLogIns.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="Tools\HttpClient.h" />
     <ClInclude Include="ImageProcessing\ImageProcessBase.h" />
     <ClInclude Include="ImageProcessing\ImageProcessByHamming.h" />
+    <ClInclude Include="ImageProcessing\ImageProcessByOpenCV.h" />
     <ClInclude Include="Log\ScanS_FC.h" />
     <ClInclude Include="Log\ScanS_WriteLog.h" />
     <ClInclude Include="Log\WriteLogIns.h" />
