@@ -1,5 +1,6 @@
 #include "ImageProcessBase.h"
 #include "ImageProcessByHamming.h"
+#include "ImageProcessByOpenCV.h"
 
 CImageProcessParam1::CImageProcessParam1()
 {
@@ -19,6 +20,11 @@ CImageProcessBase* CImageProcessBase::GetCImageProcessObj(int type)
 {
 	switch (type)
 	{
+	case 1:
+	{
+		// 新优化算法：开关中值去椒盐噪点 + 平坦区平滑 + 边缘非锐化增强 + 百分位自动窗宽窗位
+		return new CImageProcessByOpenCV();
+	}
 	default:
 	{
 		return new CImageProcessByHamming();

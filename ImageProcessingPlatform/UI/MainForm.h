@@ -462,11 +462,24 @@ private:
 	// 初始化一组控件的绑定关系
 	void initControlPair(QSlider* slider, QLineEdit* edit);
 
-	// 执行耗时任务（后台线程）
+	// 触发耗时任务（尾随防抖入口，UI线程调用）
 	void doLongTimeWork();
+
+	// 在UI线程读取控件参数并启动后台计算任务
+	void StartProcessTask();
+
+	// 后台线程纯计算：不访问任何UI控件，参数以副本传入
+	void ProcessImageCore(CImageProcessParam1 param1, CImageProcessParam2 param2);
 
 	// 控件更新锁：防止信号相互触发死循环
 	bool m_isUpdating = false;
+
+	// 尾随触发标记：任务运行期间有新请求时置位，finished 后补跑一次
+	bool m_bPendingReprocess = false;
+
+	// 批量更新标记：为真时屏蔽 doLongTimeWork 的中间触发，
+	// 用于一次性设置多个参数后由调用方统一触发一次重算
+	bool m_bBatchUpdating = false;
 
 	// 线程监视器：处理耗时任务
 	QFutureWatcher<void>* m_taskWatcher;

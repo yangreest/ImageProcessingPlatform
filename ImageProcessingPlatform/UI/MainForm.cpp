@@ -1755,6 +1755,8 @@ void MainForm::Callback_ShowImgOnLabel_2()
 {
 	auto m_vector_LastImgBuffer = m_memSDRaw.GetOriginalRawData();
 
+	// 批量设置窗宽窗位/降噪增强期间屏蔽中间重算，末尾统一触发一次
+	m_bBatchUpdating = true;
 	if (ui.comboBox->count() < 1)
 	{
 		// 获取图像的 均值和标准差
@@ -1780,6 +1782,7 @@ void MainForm::Callback_ShowImgOnLabel_2()
 		QImage::Format_Grayscale16);
 	m_memMainQImage = image.convertToFormat(QImage::Format_Grayscale16).scaled(ui.label->size(), Qt::KeepAspectRatio,
 		Qt::SmoothTransformation);
+	m_bBatchUpdating = false;
 	doLongTimeWork();
 }
 
@@ -1891,10 +1894,16 @@ void MainForm::On_pushButtonAutoAdjust_Click()
 	}
 	Algorithm data = ui.comboBox->itemData(currentIndex).value<Algorithm>();
 	ui.comboBox->setCurrentIndex(currentIndex);
+
+	// 批量设置 4 个参数：期间屏蔽中间重算，全部写入后再统一触发一次，
+	// 避免先跑一次混合参数、再尾随补跑，确保只重算一次且值完全一致
+	m_bBatchUpdating = true;
 	ui.lineEdit_3->setText(QString::number(data.m_nP3));
 	ui.lineEdit_4->setText(QString::number(data.m_nP4));
 	ui.lineEdit_5->setText(QString::number(data.m_nP5));
 	ui.lineEdit_6->setText(QString::number(data.m_nP6));
+	m_bBatchUpdating = false;
+	doLongTimeWork();
 }
 
 void MainForm::On_pushButtonFixedParam_Click()
@@ -2150,36 +2159,50 @@ void MainForm::onEditTextChanged(const QString& text, QSlider* slider, QLineEdit
 
 void MainForm::On_SliderValueChanged()
 {
-	qDebug() << "On_SliderValueChanged";
+	// 参数读取与耗时计算已下沉至 StartProcessTask / ProcessImageCore，
+	// 此处仅作为触发入口，保持既有调用点（如反转、降噪增强复位）语义不变。
+	doLongTimeWork();
+}
+
+void MainForm::StartProcessTask()
+{
+	m_bPendingReprocess = false;
+
+	// 方案3：控件值只在UI线程读取，后台线程不再访问任何 ui.* 控件
 	m_memImageProcessParam2.m_wMaxBright = ui.horizontalSlider_3->value();
 	m_memImageProcessParam2.m_wMinBright = ui.horizontalSlider_4->value();
-
 	m_memImageProcessParam1.m_nDenoise = ui.horizontalSlider_5->value();
 	m_memImageProcessParam1.m_nEnhance = ui.horizontalSlider_6->value();
 
+	// 以副本传入后台线程，避免与UI线程共享可变状态
+	CImageProcessParam1 param1 = m_memImageProcessParam1;
+	CImageProcessParam2 param2 = m_memImageProcessParam2;
+
+	QFuture<void> future = QtConcurrent::run([this, param1, param2]() {
+		ProcessImageCore(param1, param2);
+		});
+	m_taskWatcher->setFuture(future);
+}
+
+void MainForm::ProcessImageCore(CImageProcessParam1 param1, CImageProcessParam2 param2)
+{
+	// 后台线程：仅执行纯图像计算，不触碰任何控件
+	std::lock_guard<std::mutex> g(m_mutexLastImgMutex);
+	auto m_vector_LastImgBuffer = m_memSDRaw.GetOriginalRawData();
+	auto m_vector_ChangedImgBuffer2 = m_memSDRaw.GetTempRawData();
+	if (m_pImageProcess->ImageProcess1(m_memSDRaw.m_wPicWidth
+		, m_memSDRaw.m_wPicHeight
+		, m_vector_LastImgBuffer.data(),
+		&param1,
+		&m_vector_ChangedImgBuffer2))
 	{
-		std::lock_guard<std::mutex> g(m_mutexLastImgMutex);
-		auto m_vector_LastImgBuffer = m_memSDRaw.GetOriginalRawData();
-		auto m_vector_ChangedImgBuffer2 = m_memSDRaw.GetTempRawData();
-		if (m_pImageProcess->ImageProcess1(m_memSDRaw.m_wPicWidth
+		m_memSDRaw.SetTempRawData(&m_vector_ChangedImgBuffer2);
+		m_pImageProcess->BrightAndContrastProcess(m_memSDRaw.m_wPicWidth
 			, m_memSDRaw.m_wPicHeight
-			, m_vector_LastImgBuffer.data(),
-			&m_memImageProcessParam1,
-			&m_vector_ChangedImgBuffer2))
-		{
-			m_memSDRaw.SetTempRawData(&m_vector_ChangedImgBuffer2);
-			if (m_pImageProcess->BrightAndContrastProcess(m_memSDRaw.m_wPicWidth
-				, m_memSDRaw.m_wPicHeight
-				, reinterpret_cast<uint16_t*>(m_vector_ChangedImgBuffer2.data())
-				, &m_memImageProcessParam2
-				, &m_vecNeedShowBuffer))
-			{
-			}
-		}
+			, reinterpret_cast<uint16_t*>(m_vector_ChangedImgBuffer2.data())
+			, &param2
+			, &m_vecNeedShowBuffer);
 	}
-	//ui.lineEdit_3->setText(QString::number(cw));
-	//ui.lineEdit_4->setText(QString::number(ck));
-	ShowImgOnLabel();
 }
 
 //void MainForm::On_SliderValueChanged2(int value)
@@ -2224,7 +2247,14 @@ void MainForm::On_SliderValueChanged()
 
 void MainForm::onLongTaskFinished()
 {
-	qDebug() << "onLongTaskFinished";
+	// 方案3：图像合成与控件更新回到UI线程执行
+	ShowImgOnLabel();
+
+	// 方案1：尾随触发——任务运行期间若有新请求，用最新控件值再算一次
+	if (m_bPendingReprocess)
+	{
+		StartProcessTask();
+	}
 }
 
 void MainForm::On_SavePicByGuid_Click()
@@ -3898,15 +3928,21 @@ void MainForm::initControlPair(QSlider* slider, QLineEdit* edit)
 
 void MainForm::doLongTimeWork()
 {
-	// 如果已有任务在执行，直接忽略（防抖+防重复）
-	if (m_taskWatcher->isRunning()) return;
+	// 批量更新期间：屏蔽中间触发，由批量结束后统一调用一次
+	if (m_bBatchUpdating)
+	{
+		return;
+	}
 
-	// 后台线程执行耗时操作（不卡UI）
-	QFuture<void> future = QtConcurrent::run([=]() {
-		On_SliderValueChanged();
-		});
-
-	m_taskWatcher->setFuture(future);
+	// 方案1：尾随触发防抖。任务运行期间到来的请求不再被丢弃，
+	// 仅记录待处理标记，待当前任务结束后用最新控件值补跑一次，
+	// 确保一次性设置多个参数（如“自动调整”）时最终图像与控件值一致。
+	if (m_taskWatcher->isRunning())
+	{
+		m_bPendingReprocess = true;
+		return;
+	}
+	StartProcessTask();
 }
 // 从容器中根据序号读取图片路径
 std::string* MainForm::getPicPathByIndex(int index)
