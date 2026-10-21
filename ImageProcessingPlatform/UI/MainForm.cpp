@@ -13,6 +13,7 @@
 #include <QBuffer>
 #include <QFileDialog>
 #include <QSettings>
+#include <QtMath>
 #include <iostream>
 
 #include "AlertForm.h"
@@ -2780,10 +2781,25 @@ QImage MainForm::rotateImageKeepSize(const QImage& src, qreal angle, const QColo
 
 	int w = src.width();
 	int h = src.height();
-	QPointF center(w / 2.0, h / 2.0);
 
-	// 创建和原图一样大小的画布
-	QImage dst(w, h, src.format());
+	// 将角度归一化到 [0, 360)
+	qreal a = std::fmod(angle, 360.0);
+	if (a < 0)
+		a += 360.0;
+
+	// 0 度无需旋转，直接返回原图
+	if (qFuzzyIsNull(a))
+		return src;
+
+	// 计算旋转后完整包围盒的尺寸，保证图像任何部分都不会被裁剪
+	qreal rad = qDegreesToRadians(a);
+	qreal sinA = qAbs(qSin(rad));
+	qreal cosA = qAbs(qCos(rad));
+	int newW = qCeil(w * cosA + h * sinA);
+	int newH = qCeil(w * sinA + h * cosA);
+
+	// 创建可容纳完整旋转结果的画布
+	QImage dst(newW, newH, src.format());
 	dst.fill(bgColor);
 
 	QPainter painter(&dst);
@@ -2791,13 +2807,12 @@ QImage MainForm::rotateImageKeepSize(const QImage& src, qreal angle, const QColo
 	painter.setRenderHint(QPainter::SmoothPixmapTransform);
 
 	QTransform transform;
-	// 变换步骤：移中心到原点 → 旋转 → 移回中心
-	transform.translate(center.x(), center.y());
-	transform.rotate(angle);
-	transform.translate(-center.x(), -center.y());
+	// 变换步骤：移到新画布中心 → 旋转 → 移回原图中心，使旋转后的图像完整居中
+	transform.translate(newW / 2.0, newH / 2.0);
+	transform.rotate(a);
+	transform.translate(-w / 2.0, -h / 2.0);
 
 	painter.setTransform(transform);
-	// 绘制原图，超出dst区域会自动裁剪
 	painter.drawImage(QPoint(0, 0), src);
 	painter.end();
 
