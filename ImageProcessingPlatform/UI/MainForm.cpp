@@ -1320,6 +1320,11 @@ void MainForm::BindAction()
 	connect(ui.pushButton_10, &QPushButton::clicked, this, &MainForm::On_ResetPic_Click);
 	connect(ui.pushButton_40, &QPushButton::clicked, this, &MainForm::On_UpDownMirror_clicked);
 	connect(ui.pushButton_4, &QPushButton::clicked, this, &MainForm::On_XRayStart_clicked);
+	// 射线机启动按钮冷却定时器：每秒刷新倒计时，60秒后恢复按钮
+	m_nXRayStartCooldownSeconds = 0;
+	m_pXRayStartCooldownTimer = new QTimer(this);
+	m_pXRayStartCooldownTimer->setInterval(1000);
+	connect(m_pXRayStartCooldownTimer, &QTimer::timeout, this, &MainForm::On_XRayStartCooldown_Timeout);
 	connect(ui.pushButton_5, &QPushButton::clicked, this, &MainForm::On_XRayStop_clicked);
 
 	connect(ui.pushButton_19, &QPushButton::pressed, this, &MainForm::On_SampleBoard_Change_Clicked1);
@@ -4521,6 +4526,12 @@ void MainForm::On_DelayTime_clicked()
 
 void MainForm::On_XRayStart_clicked()
 {
+	// 冷却期内禁止再次启动
+	if (m_nXRayStartCooldownSeconds > 0)
+	{
+		return;
+	}
+
 	auto dp = ui.comboBox_4->currentIndex();
 	auto gdp = ui.comboBox_5->currentIndex();
 	auto djs = ui.comboBox_2->currentIndex();
@@ -4530,6 +4541,34 @@ void MainForm::On_XRayStart_clicked()
 	if (p != nullptr)
 	{
 		p->Write(cmds.data(), cmds.size());
+	}
+
+	// 按下后进入一分钟冷却：禁用按钮并显示倒计时
+	m_nXRayStartCooldownSeconds = 60;
+	ui.pushButton_4->setEnabled(false);
+	QString strStart = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "启动" : "Start";
+	ui.pushButton_4->setText(strStart + QString("(%1s)").arg(m_nXRayStartCooldownSeconds));
+	m_pXRayStartCooldownTimer->start();
+}
+
+void MainForm::On_XRayStartCooldown_Timeout()
+{
+	if (m_nXRayStartCooldownSeconds > 0)
+	{
+		m_nXRayStartCooldownSeconds--;
+	}
+
+	QString strStart = m_pConfig->m_memTimsConfig.nLanguage == 0 ? "启动" : "Start";
+	if (m_nXRayStartCooldownSeconds <= 0)
+	{
+		// 冷却结束，恢复按钮可点击
+		m_pXRayStartCooldownTimer->stop();
+		ui.pushButton_4->setEnabled(true);
+		ui.pushButton_4->setText(strStart);
+	}
+	else
+	{
+		ui.pushButton_4->setText(strStart + QString("(%1s)").arg(m_nXRayStartCooldownSeconds));
 	}
 }
 

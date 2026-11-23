@@ -112,6 +112,7 @@ private slots:
 	void On_NumberOfPulses_clicked();
 	void On_DelayTime_clicked();
 	void On_XRayStart_clicked();
+	void On_XRayStartCooldown_Timeout();
 	void On_XRayStop_clicked();
 	void On_LeftRightMirror_clicked();
 	void On_UpDownMirror_clicked();
@@ -299,6 +300,12 @@ private:
 	MouseEventFilter* m_pMouseEventFilter;
 
 	QTimer* m_pTimer;
+
+	// 射线机启动按钮冷却定时器：按下后一分钟内不能再次点击
+	QTimer* m_pXRayStartCooldownTimer;
+
+	// 射线机启动按钮冷却剩余秒数
+	int m_nXRayStartCooldownSeconds;
 
 	IDeviceCom* m_apDeviceCom[MaxControlBoardCount];
 

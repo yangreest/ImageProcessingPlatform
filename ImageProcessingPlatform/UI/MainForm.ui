@@ -1111,6 +1111,11 @@ color: rgb(229, 226, 225);</string>
 
 QPushButton:hover{
 background-color: #9EF3D6; /* surface-bright */
+}
+
+QPushButton:disabled{
+    background-color: #3E5A50; /* 同色系降低明度与饱和度，表示不可用 */
+    color: #7FA294; /* 低对比度文字 */
 }</string>
                   </property>
                   <property name="text">
